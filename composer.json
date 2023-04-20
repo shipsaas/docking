@@ -1,8 +1,15 @@
 {
-    "name": "laravel/laravel",
+    "name": "shipsaas/docking",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "DocKing: Your shared-microservice that takes over the document templates management & render/export PDF",
+    "keywords": [
+        "laravel",
+        "php",
+        "microservice",
+        "DocKing microservice",
+        "microservice generate pdf",
+        "microservice document templates management"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
