@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * there is no authentication in DocKing for now
+ * So this model won't be used
+ *
+ * We still keep this Model tho.
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
