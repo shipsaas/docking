@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * DocKing Note: No usage
+ */
+
 return [
 
     /*
