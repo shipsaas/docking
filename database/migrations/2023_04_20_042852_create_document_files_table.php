@@ -12,9 +12,9 @@ return new class extends Migration
             $table->uuid()->primary();
             $table->uuid('document_template_uuid')->index();
 
-            $table->string('path');
-            $table->unsignedBigInteger('size');
-            $table->string('url');
+            $table->string('path')->nullable();
+            $table->unsignedBigInteger('size')->nullable();
+            $table->string('url')->nullable();
 
             $table->jsonb('variables')->nullable();
             $table->jsonb('metadata')->nullable();
