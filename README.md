@@ -22,7 +22,7 @@ You can use DocKing as a Shared-Microservice which can be used in any services.
 ### PDF Rendering Services
 - Gotenberg
 - wkHTMLtoPDF
-- pdfTK
+- mpdf
 
 ## Communication via services
 
