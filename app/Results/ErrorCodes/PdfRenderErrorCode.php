@@ -2,7 +2,7 @@
 
 namespace App\Results\ErrorCodes;
 
-enum PdfRenderErrorCode
+enum PdfRenderErrorCode: string
 {
-    case UNEXPECTED_ERROR;
+    case UNEXPECTED_ERROR = 'UNEXPECTED_ERROR';
 }

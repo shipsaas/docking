@@ -1,6 +1,7 @@
 {
     "name": "shipsaas/docking",
     "type": "project",
+    "version": "1.0.0",
     "description": "DocKing: Your shared-microservice that takes over the document templates management & render/export PDF",
     "keywords": [
         "laravel",
@@ -8,7 +9,8 @@
         "microservice",
         "DocKing microservice",
         "microservice generate pdf",
-        "microservice document templates management"
+        "microservice document templates management",
+        "php microservice"
     ],
     "license": "MIT",
     "require": {
