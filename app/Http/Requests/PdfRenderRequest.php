@@ -27,9 +27,6 @@ class PdfRenderRequest extends FormRequest
 
     public function getMetadata(): array
     {
-        $metadata = $this->input('metadata') ?: [];
-        $metadata['driver'] = $metadata['driver'] ?? null;
-
-        return $metadata;
+        return $this->input('metadata') ?: [];
     }
 }

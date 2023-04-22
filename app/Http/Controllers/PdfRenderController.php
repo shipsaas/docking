@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PdfRenderAsyncRequest;
 use App\Http\Requests\PdfRenderRequest;
+use App\Jobs\RenderJob;
 use App\Models\DocumentTemplate;
 use App\Services\PdfRenderManager;
 use Illuminate\Http\JsonResponse;
@@ -14,11 +15,14 @@ class PdfRenderController extends Controller
         PdfRenderRequest $request,
         DocumentTemplate $documentTemplate,
         PdfRenderManager $manager
-    ) {
+    ): JsonResponse {
         $renderResult = $manager->render(
             $documentTemplate,
             $request->input('variables') ?: [],
-            $request->getMetadata(),
+            [
+                ...$documentTemplate->metadata,
+                ...$request->getMetadata(),
+            ],
         );
 
         if ($renderResult->isError()) {
@@ -37,8 +41,21 @@ class PdfRenderController extends Controller
         ]);
     }
 
-    public function renderAsync(PdfRenderAsyncRequest $request, DocumentTemplate $documentTemplate)
-    {
+    public function renderAsync(
+        PdfRenderAsyncRequest $request,
+        DocumentTemplate $documentTemplate
+    ): JsonResponse {
+        RenderJob::dispatch(
+            $documentTemplate,
+            $request->input('variables') ?: [],
+            [
+                ...$documentTemplate->metadata,
+                ...$request->getMetadata(),
+            ],
+        );
 
+        return new JsonResponse([
+            'outcome' => 'QUEUED',
+        ]);
     }
 }
