@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\DocumentFile;
+use App\Models\DocumentTemplate;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -31,6 +33,8 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        $this->registerModelBindings();
     }
 
     /**
@@ -41,5 +45,11 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+    private function registerModelBindings(): void
+    {
+        Route::model('documentFile', DocumentFile::class);
+        Route::model('documentTemplate', DocumentTemplate::class);
     }
 }
