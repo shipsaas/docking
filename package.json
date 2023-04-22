@@ -1,12 +1,23 @@
 {
-    "private": true,
+    "private": false,
     "scripts": {
         "dev": "vite",
         "build": "vite build"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.3",
+        "@vitejs/plugin-vue": "^4.1.0",
+        "autoprefixer": "^10.4.14",
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.7.2",
-        "vite": "^4.0.0"
+        "postcss": "^8.4.23",
+        "tailwindcss": "^3.3.1",
+        "vite": "^4.0.0",
+        "vue-loader": "^17.0.1"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.7.13",
+        "@heroicons/vue": "^2.0.17",
+        "vue": "^3.2.36"
     }
 }
