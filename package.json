@@ -2,7 +2,8 @@
     "private": false,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "format": "prettier './resources/js'  --write"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.3",
@@ -11,6 +12,7 @@
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.7.2",
         "postcss": "^8.4.23",
+        "prettier": "2.8.8",
         "tailwindcss": "^3.3.1",
         "vite": "^4.0.0",
         "vue-loader": "^17.0.1"
