@@ -1,6 +1,9 @@
 <template>
   <div>
-    <TransitionRoot as="template" :show="sidebarOpen">
+    <TransitionRoot
+      as="template"
+      :show="sidebarOpen"
+    >
       <Dialog
         as="div"
         class="relative z-50 lg:hidden"
@@ -47,7 +50,10 @@
                     @click="sidebarOpen = false"
                   >
                     <span class="sr-only">Close sidebar</span>
-                    <XMarkIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                    <XMarkIcon
+                      class="h-6 w-6 text-white"
+                      aria-hidden="true"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -63,10 +69,20 @@
                   />
                 </div>
                 <nav class="flex flex-1 flex-col">
-                  <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                  <ul
+                    role="list"
+                    class="flex flex-1 flex-col gap-y-7"
+                  >
                     <li>
-                      <ul role="list" class="-mx-2 space-y-1">
-                        <li v-for="item in navigation" :key="item.name">
+                      <ul
+                        role="list"
+                        class="-mx-2 space-y-1"
+                      >
+                        <li
+                          v-for="item in navigation"
+                          :key="item.name"
+                          @click="setActive(item)"
+                        >
                           <a
                             :href="item.href"
                             :class="[
@@ -97,8 +113,14 @@
                       >
                         Your teams
                       </div>
-                      <ul role="list" class="-mx-2 mt-2 space-y-1">
-                        <li v-for="team in teams" :key="team.name">
+                      <ul
+                        role="list"
+                        class="-mx-2 mt-2 space-y-1"
+                      >
+                        <li
+                          v-for="team in teams"
+                          :key="team.name"
+                        >
                           <a
                             :href="team.href"
                             :class="[
@@ -160,10 +182,20 @@
           />
         </div>
         <nav class="flex flex-1 flex-col">
-          <ul role="list" class="flex flex-1 flex-col gap-y-7">
+          <ul
+            role="list"
+            class="flex flex-1 flex-col gap-y-7"
+          >
             <li>
-              <ul role="list" class="-mx-2 space-y-1">
-                <li v-for="item in navigation" :key="item.name">
+              <ul
+                role="list"
+                class="-mx-2 space-y-1"
+              >
+                <li
+                  v-for="item in navigation"
+                  :key="item.name"
+                  @click="setActive(item)"
+                >
                   <a
                     :href="item.href"
                     :class="[
@@ -216,17 +248,30 @@
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>
-          <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+          <Bars3Icon
+            class="h-6 w-6"
+            aria-hidden="true"
+          />
         </button>
 
         <!-- Separator -->
-        <div class="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
+        <div
+          class="h-6 w-px bg-gray-200 lg:hidden"
+          aria-hidden="true"
+        />
 
         <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-          <form class="relative flex flex-1" action="#" method="GET"></form>
+          <form
+            class="relative flex flex-1"
+            action="#"
+            method="GET"
+          ></form>
           <div class="flex items-center gap-x-4 lg:gap-x-6">
             <!-- Profile dropdown -->
-            <Menu as="div" class="relative">
+            <Menu
+              as="div"
+              class="relative"
+            >
               <MenuButton class="-m-1.5 flex items-center p-1.5">
                 <span class="sr-only">Open user menu</span>
                 <span class="hidden lg:flex lg:items-center">
@@ -304,7 +349,7 @@ import {
 } from '@heroicons/vue/24/outline';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 
-const navigation = [
+const navigation = ref([
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
   {
     name: 'Document Templates',
@@ -318,9 +363,15 @@ const navigation = [
     icon: DocumentDuplicateIcon,
     current: false,
   },
-];
+]);
 
 const userNavigation = [{ name: 'Sign out', href: '#' }];
 
 const sidebarOpen = ref(false);
+
+const setActive = (navigationItem) => {
+  navigation.value.forEach(
+    (item) => (item.current = item.name === navigationItem.name)
+  );
+};
 </script>
