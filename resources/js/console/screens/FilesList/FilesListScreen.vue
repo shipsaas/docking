@@ -10,9 +10,8 @@
 </template>
 
 <script setup>
-import Card from "../../components/Card/Card.vue";
-import Table from "../../components/Table/Table.vue";
-
+import Card from '../../components/Card/Card.vue';
+import Table from '../../components/Table/Table.vue';
 
 const columns = [
   {

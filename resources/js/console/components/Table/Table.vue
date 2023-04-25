@@ -52,10 +52,11 @@
                   {{ record[column.key] || '-' }}
                 </td>
               </tr>
-              <tr
-                v-if="!records.length"
-              >
-                <td :colspan="columns.length" class="whitespace-nowrap text-sm text-gray-400 text-center px-3 py-4">
+              <tr v-if="!records.length">
+                <td
+                  :colspan="columns.length"
+                  class="whitespace-nowrap text-sm text-gray-400 text-center px-3 py-4"
+                >
                   No records / out of records
                 </td>
               </tr>
