@@ -296,7 +296,6 @@ import {
 } from '@headlessui/vue';
 import {
   Bars3Icon,
-  Cog6ToothIcon,
   DocumentDuplicateIcon,
   HomeIcon,
   XMarkIcon,
