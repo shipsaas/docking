@@ -19,5 +19,10 @@ services:
     volumes:
       - app_storage:/var/www/html/storage/app
 
+  gotenberg:
+    image: gotenberg/gotenberg:7
+    ports:
+      - '9898:3000'
+
 volumes:
   app_storage:

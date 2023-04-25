@@ -28,11 +28,13 @@ Awesome, IKR?
 - PHP 8.2
 - Laravel 10
 - Any database (MySQL, PostgreSQL or SQLite - your choice.)
+  -  Personal preference: MySQL 8
 
 ### PDF Rendering Services
-- Gotenberg
-- wkHTMLtoPDF
-- mpdf
+- Gotenberg ⭐️
+- wkHTMLtoPDF ✅
+- (Planned) mPDF
+  - Waiting for `psr-*` updates
 
 ## Communication via services
 

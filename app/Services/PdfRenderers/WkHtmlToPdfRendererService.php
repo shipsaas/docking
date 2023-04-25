@@ -58,6 +58,11 @@ class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements P
             }
 
             $documentFile = $this->saveFile($documentTemplate, $outputFile);
+            if (!$documentFile) {
+                return PdfRenderResult::error(new PdfRenderErrorOutcome(
+                    PdfRenderErrorCode::STORE_FILE_FAILED
+                ));
+            }
 
             return PdfRenderResult::ok(new PdfRenderOkOutcome(
                 $documentFile
