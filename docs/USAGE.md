@@ -4,7 +4,12 @@ You would definitely come up with this question: "How am I going to store the te
 
 Well, it is simple, I will give you some options.
 
-## Hardcoded ID
+There are 2 identifiers that you can use:
+
+- uuid
+- key (unique key)
+
+## Hardcoded ID/Key
 
 Yes, simple & straightforward. You can go to the Console UI and create a template for your service. 
 
