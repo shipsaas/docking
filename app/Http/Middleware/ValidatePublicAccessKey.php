@@ -13,8 +13,18 @@ class ValidatePublicAccessKey
 
     public function handle(Request $request, Closure $next): Response
     {
+        $headerValue = $request->header(static::X_ACCESS_KEY_HEADER);
+
+        // 1. Validate public access key (API Request between services)
         $accessKey = config('docking.public-access-key');
-        if (!$accessKey || $accessKey === $request->header(static::X_ACCESS_KEY_HEADER)) {
+        if (!$accessKey || $accessKey === $headerValue) {
+            return $next($request);
+        }
+
+        // 2. Validate console password
+        $consoleEnabled = config('docking.console-enabled');
+        $consolePassword = config('docking.console-password');
+        if ($consoleEnabled && $consolePassword === $headerValue) {
             return $next($request);
         }
 

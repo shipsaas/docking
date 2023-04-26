@@ -27,7 +27,7 @@ Awesome, IKR?
 ## DocKing uses
 - PHP 8.2
 - Laravel 10
-- Any database (MySQL, PostgreSQL or SQLite - your choice.)
+- Any database (MySQL, PostgreSQL or SQLite - your choice)
   -  Personal preference: MySQL 8
 
 ### PDF Rendering Services
@@ -38,7 +38,11 @@ Awesome, IKR?
 
 ## Communication via services
 
-- Restful APIs
+Please check out [Restful APIs](./docs/ENDPOINTS.md)
+
+## Development & Contributions
+
+Please check out the [Development Guidelines](./docs)
 
 ## LICENSE
 
