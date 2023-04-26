@@ -9,6 +9,7 @@ use App\Results\PdfRenderOutcomes\PdfRenderOkOutcome;
 use App\Results\PdfRenderResult;
 use App\Services\PdfRenderers\PdfRendererContract;
 use Illuminate\Process\Exceptions\ProcessTimedOutException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 
 class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements PdfRendererContract
@@ -25,31 +26,31 @@ class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements P
         array $variables = [],
         array $metadata = []
     ): PdfRenderResult {
-        $inputFile = tempnam(sys_get_temp_dir() . '/rendered_template', 'wkhtmltopdf_');
+        $inputFile = $this->renderTemplate($documentTemplate, $variables);
         $outputFile = tempnam(sys_get_temp_dir() . '/pdf', 'wkhtmltopdf_');
 
-        $pageSize = $metadata['page-size'] ?? static::DEFAULT_PAGE_SIZE;
-        $marginTop = $metadata['margin-top'] ?? static::DEFAULT_MARGIN_TOP;
-        $marginBottom = $metadata['margin-bottom'] ?? static::DEFAULT_MARGIN_BOTTOM;
-        $marginLeft = $metadata['margin-left'] ?? static::DEFAULT_MARGIN_LEFT;
-        $marginRight = $metadata['margin-top'] ?? static::DEFAULT_MARGIN_RIGHT;
-        $orientation = $metadata['orientation'] ?? static::DEFAULT_ORIENTATION;
-
-        // store rendered view
-        file_put_contents($inputFile, $this->renderTemplate($documentTemplate, $variables));
+        $metadata['page-size'] ??= static::DEFAULT_PAGE_SIZE;
+        $metadata['margin-top'] ??= static::DEFAULT_MARGIN_TOP;
+        $metadata['margin-bottom'] ??= static::DEFAULT_MARGIN_BOTTOM;
+        $metadata['margin-left'] ??= static::DEFAULT_MARGIN_LEFT;
+        $metadata['margin-top'] ??= static::DEFAULT_MARGIN_RIGHT;
+        $metadata['orientation'] ??= static::DEFAULT_ORIENTATION;
 
         try {
-            $result = Process::command("
-                wkhtmltopdf
-                --page-size $pageSize
-                --margin-top $marginTop
-                --margin-bottom $marginBottom
-                --margin-left $marginLeft
-                --margin-right $marginRight
-                 --orientation $orientation
-                 $inputFile
-                 $outputFile
+            $result = Process::command("wkhtmltopdf \
+                --page-size {$metadata['page-size']} \
+                --margin-top {$metadata['margin-top']} \
+                --margin-bottom {$metadata['margin-bottom']} \
+                --margin-left {$metadata['margin-left']} \
+                --margin-right {$metadata['margin-top']} \
+                --orientation {$metadata['orientation']} \
+                --enable-local-file-access \
+                $inputFile \
+                $outputFile
              ")->run();
+
+            Log::info($result->output());
+            Log::info($result->errorOutput());
 
             if (!$result->successful()) {
                 return PdfRenderResult::error(new PdfRenderErrorOutcome(
@@ -57,7 +58,7 @@ class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements P
                 ));
             }
 
-            $documentFile = $this->saveFile($documentTemplate, $outputFile);
+            $documentFile = $this->saveFile($documentTemplate, $outputFile, $variables, $metadata);
             if (!$documentFile) {
                 return PdfRenderResult::error(new PdfRenderErrorOutcome(
                     PdfRenderErrorCode::STORE_FILE_FAILED

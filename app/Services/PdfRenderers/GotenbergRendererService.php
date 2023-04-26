@@ -27,7 +27,7 @@ class GotenbergRendererService extends AbstractPdfRendererService implements Pdf
         array $metadata = []
     ): PdfRenderResult {
         // render template
-        $inputFile = tempnam(sys_get_temp_dir() . '/rendered_template', static::TEMP_FILE_PREFIX);
+        $inputFile = $this->renderTemplate($documentTemplate, $variables);
         file_put_contents($inputFile, $this->renderTemplate($documentTemplate, $variables));
 
         // request to gotenberg

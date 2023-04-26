@@ -12,12 +12,19 @@ use Illuminate\Support\Str;
 
 abstract class AbstractPdfRendererService
 {
-    public function renderTemplate(DocumentTemplate $template, array $variables = []): string
+    protected function renderTemplate(DocumentTemplate $template, array $variables = []): string
     {
-        return Blade::render($template->template, $variables, deleteCachedView: true);
+        $inputFile = tempnam(sys_get_temp_dir() . '/rendered_template', 'rendered_html_template');
+        rename($inputFile, $inputFile .= '.html');
+
+        $htmlRendered = Blade::render($template->template, $variables, deleteCachedView: true);
+
+        file_put_contents($inputFile, $htmlRendered);
+
+        return $inputFile;
     }
 
-    public function saveFile(
+    protected function saveFile(
         DocumentTemplate $template,
         string $renderedFilePath,
         array $variables = [],
