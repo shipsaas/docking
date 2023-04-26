@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\PdfRenderers;
+namespace App\Services\PdfRenderers;
 
 use App\Models\DocumentTemplate;
 use App\Results\ErrorCodes\PdfRenderErrorCode;

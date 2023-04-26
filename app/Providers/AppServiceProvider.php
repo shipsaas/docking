@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use App\Services\PdfRenderManager;
 use Illuminate\Support\ServiceProvider;
-use Services\PdfRenderers\GotenbergRendererService;
-use Services\PdfRenderers\MpdfRendererService;
-use Services\PdfRenderers\WkHtmlToPdfRendererService;
+use App\Services\PdfRenderers\GotenbergRendererService;
+use App\Services\PdfRenderers\MpdfRendererService;
+use App\Services\PdfRenderers\WkHtmlToPdfRendererService;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -21,7 +21,8 @@ class PdfRenderManager
         return match ($driver) {
             PdfService::GOTENBERG->value => app(GotenbergRendererService::class),
             PdfService::WK_HTML_TO_PDF->value => app(WkHtmlToPdfRendererService::class),
-            PdfService::MPDF->value => app(MpdfRendererService::class),
+            // TODO: phase 2
+            // PdfService::MPDF->value => app(MpdfRendererService::class),
             default => throw new RuntimeException("PDF Driver \"$driver\" is not supported")
         };
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\PdfRenderers;
+namespace App\Services\PdfRenderers;
 
 use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
