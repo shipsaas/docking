@@ -81,7 +81,7 @@
                         <li
                           v-for="item in navigation"
                           :key="item.name"
-                          @click="setActive(item)"
+                          @click="setNavigationItemActive(item)"
                         >
                           <a
                             :href="item.href"
@@ -194,7 +194,7 @@
                 <li
                   v-for="item in navigation"
                   :key="item.name"
-                  @click="setActive(item)"
+                  @click="setNavigationItemActive(item)"
                 >
                   <a
                     :href="item.href"
@@ -341,37 +341,17 @@ import {
 } from '@headlessui/vue';
 import {
   Bars3Icon,
-  DocumentDuplicateIcon,
-  HomeIcon,
   XMarkIcon,
-  DocumentPlusIcon,
   RocketLaunchIcon,
 } from '@heroicons/vue/24/outline';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 
-const navigation = ref([
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  {
-    name: 'Document Templates',
-    href: '#/document-templates',
-    icon: DocumentPlusIcon,
-    current: false,
-  },
-  {
-    name: 'Files',
-    href: '#/files',
-    icon: DocumentDuplicateIcon,
-    current: false,
-  },
-]);
+import { useNavigationItems } from './composable/useNavigationItems';
+
+const { navigationItems: navigation, setNavigationItemActive } =
+  useNavigationItems();
 
 const userNavigation = [{ name: 'Sign out', href: '#' }];
 
 const sidebarOpen = ref(false);
-
-const setActive = (navigationItem) => {
-  navigation.value.forEach(
-    (item) => (item.current = item.name === navigationItem.name)
-  );
-};
 </script>
