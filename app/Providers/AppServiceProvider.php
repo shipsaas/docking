@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\PdfRenderManager;
 use Illuminate\Support\ServiceProvider;
 use Services\PdfRenderers\GotenbergRendererService;
 use Services\PdfRenderers\MpdfRendererService;
@@ -24,5 +25,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(MpdfRendererService::class);
         $this->app->singleton(WkHtmlToPdfRendererService::class);
+
+        $this->app->singleton(PdfRenderManager::class);
     }
 }
