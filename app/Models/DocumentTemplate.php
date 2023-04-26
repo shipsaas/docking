@@ -26,4 +26,6 @@ class DocumentTemplate extends Model
         'default_variables' => 'array',
         'metadata' => 'array',
     ];
+
+    protected $primaryKey = 'uuid';
 }

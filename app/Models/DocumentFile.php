@@ -25,4 +25,6 @@ class DocumentFile extends Model
         'variables' => 'array',
         'metadata' => 'array',
     ];
+
+    protected $primaryKey = 'uuid';
 }

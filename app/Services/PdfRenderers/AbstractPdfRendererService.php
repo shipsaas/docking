@@ -41,7 +41,7 @@ abstract class AbstractPdfRendererService
         return DocumentFile::create([
             'document_template_uuid' => $template->uuid,
             'path' => $storedFileName,
-            'url' => Storage::publicUrl($storedFileName),
+            'url' => Storage::url($storedFileName),
             'size' => $file->getSize() ?: 0,
             'variables' => $variables,
             'metadata' => $metadata,
