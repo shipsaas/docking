@@ -1,6 +1,7 @@
 <template>
   <div>
     <TransitionRoot
+      v-if="isLoggedIn"
       as="template"
       :show="sidebarOpen"
     >
@@ -168,6 +169,7 @@
 
     <!-- Static sidebar for desktop -->
     <div
+      v-if="isLoggedIn"
       class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col"
     >
       <!-- Sidebar component, swap this element with another sidebar if you like -->
@@ -238,7 +240,10 @@
       </div>
     </div>
 
-    <div class="lg:pl-72">
+    <div
+      v-if="isLoggedIn"
+      class="lg:pl-72"
+    >
       <div
         class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8"
       >
@@ -325,10 +330,16 @@
       </main>
     </div>
   </div>
+
+  <LoginModal
+    v-if="!isLoggedIn"
+    @login="onLogin"
+  />
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import {
   Dialog,
   DialogPanel,
@@ -347,11 +358,30 @@ import {
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 
 import { useNavigationItems } from './composable/useNavigationItems';
+import { authStorage } from './utils/authStorage';
+import LoginModal from './components/LoginModal/LoginModal.vue';
+import { accessRepository } from './repositories/access.repository';
 
 const { navigationItems: navigation, setNavigationItemActive } =
   useNavigationItems();
 
+const route = useRoute();
+const router = useRouter();
+
 const userNavigation = [{ name: 'Sign out', href: '#' }];
 
 const sidebarOpen = ref(false);
+
+const isLoggedIn = ref(authStorage.isLoggedIn());
+
+const onLogin = async (password) => {
+  const passwordCheckResult = await accessRepository.access(password);
+
+  if (passwordCheckResult) {
+    authStorage.set(password);
+    isLoggedIn.value = true;
+  }
+
+  return passwordCheckResult;
+};
 </script>

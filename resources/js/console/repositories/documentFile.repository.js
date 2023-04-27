@@ -1,21 +1,11 @@
 export const documentFileRepo = {
-  index() {
-    
-  },
+  index() {},
 
-  show(id) {
+  show(id) {},
 
-  },
+  create() {},
 
-  create() {
+  update(id, record) {},
 
-  },
-
-  update(id, record) {
-
-  },
-
-  destroy(id) {
-
-  },
+  destroy(id) {},
 };
