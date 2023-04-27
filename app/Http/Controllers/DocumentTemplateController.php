@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DocumentTemplateIndexRequest;
 use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
-use App\Http\Resources\DocumentTemplateCollection;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +16,8 @@ class DocumentTemplateController extends Controller
         $records = $request->buildQueryBuilder()
             ->paginate($request->getLimit());
 
-        return DocumentTemplateCollection::collection($records)->response();
+        return DocumentTemplateResource::collection($records)
+            ->response($request);
     }
 
     public function show(DocumentTemplate $documentTemplate): JsonResponse

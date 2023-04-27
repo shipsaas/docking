@@ -12,11 +12,17 @@
 <script setup>
 import Table from '../../components/Table/Table.vue';
 import Card from '../../components/Card/Card.vue';
+import { ref } from 'vue';
+import { documentTemplateRepository } from '../../repositories/documentTemplate.repository';
 
 const columns = [
   {
-    key: 'id',
+    key: 'uuid',
     label: 'ID',
+  },
+  {
+    key: 'key',
+    label: 'Key',
   },
   {
     key: 'category',
@@ -32,14 +38,19 @@ const columns = [
   },
 ];
 
-const records = [
-  {
-    id: '123456',
-    category: 'Invoices',
-    title: 'Invoice Template',
-    updated_at: '16:02:11 Feb 28th',
-  },
-];
+const records = ref([]);
+const page = ref(1);
+
+const loadRecords = async () => {
+  const documentTemplates = await documentTemplateRepository.index({
+    limit: 20,
+    page: page.value,
+  });
+
+  records.value = [...documentTemplates.data];
+};
+
+loadRecords();
 </script>
 
 <style scoped></style>
