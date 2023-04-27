@@ -4,6 +4,8 @@ DocKing is a document-management microservice. Deal with the templates & render 
 
 You can use DocKing as a Shared-Microservice which can be used in any services.
 
+Documentation: [DocKing](https://docking.shipsaas.tech)
+
 ## Features
 - Manage your document templates 📰🧾.
 - Render HTML based on your desired data for a specific template, then export it as PDF 🏃‍.
