@@ -1,11 +1,11 @@
 # DocKing - Document-management microservice
 
 
-<center>
+<p align="center">
 
 ![DocKing Logo](./docs/img/logo.png)
 
-</center>
+</p>
 
 DocKing is a document-management microservice. Deal with the templates & render stuff just in 1 place.
 
