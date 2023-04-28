@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PdfRendered;
 use App\Http\Requests\PdfRenderAsyncRequest;
 use App\Http\Requests\PdfRenderRequest;
 use App\Jobs\RenderJob;
 use App\Models\DocumentTemplate;
 use App\Services\PdfRenderManager;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Event;
 
 class PdfRenderController extends Controller
 {
@@ -32,6 +34,8 @@ class PdfRenderController extends Controller
         }
 
         $okResult = $renderResult->getOkResult();
+
+        Event::dispatch(new PdfRendered($okResult->file));
 
         return new JsonResponse([
             'outcome' => 'SUCCESS',

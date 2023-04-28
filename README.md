@@ -45,14 +45,6 @@ Awesome, IKR?
 - (Planned) mPDF
   - Waiting for `psr-*` updates
 
-## Communication via services
-
-Please check out [Restful APIs](./docs/ENDPOINTS.md)
-
-## Development & Contributions
-
-Please check out the [Development Guidelines](./docs)
-
 ## LICENSE
 
 MIT LICENSE

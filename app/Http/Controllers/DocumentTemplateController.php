@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DocumentTemplateCreated;
+use App\Events\DocumentTemplateDestroyed;
+use App\Events\DocumentTemplateUpdated;
 use App\Http\Requests\DocumentTemplateIndexRequest;
 use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Event;
 
 class DocumentTemplateController extends Controller
 {
@@ -29,6 +33,8 @@ class DocumentTemplateController extends Controller
     {
         $documentTemplate = DocumentTemplate::create($request->validated());
 
+        Event::dispatch(new DocumentTemplateCreated($documentTemplate));
+
         return new JsonResponse([
             'uuid' => $documentTemplate->uuid,
             'created' => $documentTemplate->wasRecentlyCreated,
@@ -45,6 +51,8 @@ class DocumentTemplateController extends Controller
             'metadata' => $request->input('metadata') ?: [],
         ]);
 
+        $updateResult && Event::dispatch(new DocumentTemplateUpdated($documentTemplate));
+
         return new JsonResponse([
             'uuid' => $documentTemplate->uuid,
             'updated' => $updateResult,
@@ -53,9 +61,13 @@ class DocumentTemplateController extends Controller
 
     public function destroy(DocumentTemplate $documentTemplate): JsonResponse
     {
+        $deleteResult = (bool) $documentTemplate->delete();
+
+        $deleteResult && Event::dispatch(new DocumentTemplateDestroyed($documentTemplate));
+
         return new JsonResponse([
             'uuid' => $documentTemplate->uuid,
-            'deleted' => (bool) $documentTemplate->delete(),
+            'deleted' => $deleteResult,
         ]);
     }
 }

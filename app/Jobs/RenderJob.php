@@ -2,12 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Events\PdfRendered;
 use App\Models\DocumentTemplate;
 use App\Services\PdfRenderManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Event;
 
 /**
  * @method static static dispatch(DocumentTemplate $template, array $variables = [], array $metadata = [])
@@ -47,6 +49,8 @@ class RenderJob implements ShouldQueue
         }
 
         $okResult = $renderResult->getOkResult();
+
+        Event::dispatch(new PdfRendered($okResult->file));
 
         WebhookRenderOkNotificationJob::dispatch(
             $webhookUrl,
