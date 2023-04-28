@@ -11,6 +11,7 @@ use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 
 class DocumentTemplateController extends Controller
@@ -68,6 +69,19 @@ class DocumentTemplateController extends Controller
         return new JsonResponse([
             'uuid' => $documentTemplate->uuid,
             'deleted' => $deleteResult,
+        ]);
+    }
+
+    public function previewHtml(DocumentTemplate $documentTemplate): JsonResponse
+    {
+        $html = Blade::render(
+            $documentTemplate->template,
+            $documentTemplate->default_variables,
+            deleteCachedView: true
+        );
+
+        return new JsonResponse([
+            'html' => $html,
         ]);
     }
 }

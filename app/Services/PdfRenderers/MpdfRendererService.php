@@ -4,12 +4,12 @@ namespace App\Services\PdfRenderers;
 
 use App\Models\DocumentTemplate;
 use App\Results\PdfRenderResult;
-use App\Services\PdfRenderers\PdfRendererContract;
+use LogicException;
 
-class MpdfRendererService implements PdfRendererContract
+class MpdfRendererService extends AbstractPdfRendererService implements PdfRendererContract
 {
     public function render(DocumentTemplate $documentTemplate, array $variables = [], array $metadata = []): PdfRenderResult
     {
-        // TODO: Implement render() method.
+        throw new LogicException('MPDF is not supported yet.');
     }
 }
