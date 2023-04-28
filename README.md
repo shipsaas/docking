@@ -1,7 +1,7 @@
 # DocKing - Document-management microservice
 
 
-<p style="text-align: center;">
+<p align="center" width="100%">
 
 ![DocKing Logo](./docs/img/logo.png)
 
