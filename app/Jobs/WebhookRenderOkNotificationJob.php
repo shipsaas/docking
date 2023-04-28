@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Http\Resources\DocumentFileResource;
 use App\Models\DocumentFile;
+use App\Services\WebhookNotificationService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -21,5 +23,12 @@ class WebhookRenderOkNotificationJob implements ShouldQueue
         public string $webhookUrl,
         public DocumentFile $documentFile
     ) {
+    }
+
+    public function handle(WebhookNotificationService $service): void
+    {
+        $service->notify($this->webhookUrl, [
+            'file' => DocumentFileResource::make($this->documentFile)->toArray(app('request')),
+        ]);
     }
 }
