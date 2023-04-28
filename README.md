@@ -2,7 +2,7 @@
 
 
 <p align="center" width="100%">
-    <img width="33%" src="https://raw.githubusercontent.com/shipsaas/docking/main/docs/img/logo.png"> 
+    <img src="https://raw.githubusercontent.com/shipsaas/docking/main/docs/img/logo.png"> 
 </p>
 
 DocKing is a document-management microservice. Deal with the templates & render stuff just in 1 place.
