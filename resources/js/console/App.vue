@@ -65,8 +65,8 @@
                 <div class="flex h-16 shrink-0 items-center">
                   <img
                     class="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
+                    src="/assets/img/logo.png"
+                    alt="DocKing"
                   />
                 </div>
                 <nav class="flex flex-1 flex-col">
@@ -179,8 +179,8 @@
         <div class="flex h-16 shrink-0 items-center">
           <img
             class="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+            src="/assets/img/logo.png"
+            alt="DocKing"
           />
         </div>
         <nav class="flex flex-1 flex-col">
@@ -302,18 +302,14 @@
                 <MenuItems
                   class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                 >
-                  <MenuItem
-                    v-for="item in userNavigation"
-                    :key="item.name"
-                    v-slot="{ active }"
-                  >
+                  <MenuItem>
                     <a
-                      :href="item.href"
+                      href="javascript:void(0);"
+                      @click="onLogOut"
                       :class="[
-                        active ? 'bg-gray-50' : '',
                         'block px-3 py-1 text-sm leading-6 text-gray-900',
                       ]"
-                      >{{ item.name }}</a
+                      >Sign Out</a
                     >
                   </MenuItem>
                 </MenuItems>
@@ -335,11 +331,12 @@
     v-if="!isLoggedIn"
     @login="onLogin"
   />
+
+  <notifications />
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import {
   Dialog,
   DialogPanel,
@@ -358,30 +355,12 @@ import {
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 
 import { useNavigationItems } from './composable/useNavigationItems';
-import { authStorage } from './utils/authStorage';
 import LoginModal from './components/LoginModal/LoginModal.vue';
-import { accessRepository } from './repositories/access.repository';
+import { useAuthentication } from './composable/useAuthentication';
 
 const { navigationItems: navigation, setNavigationItemActive } =
   useNavigationItems();
-
-const route = useRoute();
-const router = useRouter();
-
-const userNavigation = [{ name: 'Sign out', href: '#' }];
+const { isLoggedIn, onLogin, onLogOut } = useAuthentication();
 
 const sidebarOpen = ref(false);
-
-const isLoggedIn = ref(authStorage.isLoggedIn());
-
-const onLogin = async (password) => {
-  const passwordCheckResult = await accessRepository.access(password);
-
-  if (passwordCheckResult) {
-    authStorage.set(password);
-    isLoggedIn.value = true;
-  }
-
-  return passwordCheckResult;
-};
 </script>

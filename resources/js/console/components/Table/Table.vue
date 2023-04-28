@@ -69,8 +69,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
-
 defineProps({
   columns: {
     type: Array,

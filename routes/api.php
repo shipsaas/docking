@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes of DocKingx
+| API Routes of DocKing
 |--------------------------------------------------------------------------
 */
 
@@ -22,6 +22,10 @@ Route::prefix('v1')
                 'create',
                 'edit',
             ]);
+        Route::post(
+            'document-templates/{documentTemplate}/preview-html',
+            [DocumentTemplateController::class, 'previewHtml']
+        );
 
         Route::post('document-templates/{documentTemplate}/pdfs', [PdfRenderController::class, 'render']);
         Route::post('document-templates/{documentTemplate}/pdfs-async', [PdfRenderController::class, 'renderAsync']);

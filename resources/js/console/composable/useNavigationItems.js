@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import {
   DocumentDuplicateIcon,
   HomeIcon,
@@ -29,6 +29,17 @@ export const useNavigationItems = () => {
       (item) => (item.current = item.name === navigationItem.name)
     );
   };
+
+  onMounted(() => {
+    if (location.hash === '#/') {
+      navigationItems.value[0].current = true;
+      return;
+    }
+
+    navigationItems.value.forEach(
+      (item) => (item.current = item.href.startsWith(location.hash))
+    );
+  });
 
   return {
     navigationItems,

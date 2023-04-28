@@ -20,6 +20,7 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.13",
         "@heroicons/vue": "^2.0.17",
+        "@kyvg/vue3-notification": "^2.9.0",
         "vue": "^3.2.36",
         "vue-router": "^4.0.13"
     }
