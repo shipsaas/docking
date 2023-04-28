@@ -1,5 +1,12 @@
 # DocKing - Document-management microservice
 
+
+<center>
+
+![DocKing Logo](./docs/img/logo.png)
+
+</center>
+
 DocKing is a document-management microservice. Deal with the templates & render stuff just in 1 place.
 
 You can use DocKing as a Shared-Microservice which can be used in any services.
