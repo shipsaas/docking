@@ -5,7 +5,17 @@
       sub-title="Manage all document templates across your product."
       :columns="columns"
       :records="records"
-    />
+    >
+      <template #action-buttons>
+        <Button>Create New Template</Button>
+      </template>
+      <template #record-actions="{ record }">
+        <span class="isolate inline-flex rounded-md shadow-sm gap-1">
+          <Button>Edit</Button>
+          <Button type="error">Delete</Button>
+        </span>
+      </template>
+    </Table>
   </Card>
 </template>
 
@@ -14,6 +24,7 @@ import Table from '../../components/Table/Table.vue';
 import Card from '../../components/Card/Card.vue';
 import { ref } from 'vue';
 import { documentTemplateRepository } from '../../repositories/documentTemplate.repository';
+import Button from '../../components/Button/Button.vue';
 
 const columns = [
   {

@@ -13,6 +13,9 @@
           v-text="subTitle"
         />
       </div>
+      <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+        <slot name="action-buttons" />
+      </div>
     </div>
     <div class="mt-8 flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -31,6 +34,13 @@
                   }"
                 >
                   {{ column.label }}
+                </th>
+                <th
+                  v-if="slots['record-actions']"
+                  scope="col"
+                  class="relative py-3.5 pl-3 pr-4 sm:pr-0"
+                >
+                  <span class="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
@@ -51,6 +61,15 @@
                 >
                   {{ record[column.key] || '-' }}
                 </td>
+                <td
+                  v-if="slots['record-actions']"
+                  class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"
+                >
+                  <slot
+                    name="record-actions"
+                    :record="record"
+                  />
+                </td>
               </tr>
               <tr v-if="!records.length">
                 <td
@@ -69,6 +88,10 @@
 </template>
 
 <script setup>
+import { useSlots } from 'vue';
+
+const slots = useSlots();
+
 defineProps({
   columns: {
     type: Array,
