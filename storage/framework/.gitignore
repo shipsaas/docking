@@ -9,3 +9,4 @@ schedule-*
 services.json
 views
 sessions
+cache
