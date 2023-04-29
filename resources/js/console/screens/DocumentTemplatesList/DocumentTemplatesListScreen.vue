@@ -7,7 +7,7 @@
       :records="records"
     >
       <template #action-buttons>
-        <Button>Create New Template</Button>
+        <CreateNewTemplate @template-created="onTemplateCreated" />
       </template>
       <template #record-actions="{ record }">
         <span class="isolate inline-flex rounded-md shadow-sm gap-1">
@@ -25,6 +25,7 @@ import Card from '../../components/Card/Card.vue';
 import { ref } from 'vue';
 import { documentTemplateRepository } from '../../repositories/documentTemplate.repository';
 import Button from '../../components/Button/Button.vue';
+import CreateNewTemplate from './components/CreateNewTemplate.vue';
 
 const columns = [
   {
@@ -61,6 +62,12 @@ const loadRecords = async () => {
   records.value = [...documentTemplates.data];
 };
 
+const onTemplateCreated = () => {
+  page.value = 1;
+  loadRecords();
+};
+
+// inits
 loadRecords();
 </script>
 

@@ -15,6 +15,18 @@ export const getData = (data) => data.data;
 export const catchError = (error) => {
   const response = error.response.data;
 
+  // validation error from Laravel
+  if (error.response.status === 422) {
+    notify({
+      type: 'error',
+      title: 'Validation Error',
+      text: response.message,
+    });
+
+    return;
+  }
+
+  // outcome error from Controllers' Logic
   if (response.outcome) {
     notify({
       type: 'error',
@@ -25,7 +37,7 @@ export const catchError = (error) => {
     return;
   }
 
-  // show generic error.
+  // undefined error/unexpected error (5xx)
   notify({
     type: 'error',
     title: 'Request Error',
