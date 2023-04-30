@@ -93,6 +93,7 @@ import {
   TransitionRoot,
 } from '@headlessui/vue';
 import { LockClosedIcon } from '@heroicons/vue/24/outline';
+import {notify} from "@kyvg/vue3-notification";
 
 const open = ref(true);
 const password = ref('');
@@ -105,9 +106,15 @@ const props = defineProps({
 });
 
 const onClickLogin = async () => {
-  const loginResult = await props.onLogin(password);
+  const loginResult = await props.onLogin(password.value);
 
   if (!loginResult) {
+    notify({
+      type: 'error',
+      title: 'Authentication Failed',
+      text: 'Attempted to login is failed, please check your password and try again.',
+    });
+
     return;
   }
 
