@@ -11,8 +11,17 @@
       </template>
       <template #record-actions="{ record }">
         <span class="isolate inline-flex rounded-md shadow-sm gap-1">
-          <Button>Edit</Button>
-          <Button type="error">Delete</Button>
+          <Button
+            @click="
+              $router.push({
+                name: 'document-template-edit',
+                params: { uuid: record.uuid },
+              })
+            "
+          >
+            Edit
+          </Button>
+          <DeleteTemplateButton :template="record" />
         </span>
       </template>
     </Table>
@@ -26,6 +35,7 @@ import { ref } from 'vue';
 import { documentTemplateRepository } from '../../repositories/documentTemplate.repository';
 import Button from '../../components/Button/Button.vue';
 import CreateNewTemplate from './components/CreateNewTemplate.vue';
+import DeleteTemplateButton from './components/DeleteTemplateButton.vue';
 
 const columns = [
   {

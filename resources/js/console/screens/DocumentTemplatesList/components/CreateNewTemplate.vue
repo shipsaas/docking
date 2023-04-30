@@ -28,12 +28,12 @@
         <Button
           @click="onClickCloseModal"
           :disabled="isLoading"
+          type="secondary"
         >
           Cancel
         </Button>
         <Button
           @click="onClickSubmit"
-          type="success"
           :disabled="isLoading"
         >
           Create

@@ -26,6 +26,9 @@ const typeClass = computed(() => {
     case 'neutral':
       return 'bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600';
 
+    case 'secondary':
+      return 'bg-neutral-600 hover:bg-neutral-500 focus-visible:outline-neutral-600';
+
     case 'success':
       return 'bg-emerald-600 hover:bg-emerald-500 focus-visible:outline-emerald-600';
 

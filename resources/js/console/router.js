@@ -17,6 +17,12 @@ export const router = createRouter({
         ),
     },
     {
+      path: '/document-templates/:uuid',
+      name: 'document-template-edit',
+      component: () =>
+        import('./screens/DocumentTemplateEdit/DocumentTemplateEdit.vue'),
+    },
+    {
       path: '/files',
       name: 'files-list',
       component: () => import('./screens/FilesList/FilesListScreen.vue'),

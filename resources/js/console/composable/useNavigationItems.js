@@ -5,6 +5,7 @@ import {
   DocumentPlusIcon,
 } from '@heroicons/vue/24/outline';
 
+const DEFAULT_NAVIGATION_INDEX = 0;
 const NAVIGATION_ITEMS = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
   {
@@ -32,13 +33,15 @@ export const useNavigationItems = () => {
 
   onMounted(() => {
     if (location.hash === '#/') {
-      navigationItems.value[0].current = true;
+      setNavigationItemActive(navigationItems.value[DEFAULT_NAVIGATION_INDEX]);
       return;
     }
 
-    navigationItems.value.forEach(
-      (item) => (item.current = item.href.startsWith(location.hash))
-    );
+    const fulfilableItem = navigationItems.value.find((item, index) => {
+      return index !== DEFAULT_NAVIGATION_INDEX && location.hash.startsWith(item.href)
+    });
+
+    fulfilableItem && setNavigationItemActive(fulfilableItem);
   });
 
   return {
