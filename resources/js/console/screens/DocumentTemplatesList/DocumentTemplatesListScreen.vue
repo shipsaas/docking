@@ -60,6 +60,9 @@ const columns = [
   {
     key: 'updated_at',
     label: 'Last Updated At',
+    transform(value) {
+      return new Date(value).toLocaleString();
+    },
   },
 ];
 

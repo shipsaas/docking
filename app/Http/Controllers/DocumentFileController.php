@@ -12,6 +12,7 @@ class DocumentFileController extends Controller
     public function index(DocumentFileIndexRequest $request): JsonResponse
     {
         $records = $request->buildQueryBuilder()
+            ->with(['documentTemplate'])
             ->paginate($request->getLimit());
 
         return DocumentFileResource::collection($records)->response();

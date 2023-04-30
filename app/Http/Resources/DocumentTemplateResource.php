@@ -9,30 +9,32 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin DocumentTemplate */
 class DocumentTemplateResource extends JsonResource
 {
-    protected array $excludedColumns = [];
-
     public function toArray(Request $request): array
     {
-        // TODO: remove this hack once the ShipSaaS/larvel-deferred-resources is up
-        $isIndexEndpoint = $request->routeIs('document-templates.index');
-
-        return [
+        $fields = [
             'uuid' => $this->uuid,
             'key' => $this->key,
             'category' => $this->category,
             'title' => $this->title,
-            'template' => $isIndexEndpoint ? null : $this->template,
-            'default_variables' => $isIndexEndpoint ? null : $this->default_variables,
-            'metadata' => $isIndexEndpoint ? null : $this->metadata,
-            'created_at' => $isIndexEndpoint ? null : $this->created_at,
-            'updated_at' => $this->updated_at,
+            'updated_at' => $this->updated_at?->toISOString(),
         ];
-    }
 
-    public function setExcludedColumns(array $columns): self
-    {
-        $this->excludedColumns = $columns;
+        // TODO: remove this hack once the ShipSaaS/larvel-deferred-resources is up
+        $isIndexEndpoint = $request->routeIs('document-templates.index');
+        $additionalFields = [];
 
-        return $this;
+        if (!$isIndexEndpoint) {
+            $additionalFields = [
+                'template' => $this->template,
+                'default_variables' => $this->default_variables,
+                'metadata' => $this->metadata,
+                'created_at' => $this->created_at?->toISOString(),
+            ];
+        }
+
+        return [
+            ...$fields,
+            ...$additionalFields,
+        ];
     }
 }

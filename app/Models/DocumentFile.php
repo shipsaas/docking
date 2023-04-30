@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DocumentFile extends Model
 {
@@ -27,4 +28,9 @@ class DocumentFile extends Model
     ];
 
     protected $primaryKey = 'uuid';
+
+    public function documentTemplate(): BelongsTo
+    {
+        return $this->belongsTo(DocumentTemplate::class, 'document_template_uuid');
+    }
 }

@@ -59,7 +59,14 @@
                     'px-3 py-4': recordIdx > 0,
                   }"
                 >
-                  {{ record[column.key] || '-' }}
+                  <component
+                    v-if="column.transformType === 'component'"
+                    :is="transformColumnValue(column, record)"
+                  />
+                  <span
+                    v-else
+                    v-text="transformColumnValue(column, record)"
+                  />
                 </td>
                 <td
                   v-if="slots['record-actions']"
@@ -110,4 +117,23 @@ defineProps({
     default: '',
   },
 });
+
+/**
+ * @param {{transform?: Function, label: String, key: String}} column
+ * @param {{[key]: any}} record
+ * @returns {unknown}
+ */
+const transformColumnValue = (column, record) => {
+  if (!record[column.key]) {
+    return '-';
+  }
+
+  const value = record[column.key];
+
+  if (typeof column.transform === 'function') {
+    return column.transform(value, record);
+  }
+
+  return value;
+};
 </script>

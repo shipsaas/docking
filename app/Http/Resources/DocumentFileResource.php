@@ -14,10 +14,11 @@ class DocumentFileResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'document_template_uuid' => $this->document_template_uuid,
+            'template_name' => $this->documentTemplate->title,
             'path' => $this->path,
             'size' => $this->size,
             'url' => $this->url,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at?->toISOString(),
         ];
     }
 }

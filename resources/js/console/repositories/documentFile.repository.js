@@ -1,4 +1,5 @@
 import { getAuthenticatedInstance } from '../factories/axios';
+import { catchError, getData } from './helper';
 
 const httpClient = getAuthenticatedInstance();
 
@@ -18,12 +19,14 @@ export const documentFileRepository = {
           sort_direction: sortDirection,
         },
       })
-      .then((response) => response.data);
+      .then(getData)
+      .catch(catchError);
   },
 
   show(id) {
     return httpClient
       .get(`document-files/${id}`)
-      .then((response) => response.data);
+      .then(getData)
+      .catch(catchError);
   },
 };
