@@ -18,10 +18,14 @@
         "vue-loader": "^17.0.1"
     },
     "dependencies": {
+        "@codemirror/lang-html": "^6.4.3",
+        "@codemirror/lang-json": "^6.0.1",
         "@headlessui/vue": "^1.7.13",
         "@heroicons/vue": "^2.0.17",
         "@kyvg/vue3-notification": "^2.9.0",
+        "codemirror": "^6.0.1",
         "vue": "^3.2.36",
+        "vue-codemirror": "^6.1.1",
         "vue-router": "^4.0.13"
     }
 }

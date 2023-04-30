@@ -93,7 +93,7 @@ import {
   TransitionRoot,
 } from '@headlessui/vue';
 import { LockClosedIcon } from '@heroicons/vue/24/outline';
-import {notify} from "@kyvg/vue3-notification";
+import { notify } from '@kyvg/vue3-notification';
 
 const open = ref(true);
 const password = ref('');
