@@ -21,6 +21,7 @@ export const router = createRouter({
       name: 'document-template-edit',
       component: () =>
         import('./screens/DocumentTemplateEdit/DocumentTemplateEdit.vue'),
+      props: (route) => ({ uuid: route.params.uuid }),
     },
     {
       path: '/files',
