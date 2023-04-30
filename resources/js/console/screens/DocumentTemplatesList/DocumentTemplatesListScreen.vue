@@ -21,7 +21,10 @@
           >
             Edit
           </Button>
-          <DeleteTemplateButton :template="record" />
+          <DeleteTemplateButton
+            :template="record"
+            @deleted="onTemplateDeleted"
+          />
         </span>
       </template>
     </Table>
@@ -76,6 +79,8 @@ const onTemplateCreated = () => {
   page.value = 1;
   loadRecords();
 };
+
+const onTemplateDeleted = () => loadRecords();
 
 // inits
 loadRecords();

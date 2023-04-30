@@ -14,8 +14,7 @@
     @vite('resources/css/console.css')
 </head>
 <body class="h-full">
-    <div id="app">
-    </div>
+    <div id="app"></div>
     @vite('resources/js/console/index.js')
 </body>
 </html>

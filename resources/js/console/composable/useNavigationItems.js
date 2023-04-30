@@ -38,7 +38,10 @@ export const useNavigationItems = () => {
     }
 
     const fulfilableItem = navigationItems.value.find((item, index) => {
-      return index !== DEFAULT_NAVIGATION_INDEX && location.hash.startsWith(item.href)
+      return (
+        index !== DEFAULT_NAVIGATION_INDEX &&
+        location.hash.startsWith(item.href)
+      );
     });
 
     fulfilableItem && setNavigationItemActive(fulfilableItem);
