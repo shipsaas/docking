@@ -6,12 +6,11 @@ const options = {
   timeout: 60_000,
 };
 
-export const getPublicInstance = () => axios.create(options);
+export const publicInstance = axios.create(options);
+export const authenticatedInstance = axios.create(options);
 
-export const getAuthenticatedInstance = () =>
-  axios.create({
-    ...options,
-    headers: {
-      'X-Access-Key': authStorage.get(),
-    },
-  });
+authenticatedInstance.interceptors.request.use((config) => {
+  config.headers['X-Access-Key'] = authStorage.get();
+
+  return config;
+});

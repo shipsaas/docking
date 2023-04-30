@@ -1,7 +1,7 @@
-import { getAuthenticatedInstance } from '../factories/axios';
+import { authenticatedInstance } from '../factories/axios';
 import { catchError, getData } from './helper';
 
-const httpClient = getAuthenticatedInstance();
+const httpClient = authenticatedInstance;
 
 export const documentFileRepository = {
   index({

@@ -1,8 +1,8 @@
-import { getPublicInstance } from '../factories/axios';
+import { publicInstance } from '../factories/axios';
 
 export const accessRepository = {
   async access(password) {
-    const response = await getPublicInstance()
+    const response = await publicInstance
       .get('access', {
         headers: {
           'X-Access-Key': password,

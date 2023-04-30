@@ -57,6 +57,9 @@
         ],
         "post-create-project-cmd": [
           "@php artisan key:generate --ansi"
+        ],
+        "start":[
+            "@php artisan serve"
         ]
     },
     "extra": {

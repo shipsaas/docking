@@ -6,8 +6,7 @@
           DocKing
         </h2>
         <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-          The simple & small service which helps you to manage your document
-          templates and render PDFs from your desired data.
+          The simple and small service helps you manage your document templates and generate PDFs from your desired data WITH EASE.
         </p>
         <div class="mt-10 flex items-center justify-center gap-x-6">
           <a
