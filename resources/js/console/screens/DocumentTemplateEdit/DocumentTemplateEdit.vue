@@ -22,6 +22,11 @@
       </div>
       <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
         <div class="flex gap-1">
+          <Dropdown
+            label="Preview"
+            :items="previewModes"
+            @selected="onPreview"
+          />
           <Button>Save</Button>
           <Button type="secondary">Cancel</Button>
         </div>
@@ -71,8 +76,10 @@
                 class="text-indigo-600 font-medium"
                 rel="nofollow"
               >
-                Laravel's Blade
-              </a>
+                Laravel Blade </a
+              >.
+              <br />
+              <strong>Save</strong> before Preview.
             </p>
           </div>
           <div class="py-2 flex-1">
@@ -133,6 +140,7 @@ import { Codemirror } from 'vue-codemirror';
 import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
 import { toJsonString } from './DocumentTemplateEdit.methods';
+import Dropdown from "../../components/Dropdown/Dropdown.vue";
 
 const props = defineProps({
   uuid: {
@@ -164,6 +172,20 @@ const tabs = ref([
     label: 'Metadata',
   },
 ]);
+const previewModes = ref([
+  {
+    key: 'html',
+    label: 'Preview HTML',
+  },
+  {
+    key: 'printing',
+    label: 'Preview Printing (Browser)',
+  },
+  {
+    key: 'pdf',
+    label: 'Preview PDF',
+  },
+]);
 const htmlExtensions = [html()];
 const jsonExtensions = [json()];
 
@@ -183,6 +205,10 @@ const loadRecord = async () => {
     default_variables: toJsonString(data.data.default_variables),
     metadata: toJsonString(data.data.metadata),
   };
+};
+
+const onPreview = (mode) => {
+  console.log('here', mode);
 };
 
 onMounted(() => loadRecord());

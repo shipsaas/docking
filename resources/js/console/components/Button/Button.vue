@@ -17,7 +17,9 @@ const props = defineProps({
     type: String,
     default: 'neutral',
     validator(value) {
-      return ['neutral', 'secondary', 'success', 'error', 'warning'].includes(value);
+      return ['neutral', 'secondary', 'success', 'error', 'warning'].includes(
+        value
+      );
     },
   },
   disabled: {
