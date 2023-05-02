@@ -57,4 +57,11 @@ export const documentTemplateRepository = {
       .then(getData)
       .catch(catchError);
   },
+
+  previewPdf(id) {
+    return httpClient
+      .get(`document-templates/${id}/preview-pdf`)
+      .then(getData)
+      .catch(catchError);
+  },
 };

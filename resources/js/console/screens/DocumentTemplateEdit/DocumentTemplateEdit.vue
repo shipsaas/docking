@@ -22,11 +22,7 @@
       </div>
       <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
         <div class="flex gap-1">
-          <Dropdown
-            label="Preview"
-            :items="previewModes"
-            @selected="onPreview"
-          />
+          <component :is="Dropdown" />
           <Button>Save</Button>
           <Button type="secondary">Cancel</Button>
         </div>
@@ -140,7 +136,7 @@ import { Codemirror } from 'vue-codemirror';
 import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
 import { toJsonString } from './DocumentTemplateEdit.methods';
-import Dropdown from "../../components/Dropdown/Dropdown.vue";
+import { usePreviewTemplate } from './composable/usePreviewTemplate.js';
 
 const props = defineProps({
   uuid: {
@@ -150,7 +146,9 @@ const props = defineProps({
 });
 
 const { isLoading, startLoading, stopLoading } = useLoading();
+
 const template = ref({
+  uuid: null,
   key: '',
   category: '',
   title: '',
@@ -158,6 +156,9 @@ const template = ref({
   default_variables: {},
   metadata: {},
 });
+
+const { Dropdown } = usePreviewTemplate(template);
+
 const tabs = ref([
   {
     key: 'info',
@@ -172,20 +173,7 @@ const tabs = ref([
     label: 'Metadata',
   },
 ]);
-const previewModes = ref([
-  {
-    key: 'html',
-    label: 'Preview HTML',
-  },
-  {
-    key: 'printing',
-    label: 'Preview Printing (Browser)',
-  },
-  {
-    key: 'pdf',
-    label: 'Preview PDF',
-  },
-]);
+
 const htmlExtensions = [html()];
 const jsonExtensions = [json()];
 
@@ -205,10 +193,6 @@ const loadRecord = async () => {
     default_variables: toJsonString(data.data.default_variables),
     metadata: toJsonString(data.data.metadata),
   };
-};
-
-const onPreview = (mode) => {
-  console.log('here', mode);
 };
 
 onMounted(() => loadRecord());
