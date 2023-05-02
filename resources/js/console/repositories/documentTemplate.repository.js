@@ -53,14 +53,14 @@ export const documentTemplateRepository = {
 
   previewHtml(id) {
     return httpClient
-      .get(`document-templates/${id}/preview-html`)
+      .post(`document-templates/${id}/preview-html`)
       .then(getData)
       .catch(catchError);
   },
 
   previewPdf(id) {
     return httpClient
-      .get(`document-templates/${id}/preview-pdf`)
+      .post(`document-templates/${id}/preview-pdf`)
       .then(getData)
       .catch(catchError);
   },

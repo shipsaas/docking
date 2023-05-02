@@ -35,7 +35,16 @@
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+              class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full"
+              :class="[
+                widthSize === 'lg' ? 'sm:max-w-lg' : '',
+                widthSize === 'xl' ? 'sm:max-w-xl' : '',
+                widthSize === '2xl' ? 'sm:max-w-2xl' : '',
+                widthSize === '3xl' ? 'sm:max-w-3xl' : '',
+                widthSize === '4xl' ? 'sm:max-w-4xl' : '',
+                widthSize === '5xl' ? 'sm:max-w-5xl' : '',
+                widthSize === 'max' ? 'sm:max-w-full' : '',
+              ]"
             >
               <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -72,8 +81,9 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue';
+import {computed} from "vue";
 
-defineProps({
+const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true,
@@ -81,6 +91,13 @@ defineProps({
   title: {
     type: String,
     default: '',
+  },
+  widthSize: {
+    type: String,
+    default: 'lg',
+    validator(value) {
+      return ['md', 'lg', 'xl', '2xl'].includes(value);
+    },
   },
 });
 </script>

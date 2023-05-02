@@ -72,8 +72,17 @@
                 class="text-indigo-600 font-medium"
                 rel="nofollow"
               >
-                Laravel Blade </a
-              >.
+                Laravel Blade
+              </a>
+              or this
+              <a
+                href="https://gist.github.com/CiprianSpiridon/f4d7fe0d8a51f0714b62"
+                target="_blank"
+                class="text-indigo-600 font-medium"
+                rel="nofollow"
+              >
+                Blade Cheatsheet
+              </a>
               <br />
               <strong>Save</strong> before Preview.
             </p>
@@ -122,6 +131,12 @@
       </template>
     </Tabs>
   </Card>
+
+  <PreviewHtmlModal
+    :is-open="!!renderedHtml"
+    :html="renderedHtml"
+    @close="renderedHtml = ''"
+  />
 </template>
 
 <script setup>
@@ -137,6 +152,7 @@ import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
 import { toJsonString } from './DocumentTemplateEdit.methods';
 import { usePreviewTemplate } from './composable/usePreviewTemplate.js';
+import PreviewHtmlModal from "./components/PreviewHtmlModal.vue";
 
 const props = defineProps({
   uuid: {
@@ -157,7 +173,7 @@ const template = ref({
   metadata: {},
 });
 
-const { Dropdown } = usePreviewTemplate(template);
+const { Dropdown, renderedHtml } = usePreviewTemplate(template);
 
 const tabs = ref([
   {
