@@ -6,13 +6,17 @@ use App\Events\DocumentTemplateCreated;
 use App\Events\DocumentTemplateDestroyed;
 use App\Events\DocumentTemplateUpdated;
 use App\Http\Requests\DocumentTemplateIndexRequest;
+use App\Http\Requests\DocumentTemplatePreviewPdfRequest;
 use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
+use App\Services\PdfRenderManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
+use Throwable;
 
 class DocumentTemplateController extends Controller
 {
@@ -74,14 +78,34 @@ class DocumentTemplateController extends Controller
 
     public function previewHtml(DocumentTemplate $documentTemplate): JsonResponse
     {
-        $html = Blade::render(
-            $documentTemplate->template,
-            $documentTemplate->default_variables,
-            deleteCachedView: true
-        );
+        $html = $documentTemplate->renderHtml();
 
         return new JsonResponse([
             'html' => $html,
+        ]);
+    }
+
+    public function previewPdf(
+        DocumentTemplatePreviewPdfRequest $request,
+        DocumentTemplate $documentTemplate,
+        PdfRenderManager $manager
+    ): JsonResponse {
+        $renderResult = $manager->render(
+            $documentTemplate,
+            $documentTemplate->default_variables,
+            $documentTemplate->metadata
+        );
+
+        if (!$renderResult->isOk()) {
+            return new JsonResponse([
+                'message' => 'Render failed, please try again',
+            ], 400);
+        }
+
+        $okResult = $renderResult->getOkResult();
+
+        return new JsonResponse([
+            'url' => $okResult->file->url,
         ]);
     }
 }

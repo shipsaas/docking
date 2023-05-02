@@ -26,6 +26,17 @@ export const catchError = (error) => {
     return;
   }
 
+  // error message
+  if (response.message) {
+    notify({
+      type: 'error',
+      title: 'Request Error',
+      text: response.message,
+    });
+
+    return;
+  }
+
   // outcome error from Controllers' Logic
   if (response.outcome) {
     notify({

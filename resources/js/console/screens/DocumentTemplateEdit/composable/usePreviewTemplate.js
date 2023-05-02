@@ -1,6 +1,5 @@
 import { ref, h } from 'vue';
 import Dropdown from '../../../components/Dropdown/Dropdown.vue';
-import PreviewHtmlModal from '../components/PreviewHtmlModal.vue';
 import { documentTemplateRepository } from '../../../repositories/documentTemplate.repository.js';
 import printJS from 'print-js';
 

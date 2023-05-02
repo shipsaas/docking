@@ -11,7 +11,7 @@ use App\Services\PdfRenderers\PdfRendererContract;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-class GotenbergRendererService extends AbstractPdfRendererService implements PdfRendererContract
+class  GotenbergRendererService extends AbstractPdfRendererService implements PdfRendererContract
 {
     public const TEMP_FILE_PREFIX = 'gotenberg_';
     public const DEFAULT_DRIVER = 'chromium';
