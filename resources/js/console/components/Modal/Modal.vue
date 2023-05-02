@@ -81,7 +81,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue';
-import {computed} from "vue";
+import { computed } from 'vue';
 
 const props = defineProps({
   isOpen: {
@@ -96,7 +96,9 @@ const props = defineProps({
     type: String,
     default: 'lg',
     validator(value) {
-      return ['md', 'lg', 'xl', '2xl'].includes(value);
+      return ['md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', 'max'].includes(
+        value
+      );
     },
   },
 });

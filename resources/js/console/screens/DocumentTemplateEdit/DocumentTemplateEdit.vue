@@ -23,8 +23,12 @@
       <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
         <div class="flex gap-1">
           <component :is="Dropdown" />
-          <Button>Save</Button>
-          <Button type="secondary">Cancel</Button>
+          <Button @click="saveTemplate">Save</Button>
+          <Button
+            @click="$router.go(-1)"
+            type="secondary"
+            >Cancel</Button
+          >
         </div>
       </div>
     </div>
@@ -150,9 +154,10 @@ import Input from '../../components/Input/Input.vue';
 import { Codemirror } from 'vue-codemirror';
 import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
-import { toJsonString } from './DocumentTemplateEdit.methods';
+import { toJsonString, validateJson } from './DocumentTemplateEdit.methods';
 import { usePreviewTemplate } from './composable/usePreviewTemplate.js';
-import PreviewHtmlModal from "./components/PreviewHtmlModal.vue";
+import PreviewHtmlModal from './components/PreviewHtmlModal.vue';
+import { notify } from '@kyvg/vue3-notification';
 
 const props = defineProps({
   uuid: {
@@ -209,6 +214,46 @@ const loadRecord = async () => {
     default_variables: toJsonString(data.data.default_variables),
     metadata: toJsonString(data.data.metadata),
   };
+};
+
+const saveTemplate = async () => {
+  const defaultVariables = validateJson(template.value.default_variables);
+  if (defaultVariables === false) {
+    notify({
+      type: 'error',
+      title: 'Validation Error',
+      text: 'Default Variable must be a valid JSON. Put "{}" for empty JSON',
+    });
+
+    return;
+  }
+
+  const metadata = validateJson(template.value.metadata);
+  if (metadata === false) {
+    notify({
+      type: 'error',
+      title: 'Validation Error',
+      text: 'Metadata must be a valid JSON. Put "{}" for empty JSON',
+    });
+
+    return;
+  }
+
+  const result = await documentTemplateRepository.update(template.value.uuid, {
+    ...template.value,
+    default_variables: defaultVariables,
+    metadata,
+  });
+
+  if (!result) {
+    return;
+  }
+
+  notify({
+    type: 'success',
+    title: 'Action OK',
+    text: 'Document Template has been saved. You can now preview the template.',
+  });
 };
 
 onMounted(() => loadRecord());

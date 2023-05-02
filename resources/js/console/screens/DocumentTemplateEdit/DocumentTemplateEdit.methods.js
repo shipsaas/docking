@@ -9,3 +9,11 @@ export const toJsonString = (object) => {
 
   return '{}';
 };
+
+export const validateJson = (string) => {
+  try {
+    return JSON.parse(string);
+  } catch (e) {
+    return false;
+  }
+};

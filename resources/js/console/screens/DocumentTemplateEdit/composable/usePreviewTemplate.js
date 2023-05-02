@@ -1,8 +1,8 @@
 import { ref, h } from 'vue';
 import Dropdown from '../../../components/Dropdown/Dropdown.vue';
 import PreviewHtmlModal from '../components/PreviewHtmlModal.vue';
-import {documentTemplateRepository} from "../../../repositories/documentTemplate.repository.js";
-import printJS from "print-js";
+import { documentTemplateRepository } from '../../../repositories/documentTemplate.repository.js';
+import printJS from 'print-js';
 
 const previewModes = [
   {
@@ -26,7 +26,9 @@ export const usePreviewTemplate = (template) => {
   const renderedHtml = ref('');
 
   const previewHtml = async (wantsHtmlString) => {
-    const data = await documentTemplateRepository.previewHtml(template.value.uuid);
+    const data = await documentTemplateRepository.previewHtml(
+      template.value.uuid
+    );
     if (!data) {
       return;
     }
@@ -52,7 +54,9 @@ export const usePreviewTemplate = (template) => {
   };
 
   const previewPdf = async () => {
-    const data = await documentTemplateRepository.previewPdf(template.value.uuid);
+    const data = await documentTemplateRepository.previewPdf(
+      template.value.uuid
+    );
     if (!data) {
       return;
     }
