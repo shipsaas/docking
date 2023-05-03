@@ -41,7 +41,7 @@ jobs:
             composer test-coverage
 
       -   name: upload coverage to codecov.io
-          if: success() && matrix.version == '8.1'
+          if: success()
           uses: codecov/codecov-action@v3
           with:
             token: ${{ secrets.CODECOV_TOKEN }}
