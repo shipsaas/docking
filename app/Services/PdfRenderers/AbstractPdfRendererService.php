@@ -30,11 +30,6 @@ abstract class AbstractPdfRendererService
         array $variables = [],
         array $metadata = []
     ): ?DocumentFile {
-        // if it is a URL, download
-        if (Str::startsWith($renderedFilePath, 'http')) {
-            Http::get($renderedFilePath);
-        }
-
         // store to default Storage
         $file = new File($renderedFilePath);
         $storedFileName = Storage::putFile('rendered-pdfs', $file, [
