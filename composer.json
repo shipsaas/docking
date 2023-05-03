@@ -58,8 +58,11 @@
         "post-create-project-cmd": [
           "@php artisan key:generate --ansi"
         ],
-        "start":[
-            "@php artisan serve"
+        "test-coverage": [
+            "@php vendor/bin/phpunit --coverage-clover coverage.xml"
+        ],
+        "test": [
+            "@php vendor/bin/phpunit"
         ]
     },
     "extra": {
