@@ -13,8 +13,12 @@ const previewModes = [
     label: 'Preview Printing (Browser)',
   },
   {
-    key: 'pdf',
-    label: 'Preview PDF',
+    key: 'pdf-gotenberg',
+    label: 'Preview PDF (Gotenberg)',
+  },
+  {
+    key: 'pdf-wkhtmltopdf',
+    label: 'Preview PDF (WkHtmlToPdf)',
   },
 ];
 
@@ -52,9 +56,12 @@ export const usePreviewTemplate = (template) => {
     });
   };
 
-  const previewPdf = async () => {
+  const previewPdf = async (driver) => {
     const data = await documentTemplateRepository.previewPdf(
-      template.value.uuid
+      template.value.uuid,
+      {
+        driver,
+      }
     );
     if (!data) {
       return;
@@ -73,8 +80,10 @@ export const usePreviewTemplate = (template) => {
         return previewHtml();
       case 'printing':
         return previewPrinting();
-      case 'pdf':
-        return previewPdf();
+      case 'pdf-gotenberg':
+        return previewPdf('gotenberg');
+      case 'pdf-wkhtmltopdf':
+        return previewPdf('wkhtmltopdf');
     }
   };
 

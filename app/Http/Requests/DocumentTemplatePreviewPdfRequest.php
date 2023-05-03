@@ -18,7 +18,7 @@ class DocumentTemplatePreviewPdfRequest extends FormRequest
         return [
             'driver' => [
                 'nullable',
-                Rule::in(PdfService::cases()),
+                Rule::in(array_column(self::cases(), 'value')('', PdfService::cases())),
             ],
         ];
     }

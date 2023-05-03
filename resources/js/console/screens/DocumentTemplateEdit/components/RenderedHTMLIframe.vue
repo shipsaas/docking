@@ -1,9 +1,12 @@
 <template>
-  <iframe v-bind="$attrs" @load="renderChildren" />
+  <iframe
+    v-bind="$attrs"
+    @load="renderChildren"
+  />
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'RenderedHTMLIframe',

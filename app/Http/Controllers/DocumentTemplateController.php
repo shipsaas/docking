@@ -93,7 +93,10 @@ class DocumentTemplateController extends Controller
         $renderResult = $manager->render(
             $documentTemplate,
             $documentTemplate->default_variables,
-            $documentTemplate->metadata
+            [
+                ...$documentTemplate->metadata,
+                'driver' => $request->input('driver'),
+            ]
         );
 
         if (!$renderResult->isOk()) {

@@ -58,9 +58,9 @@ export const documentTemplateRepository = {
       .catch(catchError);
   },
 
-  previewPdf(id) {
+  previewPdf(id, params) {
     return httpClient
-      .post(`document-templates/${id}/preview-pdf`)
+      .post(`document-templates/${id}/preview-pdf`, params)
       .then(getData)
       .catch(catchError);
   },
