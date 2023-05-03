@@ -1,5 +1,13 @@
 # DocKing - Document-management microservice
 
+<p align="center" width="100%">
+
+[![Build & Test (PHP 8.2)](https://github.com/shipsaas/docking/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/shipsaas/docking/branch/main/graph/badge.svg?token=FAZ9899IPW)](https://codecov.io/gh/shipsaas/docking)
+
+
+</p>
+
 
 <p align="center" width="100%">
     <img src="https://raw.githubusercontent.com/shipsaas/docking/main/docs/img/logo.png"> 
