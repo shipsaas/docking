@@ -2,19 +2,19 @@
 
 namespace App\Services\PdfRenderers;
 
+use App\Enums\GotenbergEngine;
 use App\Models\DocumentTemplate;
 use App\Results\ErrorCodes\PdfRenderErrorCode;
 use App\Results\PdfRenderOutcomes\PdfRenderErrorOutcome;
 use App\Results\PdfRenderOutcomes\PdfRenderOkOutcome;
 use App\Results\PdfRenderResult;
-use App\Services\PdfRenderers\PdfRendererContract;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class GotenbergRendererService extends AbstractPdfRendererService implements PdfRendererContract
 {
     public const TEMP_FILE_PREFIX = 'gotenberg_';
-    public const DEFAULT_DRIVER = 'chromium';
+    public const DEFAULT_ENGINE = GotenbergEngine::CHROMIUM->value;
 
     public function __construct(
         protected readonly string $gotenbergEndpoint
@@ -30,7 +30,7 @@ class GotenbergRendererService extends AbstractPdfRendererService implements Pdf
         $inputFile = $this->renderTemplate($documentTemplate, $variables);
 
         // request to gotenberg
-        $driver = $metadata['engine'] ?? static::DEFAULT_DRIVER;
+        $driver = $metadata['engine'] ?? static::DEFAULT_ENGINE;
         $response = Http::asMultipart()
             ->attach('files', fopen($inputFile, 'r'), 'index.html')
             ->post($this->getEndpointByEngine($driver));
@@ -63,8 +63,10 @@ class GotenbergRendererService extends AbstractPdfRendererService implements Pdf
     private function getEndpointByEngine(string $engine): string
     {
         return match ($engine) {
-            'chromium' => $this->gotenbergEndpoint . '/forms/chromium/convert/html',
-            'libreoffice' => $this->gotenbergEndpoint . '/forms/libreoffice/convert',
+            GotenbergEngine::CHROMIUM->value
+                => "{$this->gotenbergEndpoint}/forms/chromium/convert/html",
+            GotenbergEngine::LIBRE_OFFICE->value
+                => "{$this->gotenbergEndpoint}/forms/libreoffice/convert",
         };
     }
 
