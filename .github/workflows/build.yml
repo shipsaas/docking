@@ -31,8 +31,7 @@ jobs:
             php -v
             mysql -uroot -proot -e "CREATE DATABASE docking;"
             composer install --no-interaction
-            cp .env.example .env
-            echo "$TESTING_ENV" > .env.testing
+            echo "$TESTING_ENV" > .env
             php artisan key:generate
             php artisan optimize
 
