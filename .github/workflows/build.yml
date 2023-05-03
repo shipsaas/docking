@@ -32,6 +32,8 @@ jobs:
             mysql -uroot -proot -e "CREATE DATABASE docking;"
             composer install --no-interaction
             echo "$TESTING_ENV" > .env.testing
+            php artisan key:generate
+            php artisan optimize
 
       -   name: PHPUnit tests with coverage
           if: success() && github.event.pull_request.draft == false
