@@ -1,4 +1,4 @@
-# DocKing - Document-management microservice
+# DocKing from ShipSaaS
 
 <p align="center" width="100%">
 
@@ -13,7 +13,7 @@
     <img src="https://raw.githubusercontent.com/shipsaas/docking/main/docs/img/logo.png"> 
 </p>
 
-DocKing is a document-management microservice. Deal with the templates & render stuff just in 1 place.
+DocKing is a document-management microservice. Deal with the templates & render them in PDF format just in 1 place.
 
 You can use DocKing as a Shared-Microservice which can be used in any services.
 
