@@ -12,9 +12,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/console', function () {
-    return view('console');
-});
+if (config('docking.console-enabled')) {
+    Route::get('/console', function () {
+        return view('console');
+    });
+}
 
 Route::get('/healthz', function () {
     return 'OK';

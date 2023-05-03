@@ -7,9 +7,7 @@ use App\Results\ErrorCodes\PdfRenderErrorCode;
 use App\Results\PdfRenderOutcomes\PdfRenderErrorOutcome;
 use App\Results\PdfRenderOutcomes\PdfRenderOkOutcome;
 use App\Results\PdfRenderResult;
-use App\Services\PdfRenderers\PdfRendererContract;
 use Illuminate\Process\Exceptions\ProcessTimedOutException;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Process;
 
 class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements PdfRendererContract
@@ -48,9 +46,6 @@ class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements P
                 $inputFile \
                 $outputFile
              ")->run();
-
-            Log::info($result->output());
-            Log::info($result->errorOutput());
 
             if (!$result->successful()) {
                 return PdfRenderResult::error(new PdfRenderErrorOutcome(
