@@ -55,6 +55,7 @@ class PdfRenderController extends Controller
             [
                 ...$documentTemplate->metadata,
                 ...$request->getMetadata(),
+                'webhook_url' => $request->input('webhook_url'),
             ],
         );
 

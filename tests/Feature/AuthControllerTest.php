@@ -22,7 +22,10 @@ class AuthControllerTest extends TestCase
 
     public function testCorrectConsolePasswordKeyCanAccess()
     {
-        config(['docking.console-password' => 'S$ethTRRAN0011']);
+        config([
+            'docking.console-enabled' => true,
+            'docking.console-password' => 'S$ethTRRAN0011',
+        ]);
 
         $this->json(
             'GET',
@@ -37,7 +40,7 @@ class AuthControllerTest extends TestCase
     {
         config([
             'docking.public-access-key' => 'seth-tran-phat',
-            'docking.console-password' => 'S$ethTRRAN0011',
+            'docking.console-enabled' => false,
         ]);
 
         $this->json(
