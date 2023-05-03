@@ -52,6 +52,7 @@ abstract class AbstractPdfRendererService
             'size' => $file->getSize() ?: 0,
             'variables' => $variables,
             'metadata' => $metadata,
+            'is_preview_file' => isset($metadata['is_preview']),
         ]);
     }
 }

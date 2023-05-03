@@ -19,6 +19,8 @@ return new class extends Migration
             $table->jsonb('variables')->nullable();
             $table->jsonb('metadata')->nullable();
 
+            $table->boolean('is_preview_file')->default(false);
+
             $table->timestamps();
         });
     }

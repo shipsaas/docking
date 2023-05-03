@@ -63,6 +63,7 @@ export const usePreviewTemplate = (template) => {
       {
         ...JSON.parse(template.value.metadata),
         driver,
+        is_preview: true,
       }
     );
     if (!data) {
