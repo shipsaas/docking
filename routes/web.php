@@ -15,3 +15,7 @@ Route::get('/', function () {
 Route::get('/console', function () {
     return view('console');
 });
+
+Route::get('/healthz', function () {
+    return 'OK';
+});
