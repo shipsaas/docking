@@ -23,7 +23,7 @@ const previewModes = [
 ];
 
 /**
- * @param {Ref<{uuid: String | null}>} template
+ * @param {Ref<{uuid: String | null, default_variables: String, metadata: String}>} template
  */
 export const usePreviewTemplate = (template) => {
   const renderedHtml = ref('');
@@ -57,9 +57,11 @@ export const usePreviewTemplate = (template) => {
   };
 
   const previewPdf = async (driver) => {
-    const data = await documentTemplateRepository.previewPdf(
+    const data = await documentTemplateRepository.renderPdfSync(
       template.value.uuid,
+      JSON.parse(template.value.default_variables),
       {
+        ...JSON.parse(template.value.metadata),
         driver,
       }
     );

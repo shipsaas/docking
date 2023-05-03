@@ -11,7 +11,7 @@ use App\Services\PdfRenderers\PdfRendererContract;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-class  GotenbergRendererService extends AbstractPdfRendererService implements PdfRendererContract
+class GotenbergRendererService extends AbstractPdfRendererService implements PdfRendererContract
 {
     public const TEMP_FILE_PREFIX = 'gotenberg_';
     public const DEFAULT_DRIVER = 'chromium';
@@ -28,13 +28,12 @@ class  GotenbergRendererService extends AbstractPdfRendererService implements Pd
     ): PdfRenderResult {
         // render template
         $inputFile = $this->renderTemplate($documentTemplate, $variables);
-        file_put_contents($inputFile, $this->renderTemplate($documentTemplate, $variables));
 
         // request to gotenberg
-        $driver = $metadata['driver'] ?? static::DEFAULT_DRIVER;
+        $driver = $metadata['engine'] ?? static::DEFAULT_DRIVER;
         $response = Http::asMultipart()
             ->attach('files', fopen($inputFile, 'r'), 'index.html')
-            ->post($this->getEndpointByDriver($driver));
+            ->post($this->getEndpointByEngine($driver));
 
         // assert
         $contentDisposition = $response->header('Content-Disposition');
@@ -61,9 +60,9 @@ class  GotenbergRendererService extends AbstractPdfRendererService implements Pd
         ));
     }
 
-    private function getEndpointByDriver(string $driver): string
+    private function getEndpointByEngine(string $engine): string
     {
-        return match ($driver) {
+        return match ($engine) {
             'chromium' => $this->gotenbergEndpoint . '/forms/chromium/convert/html',
             'libreoffice' => $this->gotenbergEndpoint . '/forms/libreoffice/convert',
         };
@@ -71,7 +70,7 @@ class  GotenbergRendererService extends AbstractPdfRendererService implements Pd
 
     private function writeResponseToTempFile(Response $response): string
     {
-        $outputFile = tempnam(sys_get_temp_dir() . '/rendered_pdfs', static::TEMP_FILE_PREFIX);
+        $outputFile = tempnam(sys_get_temp_dir(), static::TEMP_FILE_PREFIX);
 
         $outputFileStream = fopen($outputFile, 'w');
         fwrite($outputFileStream, $response->body());

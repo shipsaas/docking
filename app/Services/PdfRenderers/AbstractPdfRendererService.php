@@ -14,7 +14,7 @@ abstract class AbstractPdfRendererService
 {
     protected function renderTemplate(DocumentTemplate $template, array $variables = []): string
     {
-        $inputFile = tempnam(sys_get_temp_dir() . '/rendered_template', 'rendered_html_template');
+        $inputFile = tempnam(sys_get_temp_dir(), 'rendered_html_template');
         rename($inputFile, $inputFile .= '.html');
 
         $htmlRendered = Blade::render($template->template, $variables, deleteCachedView: true);

@@ -58,9 +58,12 @@ export const documentTemplateRepository = {
       .catch(catchError);
   },
 
-  previewPdf(id, params) {
+  renderPdfSync(id, variables = {}, metadata = {}) {
     return httpClient
-      .post(`document-templates/${id}/preview-pdf`, params)
+      .post(`document-templates/${id}/pdfs`, {
+        variables,
+        metadata,
+      })
       .then(getData)
       .catch(catchError);
   },

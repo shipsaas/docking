@@ -26,10 +26,6 @@ Route::prefix('v1')
             'document-templates/{documentTemplate}/preview-html',
             [DocumentTemplateController::class, 'previewHtml']
         );
-        Route::post(
-            'document-templates/{documentTemplate}/preview-pdf',
-            [DocumentTemplateController::class, 'previewPdf']
-        );
 
         Route::post('document-templates/{documentTemplate}/pdfs', [PdfRenderController::class, 'render']);
         Route::post('document-templates/{documentTemplate}/pdfs-async', [PdfRenderController::class, 'renderAsync']);

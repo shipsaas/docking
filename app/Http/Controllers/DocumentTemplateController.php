@@ -6,7 +6,6 @@ use App\Events\DocumentTemplateCreated;
 use App\Events\DocumentTemplateDestroyed;
 use App\Events\DocumentTemplateUpdated;
 use App\Http\Requests\DocumentTemplateIndexRequest;
-use App\Http\Requests\DocumentTemplatePreviewPdfRequest;
 use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
@@ -82,33 +81,6 @@ class DocumentTemplateController extends Controller
 
         return new JsonResponse([
             'html' => $html,
-        ]);
-    }
-
-    public function previewPdf(
-        DocumentTemplatePreviewPdfRequest $request,
-        DocumentTemplate $documentTemplate,
-        PdfRenderManager $manager
-    ): JsonResponse {
-        $renderResult = $manager->render(
-            $documentTemplate,
-            $documentTemplate->default_variables,
-            [
-                ...$documentTemplate->metadata,
-                'driver' => $request->input('driver'),
-            ]
-        );
-
-        if (!$renderResult->isOk()) {
-            return new JsonResponse([
-                'message' => 'Render failed, please try again',
-            ], 400);
-        }
-
-        $okResult = $renderResult->getOkResult();
-
-        return new JsonResponse([
-            'url' => $okResult->file->url,
         ]);
     }
 }

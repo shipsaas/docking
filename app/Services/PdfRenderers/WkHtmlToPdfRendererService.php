@@ -27,7 +27,7 @@ class WkHtmlToPdfRendererService extends AbstractPdfRendererService implements P
         array $metadata = []
     ): PdfRenderResult {
         $inputFile = $this->renderTemplate($documentTemplate, $variables);
-        $outputFile = tempnam(sys_get_temp_dir() . '/pdf', 'wkhtmltopdf_');
+        $outputFile = tempnam(sys_get_temp_dir(), 'wkhtmltopdf_');
 
         $metadata['page-size'] ??= static::DEFAULT_PAGE_SIZE;
         $metadata['margin-top'] ??= static::DEFAULT_MARGIN_TOP;
