@@ -27,8 +27,9 @@
           <Button
             @click="$router.go(-1)"
             type="secondary"
-            >Cancel</Button
           >
+            Cancel
+          </Button>
         </div>
       </div>
     </div>
@@ -54,57 +55,57 @@
         </div>
       </template>
       <template #template>
-        <div class="flex gap-2 lg:flex-row sm:flex-col md:flex-col">
-          <div class="py-2 flex-1">
-            <label
-              class="block text-sm font-medium leading-6 text-gray-900 mb-1"
-              v-text="'Template HTML'"
-            />
-            <codemirror
-              v-model="template.template"
-              :style="{ height: '400px' }"
-              :autofocus="true"
-              :indent-with-tab="true"
-              :tab-size="4"
-              :extensions="htmlExtensions"
-            />
-            <p class="text-sm text-gray-500 mt-2">
-              Learn more rendering syntax:
-              <a
-                href="https://laravel.com/docs/10.x/blade#blade-directives"
-                target="_blank"
-                class="text-indigo-600 font-medium"
-                rel="nofollow"
-              >
-                Laravel Blade
-              </a>
-              or this
-              <a
-                href="https://gist.github.com/CiprianSpiridon/f4d7fe0d8a51f0714b62"
-                target="_blank"
-                class="text-indigo-600 font-medium"
-                rel="nofollow"
-              >
-                Blade Cheatsheet
-              </a>
-              <br />
-              <strong>Save</strong> before Preview.
-            </p>
-          </div>
-          <div class="py-2 flex-1">
-            <label
-              class="block text-sm font-medium leading-6 text-gray-900 mb-1"
-              v-text="'Default Variables (JSON)'"
-            />
-            <codemirror
-              v-model="template.default_variables"
-              :style="{ height: '400px' }"
-              :autofocus="true"
-              :indent-with-tab="true"
-              :tab-size="4"
-              :extensions="jsonExtensions"
-            />
-          </div>
+        <div class="py-2">
+          <label
+            class="block text-sm font-medium leading-6 text-gray-900 mb-1"
+            v-text="'Template HTML'"
+          />
+          <codemirror
+            v-model="template.template"
+            :style="{ height: '400px' }"
+            :autofocus="true"
+            :indent-with-tab="true"
+            :tab-size="4"
+            :extensions="htmlExtensions"
+          />
+          <p class="text-sm text-gray-500 mt-2">
+            Learn more rendering syntax:
+            <a
+              href="https://laravel.com/docs/10.x/blade#blade-directives"
+              target="_blank"
+              class="text-indigo-600 font-medium"
+              rel="nofollow"
+            >
+              Laravel Blade
+            </a>
+            or this
+            <a
+              href="https://gist.github.com/CiprianSpiridon/f4d7fe0d8a51f0714b62"
+              target="_blank"
+              class="text-indigo-600 font-medium"
+              rel="nofollow"
+            >
+              Blade Cheatsheet
+            </a>
+            <br />
+            <strong>Save</strong> before Preview.
+          </p>
+        </div>
+      </template>
+      <template #variables>
+        <div class="py-2">
+          <label
+            class="block text-sm font-medium leading-6 text-gray-900 mb-1"
+            v-text="'Default Variables (JSON)'"
+          />
+          <codemirror
+            v-model="template.default_variables"
+            :style="{ height: '400px' }"
+            :autofocus="true"
+            :indent-with-tab="true"
+            :tab-size="4"
+            :extensions="jsonExtensions"
+          />
         </div>
       </template>
       <template #metadata>
@@ -187,7 +188,11 @@ const tabs = ref([
   },
   {
     key: 'template',
-    label: 'Template & Default Variables',
+    label: 'Template',
+  },
+  {
+    key: 'variables',
+    label: 'Default Variables',
   },
   {
     key: 'metadata',

@@ -19,6 +19,7 @@ class DocumentFile extends Model
         'size',
         'variables',
         'metadata',
+        'is_preview_file',
     ];
 
     protected $casts = [
