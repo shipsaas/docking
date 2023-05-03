@@ -41,6 +41,7 @@ class AuthControllerTest extends TestCase
         config([
             'docking.public-access-key' => 'seth-tran-phat',
             'docking.console-enabled' => false,
+            'docking.console-password' => '',
         ]);
 
         $this->json(

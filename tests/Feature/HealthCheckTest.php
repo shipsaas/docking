@@ -8,6 +8,6 @@ class HealthCheckTest extends TestCase
 {
     public function testHealthCheckOk()
     {
-        $this->get('/healthz')->isOk();
+        $this->get('/healthz')->assertOk();
     }
 }

@@ -20,8 +20,8 @@ abstract class TestCase extends BaseTestCase
             $uri,
             $data,
             [
-                ...$headers,
                 ValidatePublicAccessKey::X_ACCESS_KEY_HEADER => config('docking.public-access-key'),
+                ...$headers,
             ],
             $options
         );
