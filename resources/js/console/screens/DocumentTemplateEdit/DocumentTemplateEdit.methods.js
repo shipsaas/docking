@@ -4,7 +4,7 @@ export const toJsonString = (object) => {
   }
 
   if (typeof object === 'object') {
-    return JSON.stringify(object);
+    return JSON.stringify(object, undefined, 2);
   }
 
   return '{}';
