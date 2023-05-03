@@ -6,7 +6,7 @@ use App\Enums\PdfService;
 use App\Models\DocumentTemplate;
 use App\Results\PdfRenderResult;
 use App\Services\PdfRenderers\PdfRendererContract;
-use RuntimeException;
+use LogicException;
 use App\Services\PdfRenderers\GotenbergRendererService;
 use App\Services\PdfRenderers\WkHtmlToPdfRendererService;
 
@@ -21,7 +21,7 @@ class PdfRenderManager
             PdfService::WK_HTML_TO_PDF->value => app(WkHtmlToPdfRendererService::class),
             // TODO: phase 2
             // PdfService::MPDF->value => app(MpdfRendererService::class),
-            default => throw new RuntimeException("PDF Driver \"$driver\" is not supported")
+            default => throw new LogicException("PDF Driver \"$driver\" is not supported")
         };
     }
 

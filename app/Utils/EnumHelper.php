@@ -10,7 +10,7 @@ trait EnumHelper
 {
     public static function getNames(): array
     {
-        return array_column(PdfService::cases(), 'names');
+        return array_column(PdfService::cases(), 'name');
     }
 
     public static function getValues(): array

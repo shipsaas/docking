@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
@@ -31,6 +32,11 @@ class DocumentTemplate extends Model
     ];
 
     protected $primaryKey = 'uuid';
+
+    public function documentFiles(): HasMany
+    {
+        return $this->hasMany(DocumentFile::class, 'document_template_uuid');
+    }
 
     public function renderHtml(?array $variables = null): string
     {
