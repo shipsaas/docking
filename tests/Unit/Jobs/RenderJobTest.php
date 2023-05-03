@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Jobs;
 
+use App\Events\PdfRendered;
 use App\Jobs\RenderJob;
 use App\Jobs\WebhookRenderErrorNotificationJob;
 use App\Jobs\WebhookRenderOkNotificationJob;
@@ -12,6 +13,7 @@ use App\Results\PdfRenderOutcomes\PdfRenderErrorOutcome;
 use App\Results\PdfRenderOutcomes\PdfRenderOkOutcome;
 use App\Results\PdfRenderResult;
 use App\Services\PdfRenderManager;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
@@ -21,6 +23,9 @@ class RenderJobTest extends TestCase
     {
         Queue::fake([
             WebhookRenderOkNotificationJob::class,
+        ]);
+        Event::fake([
+            PdfRendered::class,
         ]);
 
         $pdfRenderManager = $this->createMock(PdfRenderManager::class);
@@ -41,6 +46,7 @@ class RenderJobTest extends TestCase
             fn (WebhookRenderOkNotificationJob $job)
                 => $job->webhookUrl === 'https://sethphat.dev' && $job->documentFile->is($file)
         );
+        Event::assertDispatched(PdfRendered::class);
     }
 
     public function testJobRendersTheFileFailed()

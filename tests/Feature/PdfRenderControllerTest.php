@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Events\PdfRendered;
 use App\Jobs\RenderJob;
 use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
@@ -10,6 +11,7 @@ use App\Results\PdfRenderOutcomes\PdfRenderErrorOutcome;
 use App\Results\PdfRenderOutcomes\PdfRenderOkOutcome;
 use App\Results\PdfRenderResult;
 use App\Services\PdfRenderManager;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
@@ -17,6 +19,10 @@ class PdfRenderControllerTest extends TestCase
 {
     public function testRenderSyncOk()
     {
+        Event::fake([
+            PdfRendered::class,
+        ]);
+
         /** @var DocumentFile $file */
         $file = DocumentFile::factory()->create();
         $template = $file->documentTemplate;
@@ -43,6 +49,8 @@ class PdfRenderControllerTest extends TestCase
                 'document_file_uuid' => $file->uuid,
                 'url' => $file->url,
             ]);
+
+        Event::assertDispatched(PdfRendered::class);
     }
 
     public function testRenderSyncFailed()

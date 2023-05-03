@@ -38,4 +38,18 @@ class DocumentTemplateTest extends TestCase
 
         $this->assertSame('Hello Seth', $renderedHtml);
     }
+
+    public function testRenderHtmlErrorReturnsPhpErrorString()
+    {
+        $template = DocumentTemplate::factory()->create([
+            'template' => 'Hello {{ $name }}',
+            'default_variables' => [
+                'aaaa' => 'bbbb',
+            ],
+        ]);
+
+        $renderedHtml = $template->renderHtml();
+
+        $this->assertStringContainsString('Undefined variable $name', $renderedHtml);
+    }
 }

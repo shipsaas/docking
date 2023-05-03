@@ -10,12 +10,8 @@ use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
-use App\Services\PdfRenderManager;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Str;
-use Throwable;
 
 class DocumentTemplateController extends Controller
 {
@@ -42,7 +38,7 @@ class DocumentTemplateController extends Controller
         return new JsonResponse([
             'uuid' => $documentTemplate->uuid,
             'created' => $documentTemplate->wasRecentlyCreated,
-        ]);
+        ], 201);
     }
 
     public function update(
