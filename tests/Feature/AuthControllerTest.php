@@ -35,6 +35,11 @@ class AuthControllerTest extends TestCase
 
     public function testWrongBothAccessKeyAndConsolePasswordCannotAccess()
     {
+        config([
+            'docking.public-access-key' => 'seth-tran-phat',
+            'docking.console-password' => 'S$ethTRRAN0011',
+        ]);
+
         $this->json(
             'GET',
             'api/v1/access',
