@@ -63,7 +63,7 @@
             "@php vendor/bin/phpunit --coverage-clover coverage.xml"
         ],
         "test": [
-            "@php vendor/bin/phpunit"
+            "@php vendor/bin/phpunit --testsuite=Unit,Feature"
         ]
     },
     "extra": {
