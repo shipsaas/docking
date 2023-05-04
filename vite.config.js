@@ -7,13 +7,15 @@ export default defineConfig({
         vue(),
 
         laravel({
-            input: ['resources/css/console.css'],
-            refresh: true,
-        }),
-
-        laravel({
-            input: ['resources/js/console/index.js'],
+            input: ['resources/css/console.css', 'resources/js/console/index.js'],
             refresh: true,
         }),
     ],
+    build: {
+        rollupOptions: {
+            external: [
+                '/assets/img/logo.png',
+            ],
+        },
+    }
 });
