@@ -11,7 +11,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: ./app/Dockerfile
+      dockerfile: .docker/app/Dockerfile
     volumes:
       - app_storage:/var/www/html/storage/app
 
