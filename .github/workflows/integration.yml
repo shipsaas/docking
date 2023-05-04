@@ -49,4 +49,4 @@ jobs:
       -   name: PHPUnit tests - Integration Suite
           if: success()
           run: |
-            composer test --testsuite=Integration
+            composer test-integration
