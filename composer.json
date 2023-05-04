@@ -60,7 +60,7 @@
           "@php artisan key:generate --ansi"
         ],
         "test-coverage": [
-            "@php vendor/bin/phpunit --coverage-clover coverage.xml"
+            "@php vendor/bin/phpunit --testsuite=Unit,Feature --coverage-clover coverage.xml"
         ],
         "test": [
             "@php vendor/bin/phpunit --testsuite=Unit,Feature"
