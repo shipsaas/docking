@@ -2,7 +2,22 @@
 
 DocKing ships Docker Images too, in case you want boot it up as fast as you can for development, even production usage.
 
-## Build Flow
+## Development Image
+
+Development Image offers all-in-one image. You only need to run the image to use and that's all.
+
+```bash
+
+```
+
+## Production Build
+
+For production, we highly recommended to build the private image from your end, to ensure:
+
+- Configurations & Environment Variables
+- Private usage
+
+Steps:
 
 - Clone Project / Get Latest Tag
 - `composer install`

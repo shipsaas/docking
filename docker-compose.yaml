@@ -4,7 +4,7 @@ services:
   docking:
     build:
       context: .
-      dockerfile: .docker/app/Dockerfile
+      dockerfile: .docker/Dockerfile
     volumes:
       - app_storage:/var/www/html/storage/app
     links:
