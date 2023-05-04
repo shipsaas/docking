@@ -65,7 +65,7 @@
                 <div class="flex h-16 shrink-0 items-center">
                   <img
                     class="h-8 w-auto"
-                    src="/assets/img/logo.png"
+                    :src="imgUrl"
                     alt="DocKing"
                   />
                 </div>
@@ -179,7 +179,7 @@
         <div class="flex h-16 shrink-0 items-center">
           <img
             class="h-8 w-auto"
-            src="/assets/img/logo.png"
+            :src="imgUrl"
             alt="DocKing"
           />
         </div>
@@ -353,6 +353,7 @@ import {
   RocketLaunchIcon,
 } from '@heroicons/vue/24/outline';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
+import imgUrl from './assets/img/logo.png';
 
 import { useNavigationItems } from './composable/useNavigationItems';
 import LoginModal from './components/LoginModal/LoginModal.vue';
