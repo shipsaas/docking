@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b7d3dae9ad7ed23449e7ba1eb0d967d",
+    "content-hash": "94678e3916d7adfaa623fe00e7e96326",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8157,6 +8157,57 @@
             "time": "2023-02-07T11:34:05+00:00"
         },
         {
+            "name": "smalot/pdfparser",
+            "version": "v2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smalot/pdfparser.git",
+                "reference": "9094d7777aeaa7d8a0a845b352f7dfe4a8baced3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smalot/pdfparser/zipball/9094d7777aeaa7d8a0a845b352f7dfe4a8baced3",
+                "reference": "9094d7777aeaa7d8a0a845b352f7dfe4a8baced3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-zlib": "*",
+                "php": ">=7.1",
+                "symfony/polyfill-mbstring": "^1.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Smalot\\PdfParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastien MALOT",
+                    "email": "sebastien@malot.fr"
+                }
+            ],
+            "description": "Pdf parser library. Can read and extract information from pdf file.",
+            "homepage": "https://www.pdfparser.org",
+            "keywords": [
+                "extract",
+                "parse",
+                "parser",
+                "pdf",
+                "text"
+            ],
+            "support": {
+                "issues": "https://github.com/smalot/pdfparser/issues",
+                "source": "https://github.com/smalot/pdfparser/tree/v2.5.0"
+            },
+            "time": "2023-04-24T07:00:49+00:00"
+        },
+        {
             "name": "spatie/backtrace",
             "version": "1.4.0",
             "source": {
@@ -8864,7 +8915,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1|^8.2"
+        "php": "^8.2"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"

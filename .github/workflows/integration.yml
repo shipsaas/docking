@@ -49,10 +49,3 @@ jobs:
           if: success()
           run: |
             composer test --testsuite=Integration
-
-      -   name: upload coverage to codecov.io
-          if: success()
-          uses: codecov/codecov-action@v3
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            file: ./coverage.xml

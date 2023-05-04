@@ -1,0 +1,41 @@
+{
+    "title": "Invoice",
+    "invoice": {
+        "date": "May 3th, 2023",
+        "number": "1555",
+        "due_date": "Jun 3th, 2023",
+        "amount": "USD 1,950.98",
+        "items": [
+            {
+                "quantity": 1,
+                "description": "Monthly Infrastructure Fee",
+                "price": "USD 950.98",
+                "subtotal": "USD 950.98"
+            },
+            {
+                "quantity": 1,
+                "description": "Monthly Software Fee",
+                "price": "USD 1,000.00",
+                "subtotal": "USD 1,000.00"
+            }
+        ]
+    },
+    "client": {
+        "name": "Rainy Girl",
+        "address": "1150 Ave Street"
+    },
+    "account": {
+        "number": "0181003444561",
+        "swift": "BFTVVNVX"
+    },
+    "owner": {
+        "name": "DocKing",
+        "email": "seth@shipsaas.tech",
+        "phone": "849999999",
+        "website": "docking.shipsaas.tech",
+        "address": "2930 Thunder Street",
+        "locality": "San Francisco",
+        "state": "California",
+        "country": "US"
+    }
+}

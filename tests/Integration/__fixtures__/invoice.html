@@ -1,0 +1,307 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Fixture Invoice of DocKing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr td {
+            padding: 0;
+        }
+
+        table tr td:last-child {
+            text-align: right;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .large {
+            font-size: 1.75em;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #fb7578;
+        }
+
+        .logo-container {
+            margin: 20px 0 70px 0;
+        }
+
+        .invoice-info-container {
+            font-size: 0.875em;
+        }
+        .invoice-info-container td {
+            padding: 4px 0;
+        }
+
+        .client-name {
+            font-size: 1.5em;
+            vertical-align: top;
+        }
+
+        .line-items-container {
+            margin: 70px 0;
+            font-size: 0.875em;
+        }
+
+        .line-items-container th {
+            text-align: left;
+            color: #999;
+            border-bottom: 2px solid #ddd;
+            padding: 10px 0 15px 0;
+            font-size: 0.75em;
+            text-transform: uppercase;
+        }
+
+        .line-items-container th:last-child {
+            text-align: right;
+        }
+
+        .line-items-container td {
+            padding: 15px 0;
+        }
+
+        .line-items-container tbody tr:first-child td {
+            padding-top: 25px;
+        }
+
+        .line-items-container.has-bottom-border tbody tr:last-child td {
+            padding-bottom: 25px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .line-items-container.has-bottom-border {
+            margin-bottom: 0;
+        }
+
+        .line-items-container th.heading-quantity {
+            width: 50px;
+        }
+        .line-items-container th.heading-price {
+            text-align: right;
+            width: 100px;
+        }
+        .line-items-container th.heading-subtotal {
+            width: 100px;
+        }
+
+        .payment-info {
+            width: 38%;
+            font-size: 0.75em;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 100px;
+        }
+
+        .footer-thanks {
+            padding-top: 50px;
+            font-size: 1.125em;
+        }
+
+        .footer-thanks img {
+            display: inline-block;
+            position: relative;
+            top: 1px;
+            width: 16px;
+            margin-right: 4px;
+        }
+
+        .footer-info {
+            float: right;
+            margin-top: 5px;
+            font-size: 0.75em;
+            color: #ccc;
+        }
+
+        .footer-info span {
+            padding: 0 5px;
+            color: black;
+        }
+
+        .footer-info span:last-child {
+            padding-right: 0;
+        }
+
+        .page-container {
+            display: none;
+        }
+
+        .footer {
+            margin-top: 30px;
+        }
+
+        .footer-info {
+            float: none;
+            position: running(footer);
+            margin-top: -25px;
+        }
+
+        .page-container {
+            display: block;
+            position: running(pageContainer);
+            margin-top: -25px;
+            font-size: 12px;
+            text-align: right;
+            color: #999;
+        }
+
+        .page-container .page::after {
+            content: counter(page);
+        }
+
+        .page-container .pages::after {
+            content: counter(pages);
+        }
+
+
+        @page {
+            @bottom-right {
+                content: element(pageContainer);
+            }
+            @bottom-left {
+                content: element(footer);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="web-container">
+
+    <div class="page-container">
+        Page
+        <span class="page"></span>
+        of
+        <span class="pages"></span>
+    </div>
+
+    <div class="logo-container">
+        <img
+            src="https://www.gitbook.com/cdn-cgi/image/width=40,dpr=2,height=40,fit=contain,format=auto/https%3A%2F%2F1879741245-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252F35WpFfbPjsx7AT7mEjwk%252Ficon%252FEf9lR2rALBenMTSv6HPu%252FDocKing.png%3Falt%3Dmedia%26token%3Dd8c2a067-b871-406c-a431-161838199ecd"
+        >
+    </div>
+
+    <table class="invoice-info-container">
+        <tr>
+            <td rowspan="2" class="client-name">
+                {{ $client['name'] }}
+            </td>
+            <td>
+                {{ $owner['name'] }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ $owner['address'] }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Invoice Date: <strong>{{ $invoice['date'] }}</strong>
+            </td>
+            <td>
+                {{ $owner['locality'] }},
+                {{ $owner['state'] }},
+                {{ $owner['country'] }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Invoice No: <strong>{{ $invoice['number'] }}</strong>
+            </td>
+            <td>
+                {{ $owner['email'] }}
+            </td>
+        </tr>
+    </table>
+
+
+    <table class="line-items-container">
+        <thead>
+        <tr>
+            <th class="heading-quantity">Qty</th>
+            <th class="heading-description">Description</th>
+            <th class="heading-price">Price</th>
+            <th class="heading-subtotal">Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($invoice['items'] as $invoiceItem)
+        <tr>
+            <td>{{ $invoiceItem['quantity'] }}</td>
+            <td>{{ $invoiceItem['description'] }}</td>
+            <td class="right">
+                {{ $invoiceItem['price'] }}
+            </td>
+            <td class="bold">
+                {{ $invoiceItem['subtotal'] }}
+            </td>
+        </tr>
+        @endforeach
+        </tbody>
+    </table>
+
+
+    <table class="line-items-container has-bottom-border">
+        <thead>
+        <tr>
+            <th>Payment Info</th>
+            <th>Due By</th>
+            <th>Total Due</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="payment-info">
+                <div>
+                    Account No: <strong>{{ $account['number'] }}</strong>
+                </div>
+                <div>
+                    SWIFT Code: <strong>{{ $account['swift'] }}</strong>
+                </div>
+            </td>
+            <td class="large">{{ $invoice['due_date'] }}</td>
+            <td class="large total">
+                {{ $invoice['amount'] }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div class="footer-info">
+            <span>{{ $owner['email'] }}</span> |
+            <span>{{ $owner['phone'] }}</span> |
+            <span>{{ $owner['website'] }}</span>
+        </div>
+        <div class="footer-thanks">
+            <img src="https://github.com/anvilco/html-pdf-invoice-template/raw/main/img/heart.png" alt="heart">
+            <span>Thank you!</span>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
