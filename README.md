@@ -45,6 +45,13 @@ Awesome, IKR?
 - (Planned) mPDF
   - Waiting for `psr-*` updates
 
+## Tests
+
+- Unit Tests to cover all functions & methods ❇️
+- Integration Tests to test against REAL PDF ENGINES:
+  - Gotenberg ✅
+  - WkHtmlToPdf ✅
+
 ## LICENSE
 
 MIT LICENSE
