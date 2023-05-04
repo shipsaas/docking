@@ -5,17 +5,13 @@ services:
     image: nginx:latest
     ports:
       - '8080:80'
-    volumes:
-      - ./:/var/www/html
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     links:
       - php
 
-  # this will start: php-fpm and worker (using supervisor)
   php:
     build:
       context: .
-      dockerfile: .docker/app/Dockerfile
+      dockerfile: ./app/Dockerfile
     volumes:
       - app_storage:/var/www/html/storage/app
 

@@ -19,14 +19,17 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy project files
-COPY . .
-COPY docking-worker.conf /etc/supervisor/conf.d/
+COPY ../../ .
+
+# Copy supervisor setup
+COPY docking-worker.conf /etc/supervisor/conf.d/docking-worker.conf
 
 # build
 RUN composer install
 RUN npm ci
 RUN npm run build
 RUN php artisan optimize
+RUN php artisan storage:link
 
 # Set permissions
 RUN chown -R www-data:www-data storage
