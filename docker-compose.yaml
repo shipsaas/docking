@@ -1,19 +1,16 @@
 version: '3.9'
 
 services:
-  web:
-    image: nginx:latest
-    ports:
-      - '8080:80'
-    links:
-      - php
-
-  php:
+  docking:
     build:
       context: .
       dockerfile: .docker/app/Dockerfile
     volumes:
       - app_storage:/var/www/html/storage/app
+    links:
+      - gotenberg
+    ports:
+      - '8888:80'
 
   gotenberg:
     image: gotenberg/gotenberg:7
