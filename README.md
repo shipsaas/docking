@@ -17,8 +17,9 @@ Documentation: [DocKing](https://docking.shipsaas.tech)
 ## Features
 - Manage your document templates 📰🧾.
 - Render HTML based on your desired data for a specific template, then export it as PDF 🏃‍.
+- Supports multiple state-of-the-art PDF Engines 🍻.
 - Webhook notification after PDF rendered (for async flow) 🚀
-- Built-in UI-console to manage the services (for internal use) 🔋.
+- Built-in UI-console to manage the templates & files (for internal use) 🔋.
 - DocKing can perfectly fit for the horizontal scaling based on your needs 😉.
 
 ## Diagram of how it works
