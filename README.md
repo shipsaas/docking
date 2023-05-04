@@ -1,6 +1,7 @@
 # DocKing from ShipSaaS
 
 [![Build & Test (PHP 8.2)](https://github.com/shipsaas/docking/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/build.yml)
+[![Integration Tests](https://github.com/shipsaas/docking/actions/workflows/integration.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/integration.yml)
 [![codecov](https://codecov.io/gh/shipsaas/docking/branch/main/graph/badge.svg?token=FAZ9899IPW)](https://codecov.io/gh/shipsaas/docking)
 
 <p align="center" width="100%">

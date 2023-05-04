@@ -34,6 +34,7 @@ jobs:
             echo "$TESTING_ENV" > .env
             php artisan key:generate
             php artisan optimize
+            php artisan storage:link
 
       -   name: Setup WkHTMLToPdf
           if: success()
