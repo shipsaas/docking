@@ -1,0 +1,58 @@
+name: Integration Tests
+env:
+  TESTING_ENV: ${{ secrets.TESTING_ENV }}
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+    types: [ opened, synchronize, reopened, ready_for_review ]
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -   uses: actions/checkout@v3
+          if: success()
+
+      -   name: Setup PHP with coverage driver
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: 8.2
+            coverage: pcov
+
+      -   name: Setup
+          if: success()
+          run: |
+            sudo service mysql start
+            php -v
+            mysql -uroot -proot -e "CREATE DATABASE docking;"
+            composer install --no-interaction
+            echo "$TESTING_ENV" > .env
+            php artisan key:generate
+            php artisan optimize
+
+      -   name: Setup WkHTMLToPdf
+          if: success()
+          run: sudo apt-get update && sudo apt-get install wkhtmltopdf -y
+
+      -   name: Setup Gotenberg
+          if: success()
+          run: |
+            docker-compose up -d gotenberg
+            sleep 30
+
+      -   name: PHPUnit tests - Integration Suite
+          if: success()
+          run: |
+            composer test --testsuite=Integration
+
+      -   name: upload coverage to codecov.io
+          if: success()
+          uses: codecov/codecov-action@v3
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            file: ./coverage.xml
