@@ -34,6 +34,7 @@ RUN php artisan optimize
 RUN php artisan storage:link
 RUN php artisan migrate
 
+RUN mkdir -p storage/log
 RUN chmod -R 777 storage/log
 
 # Nginx remove default site
