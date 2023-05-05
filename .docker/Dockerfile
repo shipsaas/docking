@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     supervisor \
-    nginx
+    nginx \
+    wkhtmltopdf
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo mbstring exif pcntl bcmath gd
@@ -29,7 +30,6 @@ COPY . .
 COPY ./.docker/docking-worker.conf /etc/supervisor/conf.d/
 COPY ./.docker/docking-host.conf /etc/nginx/conf.d/default.conf
 
-RUN touch docking.sqlite
 RUN php artisan optimize
 RUN php artisan storage:link
 RUN php artisan migrate

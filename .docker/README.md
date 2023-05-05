@@ -10,14 +10,17 @@ Development Image offers all-in-one image. You only need to run the image to use
 
 ```
 
+Dev mode uses SQLite (`docking.sqlite` file is inside the image)
+
 ## Production Build
 
-For production, we highly recommended to build the private image from your end, to ensure:
+For production, we highly recommended to build the private image and push it from your end. So you will have over controls on:
 
 - Configurations & Environment Variables
 - Private usage
+- blah blah...
 
-Steps:
+### Preparation Steps
 
 - Clone Project / Get Latest Tag
 - `composer install`
@@ -25,6 +28,14 @@ Steps:
 - `npm run build`
 - Prepare your desire ".env" file
 - Build
+
+### Build Image
+
+```bash
+docker build -f Dockerfile.prod -t your-org/docking:<version>
+
+docker build -f ./docker/Dockerfile.prod -t shipsaas/docking:1.0.0
+```
 
 ## Note
 
