@@ -34,9 +34,7 @@ RUN php artisan optimize
 RUN php artisan storage:link
 RUN php artisan migrate
 
-# Set permissions
-RUN chown -R www-data:www-data storage
-RUN chown -R www-data:www-data bootstrap/cache
+RUN chmod -R 777 storage/log
 
 # Nginx remove default site
 RUN rm /etc/nginx/sites-enabled/default
