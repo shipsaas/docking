@@ -32,13 +32,27 @@ jobs:
           with:
             images: ${{ env.REGISTRY }}/${{ env.IMAGE }}
 
-      -   name: Setup
+      -   name: Setup PHP with coverage driver
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: 8.2
+            coverage: pcov
+
+      -   name: Setup Node 16
+          uses: actions/setup-node@v3
+          with:
+            node-version: 16
+            cache: 'npm'
+
+      -   name: Setup & Build
           if: success()
           run: |
             composer install --no-interaction
             echo "$DEV_IMAGE_ENV" > .env
             touch docking.sqlite
             php artisan key:generate
+
+            npm ci && npm run build
 
       -   name: Build and push Docker image
           uses: docker/build-push-action@v4
