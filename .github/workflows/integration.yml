@@ -43,7 +43,7 @@ jobs:
       -   name: Setup Gotenberg
           if: success()
           run: |
-            docker-compose -f ./docker/docker-compose.yml up -d gotenberg
+            docker-compose up -d gotenberg
             sleep 30
 
       -   name: PHPUnit tests - Integration Suite
