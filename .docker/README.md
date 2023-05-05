@@ -6,11 +6,14 @@ DocKing ships Docker Images too, in case you want boot it up as fast as you can 
 
 Development Image offers all-in-one image. You only need to run the image to use and that's all.
 
-```bash
+Dev mode uses SQLite (`docking.sqlite` file is inside the image).
 
+```bash
+docker run -p 8888:80 shipsaas/docking-dev -d
 ```
 
-Dev mode uses SQLite (`docking.sqlite` file is inside the image)
+Note: you need to run `gotenberg` image independently. 
+Check out our [`docker-compose.yaml`](../docker-compose.yaml) for example.
 
 ## Production Build
 
