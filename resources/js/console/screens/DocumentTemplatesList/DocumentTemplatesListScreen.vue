@@ -7,7 +7,7 @@
       :records="records"
     >
       <template #action-buttons>
-        <CreateNewTemplate @template-created="onTemplateCreated" />
+        <CreateNewTemplate />
       </template>
       <template #record-actions="{ record }">
         <span class="isolate inline-flex rounded-md shadow-sm gap-1">
@@ -76,11 +76,6 @@ const loadRecords = async () => {
   });
 
   records.value = [...documentTemplates.data];
-};
-
-const onTemplateCreated = () => {
-  page.value = 1;
-  loadRecords();
 };
 
 const onTemplateDeleted = () => loadRecords();

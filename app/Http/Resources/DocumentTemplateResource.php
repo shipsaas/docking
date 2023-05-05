@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use stdClass;
 
 /** @mixin DocumentTemplate */
 class DocumentTemplateResource extends JsonResource
@@ -26,8 +27,8 @@ class DocumentTemplateResource extends JsonResource
         if (!$isIndexEndpoint) {
             $additionalFields = [
                 'template' => $this->template,
-                'default_variables' => $this->default_variables,
-                'metadata' => $this->metadata,
+                'default_variables' => empty($this->default_variables) ? new stdClass() : $this->default_variables,
+                'metadata' => empty($this->metadata) ? new stdClass() : $this->metadata,
                 'created_at' => $this->created_at?->toISOString(),
             ];
         }

@@ -12,6 +12,7 @@ use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
+use stdClass;
 
 class DocumentTemplateController extends Controller
 {
@@ -31,9 +32,13 @@ class DocumentTemplateController extends Controller
 
     public function store(DocumentTemplateStoreRequest $request): JsonResponse
     {
-        $documentTemplate = DocumentTemplate::create($request->validated());
+        $documentTemplate = DocumentTemplate::create([
+            ...$request->validated(),
+            'default_variables' => new stdClass,
+            'metadata' => new stdClass,
+        ]);
 
-        Event::dispatch(new DocumentTemplateCreated($documentTemplate));
+        $documentTemplate && Event::dispatch(new DocumentTemplateCreated($documentTemplate));
 
         return new JsonResponse([
             'uuid' => $documentTemplate->uuid,
@@ -47,8 +52,8 @@ class DocumentTemplateController extends Controller
     ): JsonResponse {
         $updateResult = $documentTemplate->update([
             ...$request->validated(),
-            'default_variables' => $request->input('default_variables') ?: [],
-            'metadata' => $request->input('metadata') ?: [],
+            'default_variables' => $request->input('default_variables') ?: $documentTemplate->default_variables ?: '{}',
+            'metadata' => $request->input('metadata') ?: $documentTemplate->metadata ?: '{}',
         ]);
 
         $updateResult && Event::dispatch(new DocumentTemplateUpdated($documentTemplate));
