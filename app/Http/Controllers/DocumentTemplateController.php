@@ -34,8 +34,12 @@ class DocumentTemplateController extends Controller
     {
         $documentTemplate = DocumentTemplate::create([
             ...$request->validated(),
-            'default_variables' => new stdClass,
-            'metadata' => new stdClass,
+            'default_variables' => [
+                'your-variable' => 'here',
+            ],
+            'metadata' => [
+                'driver' => 'gotenberg|wkhtmltopdf',
+            ],
         ]);
 
         $documentTemplate && Event::dispatch(new DocumentTemplateCreated($documentTemplate));
@@ -52,8 +56,12 @@ class DocumentTemplateController extends Controller
     ): JsonResponse {
         $updateResult = $documentTemplate->update([
             ...$request->validated(),
-            'default_variables' => $request->input('default_variables') ?: $documentTemplate->default_variables ?: '{}',
-            'metadata' => $request->input('metadata') ?: $documentTemplate->metadata ?: '{}',
+            'default_variables' => $request->input('default_variables')
+                ?: $documentTemplate->default_variables
+                    ?: new stdClass(),
+            'metadata' => $request->input('metadata')
+                ?: $documentTemplate->metadata
+                    ?: new stdClass(),
         ]);
 
         $updateResult && Event::dispatch(new DocumentTemplateUpdated($documentTemplate));
