@@ -37,6 +37,7 @@ RUN php artisan migrate
 RUN chown -R www-data:www-data storage
 RUN chown -R www-data:www-data storage/app
 RUN chmod -R 777 storage/logs
+RUN chmod -R 777 docking.sqlite
 
 # Nginx remove default site
 RUN rm /etc/nginx/sites-enabled/default
