@@ -51,10 +51,11 @@ import Input from '../../../components/Input/Input.vue';
 import { documentTemplateRepository } from '../../../repositories/documentTemplate.repository';
 import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isOpenModal = ref(false);
 const { isLoading, startLoading, stopLoading } = useLoading();
-const emits = defineEmits(['template-created']);
 
 const getBlankFields = () => ({
   key: '',
@@ -93,7 +94,13 @@ const onClickSubmit = async () => {
   });
 
   onClickCloseModal();
-  emits('template-created', data.uuid);
+
+  router.push({
+    name: 'document-template-edit',
+    params: {
+      uuid: data.uuid,
+    },
+  });
 };
 </script>
 

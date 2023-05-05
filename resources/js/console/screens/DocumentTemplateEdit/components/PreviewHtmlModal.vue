@@ -5,7 +5,8 @@
     width-size="5xl"
   >
     <p class="text-sm text-gray-500 mt-2">
-      Note: this is browser-rendering. For more accurate result, use the PDF mode.
+      Note: this is browser-rendering. For more accurate result, use the PDF
+      mode.
     </p>
     <div class="my-2 border-t"></div>
     <RenderedHTMLIframe
