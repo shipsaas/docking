@@ -14,8 +14,8 @@ class DocumentTemplateUpdateRequest extends FormRequest
             'title' => 'required|string',
             'category' => 'required|string',
             'template' => 'required|string',
-            'default_variables' => 'nullable|array',
-            'metadata' => 'nullable|array',
+            'default_variables' => 'required|array',
+            'metadata' => 'required|array',
         ];
     }
 }
