@@ -40,6 +40,8 @@ Awesome, IKR?
 - Laravel 10
 - Any database (MySQL, PostgreSQL or SQLite - your choice)
   -  Personal preference: MySQL 8
+- Vue 3
+- Tailwind CSS
 
 ### PDF Rendering Services
 - Gotenberg ⭐️
