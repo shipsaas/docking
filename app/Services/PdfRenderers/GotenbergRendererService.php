@@ -33,7 +33,10 @@ class GotenbergRendererService extends AbstractPdfRendererService implements Pdf
         $driver = $metadata['engine'] ?? static::DEFAULT_ENGINE;
         $response = Http::asMultipart()
             ->attach('files', fopen($inputFile, 'r'), 'index.html')
-            ->post($this->getEndpointByEngine($driver));
+            ->post(
+                $this->getEndpointByEngine($driver),
+                $this->resolveMetadata($metadata),
+            );
 
         // assert
         $contentDisposition = $response->header('Content-Disposition');
@@ -79,5 +82,25 @@ class GotenbergRendererService extends AbstractPdfRendererService implements Pdf
         fclose($outputFileStream);
 
         return $outputFile;
+    }
+
+    private function resolveMetadata(array $metadata): array
+    {
+        $gotenbergMetadata = [];
+
+        $gotenbergMetadata['pageWidth'] ??= $metadata['page-width'] ?? null;
+        $gotenbergMetadata['paperHeight'] ??= $metadata['page-height'] ?? null;
+        $gotenbergMetadata['marginTop'] ??= $metadata['margin-top'] ?? null;
+        $gotenbergMetadata['marginBottom'] ??= $metadata['margin-bottom'] ?? null;
+        $gotenbergMetadata['marginLeft'] ??= $metadata['margin-left'] ?? null;
+        $gotenbergMetadata['marginRight'] ??= $metadata['margin-right'] ?? null;
+        $gotenbergMetadata['preferCssPageSize'] ??= $metadata['prefer-css-page-size'] ?? null;
+        $gotenbergMetadata['printBackground'] ??= $metadata['print-background'] ?? null;
+        $gotenbergMetadata['omitBackground'] ??= $metadata['omit-background'] ?? null;
+        $gotenbergMetadata['landscape'] ??= $metadata['landscape'] ?? null;
+        $gotenbergMetadata['scale'] ??= $metadata['scale'] ?? null;
+        $gotenbergMetadata['nativePageRanges'] ??= $metadata['native-page-ranges'] ?? null;
+
+        return array_filter($gotenbergMetadata);
     }
 }
