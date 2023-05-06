@@ -14,6 +14,7 @@ use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
 use App\Services\TemplatingRenderManager;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use stdClass;
@@ -79,6 +80,8 @@ class DocumentTemplateController extends Controller
 
     public function destroy(DocumentTemplate $documentTemplate): JsonResponse
     {
+        throw new AuthorizationException("We don't support deleting new template for LiveMode test. Sorries.");
+
         $deleteResult = (bool) $documentTemplate->delete();
 
         $deleteResult && Event::dispatch(new DocumentTemplateDestroyed($documentTemplate));
