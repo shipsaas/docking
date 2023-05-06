@@ -9,6 +9,11 @@ use Illuminate\Validation\Rule;
 
 class DocumentTemplateStoreRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return false;
+    }
+
     protected function failedAuthorization()
     {
         throw new AuthorizationException("We don't support creating new template for LiveMode test. Sorries.");

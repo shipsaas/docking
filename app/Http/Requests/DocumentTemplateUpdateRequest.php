@@ -9,9 +9,14 @@ use Illuminate\Validation\Rule;
 
 class DocumentTemplateUpdateRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return false;
+    }
+
     protected function failedAuthorization(): void
     {
-        throw new AuthorizationException("We don't support updating new template for LiveMode test. Sorries.");
+        throw new AuthorizationException("We don't support updating template for LiveMode test. Sorries.");
     }
 
     public function rules(): array

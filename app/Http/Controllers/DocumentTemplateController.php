@@ -80,7 +80,7 @@ class DocumentTemplateController extends Controller
 
     public function destroy(DocumentTemplate $documentTemplate): JsonResponse
     {
-        throw new AuthorizationException("We don't support deleting new template for LiveMode test. Sorries.");
+        throw new AuthorizationException("We don't support deleting template for LiveMode test. Sorries.");
 
         $deleteResult = (bool) $documentTemplate->delete();
 
