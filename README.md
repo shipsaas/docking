@@ -14,7 +14,20 @@ You can use DocKing as a Shared-Microservice which can be used in any services.
 
 Documentation: [DocKing](https://docking.shipsaas.tech)
 
-## Features
+## LIVE DEMO 🔥
+
+URL: https://docking-demo.shipsaas.tech/
+
+Console: https://docking-demo.shipsaas.tech/console#/
+
+
+- Password: None
+- Drivers:
+  - Gotenberg: Yes, use the Live Demo Instance
+  - WkHtmlToPdf: Yes, without any extensions or fonts.
+- Most of the features are disabled. You can only view & preview PDFs in multiple modes.
+
+## Features 🚀
 - Manage your document templates 📰🧾.
 - Render HTML based on your desired data for a specific template, then export it as PDF 🏃‍.
 - Supports multiple state-of-the-art PDF Engines 🍻.
