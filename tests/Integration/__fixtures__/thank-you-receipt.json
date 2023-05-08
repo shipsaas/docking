@@ -1,0 +1,29 @@
+{
+    "support_email": "info@shipsaas.tech",
+    "company": {
+        "name": "ShipSaaS",
+        "address": "123 Ave",
+        "locality": "San Francisco",
+        "state": "CA",
+        "zipcode": "15000",
+        "country": "US"
+    },
+    "customer": {
+        "name": "Seth Sandaru"
+    },
+    "invoice": {
+        "id": 111555,
+        "created_at": "May 8th, 2023",
+        "total": "$ 10.00"
+    },
+    "items": [
+        {
+            "name": "Subscription",
+            "price": "$ 9.00"
+        },
+        {
+            "name": "Tax",
+            "price": "$ 1.00"
+        }
+    ]
+}

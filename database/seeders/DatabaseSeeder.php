@@ -46,5 +46,25 @@ class DatabaseSeeder extends Seeder
                 'engine' => GotenbergEngine::CHROMIUM->value,
             ],
         ]);
+
+        // 3. Thank you receipt
+        DocumentTemplate::create([
+            'key' => 'thank-you-receipt-template',
+            'category' => 'invoice-domain',
+            'title' => 'Thank You Receipt Template',
+            'template' => file_get_contents(
+                __DIR__ . '/../../tests/Integration/__fixtures__/thank-you-receipt.html'
+            ),
+            'default_variables' => json_decode(
+                file_get_contents(
+                    __DIR__ . '/../../tests/Integration/__fixtures__/thank-you-receipt.json'
+                ),
+                true
+            ),
+            'metadata' => [
+                'driver' => 'gotenberg',
+                'engine' => GotenbergEngine::CHROMIUM->value,
+            ],
+        ]);
     }
 }
