@@ -35,7 +35,8 @@ class GotenbergServiceTest extends TestCase
         Http::expects('post')
             ->once()
             ->with(
-                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html'
+                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html',
+                []
             )
             ->andReturn($httpResponse = $this->createMock(Response::class));
 
@@ -65,7 +66,8 @@ class GotenbergServiceTest extends TestCase
         Http::expects('post')
             ->once()
             ->with(
-                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html'
+                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html',
+                []
             )
             ->andReturn($httpResponse = $this->createMock(Response::class));
 
@@ -93,7 +95,8 @@ class GotenbergServiceTest extends TestCase
         Http::expects('post')
             ->once()
             ->with(
-                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html'
+                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html',
+                []
             )
             ->andReturn($httpResponse = $this->createMock(Response::class));
 
@@ -122,7 +125,8 @@ class GotenbergServiceTest extends TestCase
         Http::expects('post')
             ->once()
             ->with(
-                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html'
+                'http://internal-gotenberg.shipsaas.tech/forms/chromium/convert/html',
+                []
             )
             ->andReturn($httpResponse = $this->createMock(Response::class));
 
