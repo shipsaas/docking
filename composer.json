@@ -20,6 +20,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "mpdf/mpdf": "^v8.1.6",
         "shipsaas/never-throw": "^1.0"
     },
     "require-dev": {
