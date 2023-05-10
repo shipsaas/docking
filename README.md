@@ -23,7 +23,7 @@ Console: https://docking-demo.shipsaas.tech/console#/
 
 - Password: None
 - Drivers:
-  - Gotenberg: Yes, use the Live Demo Instance
+  - Gotenberg: Yes, use the Live Demo Instance (from Gotenberg.dev)
   - WkHtmlToPdf: Yes, without any extensions or fonts.
 - Most of the features are disabled. You can only view & preview PDFs in multiple modes.
 
@@ -73,6 +73,16 @@ Awesome, IKR?
 
 MIT LICENSE
 
+## Development & Contribution Guidelines
+- Please follow PSR-1 & PSR-12 coding conventions
+- Unit/Integration testing is a must
+
+Thank you very much for your contributions!
+
 ## Contributors
 
 ShipSaaS x Seth Phat & Contributors.
+
+## Copyright
+
+Copyright ©️ 2023 by ShipSaaS x Seth Phat.
