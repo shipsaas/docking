@@ -20,6 +20,10 @@ const previewModes = [
     key: 'pdf-wkhtmltopdf',
     label: 'Preview PDF (WkHtmlToPdf)',
   },
+  {
+    key: 'pdf-mpdf',
+    label: 'Preview PDF (mPDF)',
+  },
 ];
 
 /**
@@ -87,6 +91,8 @@ export const usePreviewTemplate = (template) => {
         return previewPdf('gotenberg');
       case 'pdf-wkhtmltopdf':
         return previewPdf('wkhtmltopdf');
+      case 'pdf-mpdf':
+        return previewPdf('mpdf');
     }
   };
 

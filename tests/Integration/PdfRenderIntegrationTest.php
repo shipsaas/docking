@@ -78,6 +78,33 @@ class PdfRenderIntegrationTest extends TestCase
         $this->assertStringContainsString('docking.shipsaas.tech', $content);
     }
 
+    public function testRenderPdfUsingMPDF()
+    {
+        $response = $this->json('POST', 'api/v1/document-templates/' . $this->template->uuid . '/pdfs', [
+            'variables' => $this->template->default_variables,
+            'metadata' => [
+                'driver' => PdfService::MPDF->value,
+            ],
+        ])->assertOk();
+
+        $url = $response->json('url');
+
+        $content = str_replace([' ', "\t"], '', ($this->readPdfToString(
+            public_path(
+                str_replace(
+                    'http://127.0.0.1:8000',
+                    '',
+                    $url
+                )
+            )
+        )));
+
+        $this->assertStringContainsString('MonthlyInfrastructureFee', $content);
+        $this->assertStringContainsString('MonthlySoftwareFee', $content);
+        $this->assertStringContainsString('seth@shipsaas.tech', $content);
+        $this->assertStringContainsString('docking.shipsaas.tech', $content);
+    }
+
     private function readPdfToString(string $filePath): string
     {
         $parser = new Parser();

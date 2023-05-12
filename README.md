@@ -59,8 +59,7 @@ Awesome, IKR?
 ### PDF Rendering Services
 - Gotenberg ⭐️
 - wkHTMLtoPDF ✅
-- (Planned) mPDF
-  - Waiting for `psr-*` updates
+- mPDF 🧰 (available since v1.1.0)
 
 ## Tests
 
@@ -68,6 +67,7 @@ Awesome, IKR?
 - Integration Tests to test against REAL PDF ENGINES:
   - Gotenberg ✅
   - WkHtmlToPdf ✅
+  - mPDF ✅
 
 ## LICENSE
 
