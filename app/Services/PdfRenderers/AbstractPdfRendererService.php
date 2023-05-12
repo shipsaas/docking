@@ -12,6 +12,13 @@ use Illuminate\Support\Str;
 
 abstract class AbstractPdfRendererService
 {
+    /**
+     * Render a DocumentTemplate with dynamic variables using Blade
+     *
+     * Then store the HTML into a temporary file
+     *
+     * @return string The temporary file path
+     */
     protected function renderTemplate(DocumentTemplate $template, array $variables = []): string
     {
         $inputFile = tempnam(sys_get_temp_dir(), 'rendered_html_template');

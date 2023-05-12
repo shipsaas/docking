@@ -32,12 +32,5 @@ class AppServiceProvider extends ServiceProvider
             PdfRendererContract::class,
             fn () => $this->app->make(PdfRenderManager::class)->getDriver()
         );
-
-        $this->app->bind(Mpdf::class, function () {
-            $mpdf = new Mpdf();
-            $mpdf->setLogger(logger());
-
-            return $mpdf;
-        });
     }
 }

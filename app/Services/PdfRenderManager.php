@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\PdfService;
 use App\Models\DocumentTemplate;
 use App\Results\PdfRenderResult;
+use App\Services\PdfRenderers\MpdfRendererService;
 use App\Services\PdfRenderers\PdfRendererContract;
 use LogicException;
 use App\Services\PdfRenderers\GotenbergRendererService;
@@ -19,8 +20,7 @@ class PdfRenderManager
         return match ($driver) {
             PdfService::GOTENBERG->value => app(GotenbergRendererService::class),
             PdfService::WK_HTML_TO_PDF->value => app(WkHtmlToPdfRendererService::class),
-            // TODO: phase 2
-            // PdfService::MPDF->value => app(MpdfRendererService::class),
+            PdfService::MPDF->value => app(MpdfRendererService::class),
             default => throw new LogicException("PDF Driver \"$driver\" is not supported")
         };
     }

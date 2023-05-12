@@ -2,20 +2,23 @@
 
 namespace App\Utils;
 
-use App\Enums\PdfService;
+use BackedEnum;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\In as RuleIn;
 
+/**
+ * @mixin BackedEnum
+ */
 trait EnumHelper
 {
     public static function getNames(): array
     {
-        return array_column(PdfService::cases(), 'name');
+        return array_column(self::cases(), 'name');
     }
 
     public static function getValues(): array
     {
-        return array_column(PdfService::cases(), 'value');
+        return array_column(self::cases(), 'value');
     }
 
     public static function getRequestRule(): RuleIn
