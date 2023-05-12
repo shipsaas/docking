@@ -74,8 +74,12 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
         $mpdf->setLogger(logger());
         $mpdf->useSubstitutions = false;
         $mpdf->simpleTables = true;
-        $mpdf->SetProtection(['print']);
         $mpdf->SetDisplayMode('fullpage');
+
+        // this will generate an unreadable PDF
+        if (isset($metadata['encryptPdf']) && $metadata['encryptPdf'] === true) {
+            $mpdf->SetProtection(['print']);
+        }
 
         return $mpdf;
     }
