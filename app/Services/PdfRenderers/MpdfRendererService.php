@@ -55,6 +55,13 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
 
     private function createMdpfInstance(array $metadata = []): Mpdf
     {
+        if (app()->runningUnitTests()
+            && isset($metadata['use-test-instance'])
+            && $metadata['use-test-instance'] === true
+        ) {
+            return app('mpdf-testing');
+        }
+
         $mpdf = new Mpdf([
             'format' => $metadata['format'] ?? 'A4',
             'margin_left' => $metadata['margin-left'] ?? 15,
