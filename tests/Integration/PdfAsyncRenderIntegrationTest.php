@@ -4,6 +4,8 @@ namespace Tests\Integration;
 
 use App\Enums\PdfService;
 use App\Models\DocumentTemplate;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 class PdfAsyncRenderIntegrationTest extends TestCase
@@ -26,6 +28,11 @@ class PdfAsyncRenderIntegrationTest extends TestCase
         config([
             'queue.default' => 'database',
         ]);
+
+        Schema::create('webhook_records', function (Blueprint $table) {
+            $table->id();
+            $table->string('url');
+        });
     }
 
     public function testRenderAsyncOk()
@@ -38,11 +45,10 @@ class PdfAsyncRenderIntegrationTest extends TestCase
                 'variables' => $this->template->default_variables,
                 'metadata' => [
                     'driver' => PdfService::WK_HTML_TO_PDF->value,
-                    'pageWidth' => 5,
-                    'marginTop' => 15,
-                    'marginBottom' => 15,
-                    'marginLeft' => 20,
-                    'marginRight' => 20,
+                    'margin-top' => 15,
+                    'margin-bottom' => 15,
+                    'margin-left' => 20,
+                    'margin-right' => 20,
                 ],
                 'webhook_url' => route('tests.notifications'),
             ]
@@ -55,8 +61,6 @@ class PdfAsyncRenderIntegrationTest extends TestCase
         $this->artisan('queue:work --stop-when-empty');
 
         // 4. Assertions
-        $this->assertTrue(config('notifications.notified'));
-        $this->assertNotNull(config('notifications.url'));
-        $this->assertStringStartsWith('http', config('notifications.url'));
+        $this->assertDatabaseCount('webhook_records', 1);
     }
 }
