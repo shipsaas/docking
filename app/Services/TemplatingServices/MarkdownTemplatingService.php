@@ -21,10 +21,10 @@ class MarkdownTemplatingService implements TemplatingServiceContract
      */
     public function renderHtml(DocumentTemplate $template, array $variables): string
     {
-        $renderedMarkdown = $this->bladeTemplatingService->renderHtml($template, $variables);
+        $renderedHtml = $this->bladeTemplatingService->renderHtml($template, $variables);
 
         return rescue(
-            fn () => Markdown::parse($renderedMarkdown)->toHtml(),
+            fn () => Markdown::parse($renderedHtml)->toHtml(),
             TemplatingErrorMessage::resolveThrowable(...)
         );
     }
