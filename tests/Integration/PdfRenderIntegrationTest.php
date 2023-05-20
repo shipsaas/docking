@@ -115,8 +115,8 @@ class PdfRenderIntegrationTest extends TestCase
             ],
         ]);
 
-        $response = $this->json('POST', 'api/v1/document-templates/' . $markdownTemplate->template->uuid . '/pdfs', [
-            'variables' => $markdownTemplate->template->default_variables,
+        $response = $this->json('POST', 'api/v1/document-templates/' . $markdownTemplate->uuid . '/pdfs', [
+            'variables' => $markdownTemplate->default_variables,
             'metadata' => [
                 'driver' => PdfService::GOTENBERG->value,
                 'templating' => TemplatingMode::MARKDOWN->value,
