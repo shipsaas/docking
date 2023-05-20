@@ -3,6 +3,7 @@
 namespace Tests\Integration;
 
 use App\Enums\PdfService;
+use App\Enums\TemplatingMode;
 use App\Models\DocumentTemplate;
 use Smalot\PdfParser\Parser;
 use Tests\TestCase;
@@ -103,6 +104,38 @@ class PdfRenderIntegrationTest extends TestCase
         $this->assertStringContainsString('MonthlySoftwareFee', $content);
         $this->assertStringContainsString('seth@shipsaas.tech', $content);
         $this->assertStringContainsString('docking.shipsaas.tech', $content);
+    }
+
+    public function testRenderPdfUsingGotenbergMarkdownTemplate()
+    {
+        $markdownTemplate = DocumentTemplate::factory()->create([
+            'template' => file_get_contents(__DIR__ . '/__fixtures__/email.md'),
+            'default_variables' => [
+                'name' => 'Markdown Hehe',
+            ],
+        ]);
+
+        $response = $this->json('POST', 'api/v1/document-templates/' . $markdownTemplate->uuid . '/pdfs', [
+            'variables' => $markdownTemplate->default_variables,
+            'metadata' => [
+                'driver' => PdfService::GOTENBERG->value,
+                'templating' => TemplatingMode::MARKDOWN->value,
+            ],
+        ])->assertOk();
+
+        $url = $response->json('url');
+
+        $content = $this->readPdfToString(
+            public_path(
+                str_replace(
+                    'http://127.0.0.1:8000',
+                    '',
+                    $url
+                )
+            )
+        );
+
+        $this->assertStringContainsString('Markdown Hehe', $content);
     }
 
     private function readPdfToString(string $filePath): string

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Enums\TemplatingMode;
 use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
 use Tests\TestCase;
@@ -25,31 +26,21 @@ class DocumentTemplateTest extends TestCase
         );
     }
 
-    public function testRenderHtmlOk()
+    public function testGetTemplatingModeReturnsTheModeFromMetadata()
     {
-        $template = DocumentTemplate::factory()->create([
-            'template' => 'Hello {{ $name }}',
-            'default_variables' => [
-                'name' => 'Seth',
+        $template = new DocumentTemplate([
+            'metadata' => [
+                'templating' => TemplatingMode::MARKDOWN->value,
             ],
         ]);
 
-        $renderedHtml = $template->renderHtml();
-
-        $this->assertSame('Hello Seth', $renderedHtml);
+        $this->assertSame(TemplatingMode::MARKDOWN, $template->getTemplatingMode());
     }
 
-    public function testRenderHtmlErrorReturnsPhpErrorString()
+    public function testGetTemplatingModeReturnsFallbackMode()
     {
-        $template = DocumentTemplate::factory()->create([
-            'template' => 'Hello {{ $name }}',
-            'default_variables' => [
-                'aaaa' => 'bbbb',
-            ],
-        ]);
+        $template = new DocumentTemplate();
 
-        $renderedHtml = $template->renderHtml();
-
-        $this->assertStringContainsString('Undefined variable $name', $renderedHtml);
+        $this->assertSame(TemplatingMode::BLADE, $template->getTemplatingMode());
     }
 }

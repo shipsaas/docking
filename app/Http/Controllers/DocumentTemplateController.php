@@ -10,6 +10,7 @@ use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
+use App\Services\TemplatingRenderManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use stdClass;
@@ -84,9 +85,12 @@ class DocumentTemplateController extends Controller
         ]);
     }
 
-    public function previewHtml(DocumentTemplate $documentTemplate): JsonResponse
-    {
-        $html = $documentTemplate->renderHtml();
+    public function previewHtml(
+        DocumentTemplate $documentTemplate,
+        TemplatingRenderManager $manager
+    ): JsonResponse {
+        $html = $manager->setMode($documentTemplate->getTemplatingMode())
+            ->renderHtml($documentTemplate, $documentTemplate->default_variables);
 
         return new JsonResponse([
             'html' => $html,
