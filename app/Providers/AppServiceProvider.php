@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\PdfRenderers\PdfRendererContract;
 use App\Services\PdfRenderManager;
+use App\Services\TemplatingServices\BladeTemplatingService;
+use App\Services\TemplatingServices\MarkdownTemplatingService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\PdfRenderers\GotenbergRendererService;
 use App\Services\PdfRenderers\MpdfRendererService;
@@ -34,5 +36,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind('mpdf-testing', Mpdf::class);
+
+        $this->bindTemplatingServices();
+    }
+
+    private function bindTemplatingServices(): void
+    {
+        $this->app->singleton(BladeTemplatingService::class);
+        $this->app->singleton(MarkdownTemplatingService::class);
     }
 }
