@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TemplatingMode;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,18 +41,11 @@ class DocumentTemplate extends Model
         return $this->hasMany(DocumentFile::class, 'document_template_uuid');
     }
 
-    public function renderHtml(?array $variables = null): string
+    public function getTemplatingMode(): TemplatingMode
     {
-        $variables ??= $this->default_variables;
+        $rawMode = ($this->metadata['templating'] ?? null)
+            ?: TemplatingMode::BLADE->value;
 
-        return rescue(
-            fn () => Blade::render(
-                $this->template,
-                $variables,
-                deleteCachedView: true
-            ),
-            fn (Throwable $error)
-                => 'Failed to render HTML. Error: ' . Str::before($error->getMessage(), '(View:')
-        );
+        return TemplatingMode::from($rawMode);
     }
 }

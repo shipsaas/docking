@@ -3,12 +3,14 @@
 namespace App\Services\TemplatingServices;
 
 use App\Models\DocumentTemplate;
+use App\Utils\TemplatingErrorMessage;
 use Illuminate\Mail\Markdown;
 
 class MarkdownTemplatingService implements TemplatingServiceContract
 {
-    public function __construct(private BladeTemplatingService $bladeTemplatingService)
-    {
+    public function __construct(
+        private readonly BladeTemplatingService $bladeTemplatingService
+    ) {
     }
 
     /**
@@ -21,6 +23,9 @@ class MarkdownTemplatingService implements TemplatingServiceContract
     {
         $renderedMarkdown = $this->bladeTemplatingService->renderHtml($template, $variables);
 
-        return Markdown::parse($renderedMarkdown)->toHtml();
+        return rescue(
+            fn () => Markdown::parse($renderedMarkdown)->toHtml(),
+            TemplatingErrorMessage::resolveThrowable(...)
+        );
     }
 }

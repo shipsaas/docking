@@ -4,6 +4,7 @@ namespace App\Services\PdfRenderers;
 
 use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
+use App\Services\TemplatingRenderManager;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Http;
@@ -24,7 +25,9 @@ abstract class AbstractPdfRendererService
         $inputFile = tempnam(sys_get_temp_dir(), 'rendered_html_template');
         rename($inputFile, $inputFile .= '.html');
 
-        $htmlRendered = Blade::render($template->template, $variables, deleteCachedView: true);
+        $htmlRendered = app(TemplatingRenderManager::class)
+            ->setMode($template->getTemplatingMode())
+            ->renderHtml($template, $variables);
 
         file_put_contents($inputFile, $htmlRendered);
 
