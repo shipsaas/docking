@@ -108,6 +108,8 @@ class DocumentTemplateController extends Controller
         DocumentTemplateDuplicateRequest $request,
         DocumentTemplate $documentTemplate
     ): JsonResponse {
+        throw new AuthorizationException("We don't support duplicating template for LiveMode test. Sorries.");
+
         $newTemplate = $documentTemplate->replicate([
             'uuid',
             'key',
