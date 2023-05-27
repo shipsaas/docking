@@ -68,6 +68,7 @@ Awesome, IKR?
   - Gotenberg ✅
   - WkHtmlToPdf ✅
   - mPDF ✅
+- E2E Tests to validate REAL WORLD API CALLs
 
 ## LICENSE
 
