@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\E2E;
 
 use App\Enums\PdfService;
+use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
-class PdfAsyncRenderIntegrationTest extends TestCase
+class PdfAsyncRenderE2ETest extends TestCase
 {
     protected DocumentTemplate $template;
 
@@ -17,9 +17,9 @@ class PdfAsyncRenderIntegrationTest extends TestCase
         parent::setUp();
 
         $this->template = DocumentTemplate::factory()->create([
-            'template' => file_get_contents(__DIR__ . '/__fixtures__/invoice.html'),
+            'template' => file_get_contents(__DIR__ . '/../Integration/__fixtures__/invoice.html'),
             'default_variables' => json_decode(
-                file_get_contents(__DIR__ . '/__fixtures__/invoice.json'),
+                file_get_contents(__DIR__ . '/../Integration/__fixtures__/invoice.json'),
                 true
             ),
         ]);
@@ -28,11 +28,6 @@ class PdfAsyncRenderIntegrationTest extends TestCase
         config([
             'queue.default' => 'database',
         ]);
-
-        Schema::create('webhook_records', function (Blueprint $table) {
-            $table->id();
-            $table->string('url');
-        });
     }
 
     public function testRenderAsyncOk()
@@ -50,7 +45,7 @@ class PdfAsyncRenderIntegrationTest extends TestCase
                     'margin-left' => 20,
                     'margin-right' => 20,
                 ],
-                'webhook_url' => route('tests.notifications'),
+                'webhook_url' => 'https://snorlax.shipsaas.tech/docking-webhook',
             ]
         )->assertOk();
 
@@ -61,6 +56,18 @@ class PdfAsyncRenderIntegrationTest extends TestCase
         $this->artisan('queue:work --stop-when-empty');
 
         // 4. Assertions
-        $this->assertDatabaseCount('webhook_records', 1);
+        $latestFile = DocumentFile::latest()->first();
+
+        $this->assertNotNull($latestFile);
+
+        $latestWebhookRecord = Http::get('https://snorlax.shipsaas.tech/get-latest-webhook-request');
+
+        $this->assertNotNull(
+            $latestWebhookRecord->json('file_url')
+        );
+        $this->assertSame(
+            $latestFile->url,
+            $latestWebhookRecord->json('file_url')
+        );
     }
 }

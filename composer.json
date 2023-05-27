@@ -66,6 +66,9 @@
         "test-integration": [
             "@php vendor/bin/phpunit --testsuite=Integration"
         ],
+        "test-e2e": [
+            "@php vendor/bin/phpunit --testsuite=E2E"
+        ],
         "test": [
             "@php vendor/bin/phpunit --testsuite=Unit,Feature"
         ]
