@@ -112,7 +112,7 @@ class DocumentTemplateController extends Controller
 
         $newTemplate->save();
 
-        Event::dispatch(new DocumentTemplateCreated($documentTemplate));
+        Event::dispatch(new DocumentTemplateCreated($newTemplate));
 
         return new JsonResponse([
             'uuid' => $newTemplate->uuid,
