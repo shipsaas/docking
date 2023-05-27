@@ -2,17 +2,20 @@
 
 [![Build & Test (PHP 8.2)](https://github.com/shipsaas/docking/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/build.yml)
 [![Integration Tests](https://github.com/shipsaas/docking/actions/workflows/integration.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/integration.yml)
+[![E2E Tests](https://github.com/shipsaas/docking/actions/workflows/e2e.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/e2e.yml)
 [![codecov](https://codecov.io/gh/shipsaas/docking/branch/main/graph/badge.svg?token=FAZ9899IPW)](https://codecov.io/gh/shipsaas/docking)
 
 <p align="center" width="100%">
     <img src="https://raw.githubusercontent.com/shipsaas/docking/main/docs/img/logo.png"> 
 </p>
 
-DocKing is a document management microservice that handles templates and renders them in PDF format, all in one place.
+DocKing is a document management service/microservice that handles templates and renders them in PDF format, all in one place.
 
-You can utilize DocKing as a shared microservice, which can be integrated into any service.
+You can utilize DocKing as a shared microservice, which can be integrated & used in any services from your big product.
 
 Documentation: [DocKing](https://docking.shipsaas.tech)
+
+DocKing is well-tested & production-ready 😉🏎️🚀
 
 ## LIVE DEMO 🔥
 
@@ -25,15 +28,19 @@ Console: https://docking-demo.shipsaas.tech/console#/
 - Drivers:
   - Gotenberg: Yes, use the Live Demo Instance (from Gotenberg.dev)
   - WkHtmlToPdf: Yes, without any extensions or fonts.
-- Most of the features are disabled. You can only view & preview PDFs in multiple modes.
+  - mPDF: Yes, without any extensions or fonts.
+- Most of the features are disabled. You can only view & preview PDFs in multiple drivers.
 
 ## Features 🚀
-- Manage your document templates 📰🧾.
-- Render HTML based on your desired data for a specific template, then export it as PDF 🏃‍.
+- Manage all of your document templates just in one place 📰🧾.
+- Dynamically render & export PDF from your desired data 🏃‍.
 - Supports multiple state-of-the-art PDF Engines 🍻.
+- Supports sync & async PDF rendering modes 🔥.
 - Webhook notification after PDF rendered (for async flow) 🚀
-- Built-in UI-console to manage the templates & files (for internal use) 🔋.
-- DocKing can perfectly fit for the horizontal scaling based on your needs 😉.
+- Built-in UI-console to manage & review the templates & files (for internal use) 🔋.
+- Horizontal scaling when traffic goes high? DocKing got that 😉.
+
+Check out our planned features here: [The DocKing Project](https://github.com/orgs/shipsaas/projects/1)
 
 ## Diagram of how it works
 
@@ -68,7 +75,7 @@ Awesome, IKR?
   - Gotenberg ✅
   - WkHtmlToPdf ✅
   - mPDF ✅
-- E2E Tests to validate REAL WORLD API CALLs
+- E2E Tests to validate REAL WORLD API CALLs & Rendering Async Flow
 
 ## LICENSE
 

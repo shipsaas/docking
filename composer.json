@@ -1,7 +1,7 @@
 {
     "name": "shipsaas/docking",
     "type": "project",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "DocKing: Your shared-microservice that takes over the document templates management & render/export PDF",
     "keywords": [
         "laravel",
