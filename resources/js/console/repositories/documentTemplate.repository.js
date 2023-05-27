@@ -58,6 +58,13 @@ export const documentTemplateRepository = {
       .catch(catchError);
   },
 
+  duplicate(id, data) {
+    return httpClient
+      .post(`document-templates/${id}/duplicate`, data)
+      .then(getData)
+      .catch(catchError);
+  },
+
   renderPdfSync(id, variables = {}, metadata = {}) {
     return httpClient
       .post(`document-templates/${id}/pdfs`, {
