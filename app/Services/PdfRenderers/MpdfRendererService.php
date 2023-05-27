@@ -63,12 +63,12 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
         }
 
         $mpdf = new Mpdf([
-            'format' => $metadata['format'] ?? 'A4',
+            'format' => $metadata['page-size'] ?? 'A4',
             'margin_left' => $metadata['margin-left'] ?? 15,
             'margin_right' => $metadata['margin-right'] ?? 15,
             'margin_top' => $metadata['margin-top'] ?? 16,
             'margin_bottom' => $metadata['margin-bottom'] ?? 16,
-            'orientation' => $metadata['margin-orientation'] ?? 'P',
+            'orientation' => $metadata['orientation'] ?? 'P',
             'tempDir' => sys_get_temp_dir(),
         ]);
         $mpdf->setLogger(logger());
@@ -77,7 +77,7 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
         $mpdf->SetDisplayMode('fullpage');
 
         // this will generate an unreadable PDF
-        if (isset($metadata['encryptPdf']) && $metadata['encryptPdf'] === true) {
+        if (isset($metadata['encrypt-pdf']) && $metadata['encrypt-pdf'] === true) {
             $mpdf->SetProtection(['print']);
         }
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class WebhookNotificationService
 {
@@ -10,6 +11,13 @@ class WebhookNotificationService
         string $webhookUrl,
         array $body = []
     ): void {
-        Http::post($webhookUrl, $body);
+        $response = Http::withHeaders([
+            'accept' => 'application/json',
+        ])->post($webhookUrl, $body);
+
+        Log::info('Request webhook', [
+            'result' => $response->body(),
+            'statusCode' => $response->status(),
+        ]);
     }
 }

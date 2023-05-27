@@ -13,6 +13,15 @@ abstract class TestCase extends BaseTestCase
     use DatabaseMigrations;
     use DatabaseTruncation;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config([
+            'filesystems.default' => 'public',
+        ]);
+    }
+
     public function json($method, $uri, array $data = [], array $headers = [], $options = 0)
     {
         return parent::json(

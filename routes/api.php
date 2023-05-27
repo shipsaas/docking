@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentFileController;
 use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\PdfRenderController;
+use App\Http\Controllers\TestWebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
