@@ -145,4 +145,39 @@ class DocumentTemplateControllerTest extends TestCase
                 'html' => 'Hello Seth',
             ]);
     }
+
+    public function testDuplicateTemplateReturnsErrorOnDuplicatedKey()
+    {
+        $template = DocumentTemplate::factory()->create();
+
+        $this->json('POST', 'api/v1/document-templates/' . $template->uuid . '/duplicate', [
+            'key' => $template->key,
+        ])->assertJsonValidationErrorFor('key');
+    }
+
+    public function testDuplicateTemplateReturnsOk()
+    {
+        Event::fake([
+            DocumentTemplateCreated::class,
+        ]);
+
+        $template = DocumentTemplate::factory()->create();
+
+        $this->json('POST', 'api/v1/document-templates/' . $template->uuid . '/duplicate', [
+            'key' => 'my-new-awesome-template',
+        ])->assertCreated();
+
+        $this->assertDatabaseHas('document_templates', [
+            'key' => 'my-new-awesome-template',
+            'title' => $template->title . ' (Duplicated)',
+        ]);
+
+        $newTemplate = DocumentTemplate::firstWhere('key', 'my-new-awesome-template');
+
+        Event::assertDispatched(
+            DocumentTemplateCreated::class,
+            fn (DocumentTemplateCreated $event) => !$event->template->is($template)
+                && $event->template->is($newTemplate)
+        );
+    }
 }

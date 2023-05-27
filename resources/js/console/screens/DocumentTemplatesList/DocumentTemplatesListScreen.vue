@@ -21,6 +21,10 @@
           >
             Edit
           </Button>
+          <DuplicateTemplateButton
+            :template="record"
+            @duplicated="onTemplateDuplicated"
+          />
           <DeleteTemplateButton
             :template="record"
             @deleted="onTemplateDeleted"
@@ -39,6 +43,10 @@ import { documentTemplateRepository } from '../../repositories/documentTemplate.
 import Button from '../../components/Button/Button.vue';
 import CreateNewTemplate from './components/CreateNewTemplate.vue';
 import DeleteTemplateButton from './components/DeleteTemplateButton.vue';
+import DuplicateTemplateButton from './components/DuplicateTemplateButton.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const columns = [
   {
@@ -79,6 +87,11 @@ const loadRecords = async () => {
 };
 
 const onTemplateDeleted = () => loadRecords();
+const onTemplateDuplicated = (result) =>
+  router.push({
+    name: 'document-template-edit',
+    params: { uuid: result.template.uuid },
+  });
 
 // inits
 loadRecords();
