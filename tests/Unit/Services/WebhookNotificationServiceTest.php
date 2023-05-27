@@ -11,6 +11,7 @@ class WebhookNotificationServiceTest extends TestCase
 {
     public function testSilentlyTriggerTheWebhookToNotifySubscribedClient()
     {
+        Http::expects('withHeaders')->andReturnSelf();
         Http::expects('post')
             ->with('https://sethphat.dev', [
                 'ok' => true,
