@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\DocumentTemplateCreated;
 use App\Events\DocumentTemplateDestroyed;
 use App\Events\DocumentTemplateUpdated;
+use App\Http\Requests\DocumentTemplateDuplicateRequest;
 use App\Http\Requests\DocumentTemplateIndexRequest;
 use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
@@ -95,5 +96,26 @@ class DocumentTemplateController extends Controller
         return new JsonResponse([
             'html' => $html,
         ]);
+    }
+
+    public function duplicate(
+        DocumentTemplateDuplicateRequest $request,
+        DocumentTemplate $documentTemplate
+    ): JsonResponse {
+        $newTemplate = $documentTemplate->replicate([
+            'uuid',
+            'key',
+        ])->fill([
+            'key' => $request->validated('key'),
+            'title' => $documentTemplate->title . ' (Duplicated)',
+        ]);
+
+        $newTemplate->save();
+
+        Event::dispatch(new DocumentTemplateCreated($documentTemplate));
+
+        return new JsonResponse([
+            'uuid' => $newTemplate->uuid,
+        ], 201);
     }
 }

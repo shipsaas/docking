@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentFileController;
 use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\PdfRenderController;
-use App\Http\Controllers\TestWebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +25,10 @@ Route::prefix('v1')
         Route::post(
             'document-templates/{documentTemplate}/preview-html',
             [DocumentTemplateController::class, 'previewHtml']
+        );
+        Route::post(
+            'document-templates/{documentTemplate}/duplicate',
+            [DocumentTemplateController::class, 'duplicate']
         );
 
         Route::post('document-templates/{documentTemplate}/pdfs', [PdfRenderController::class, 'render']);
