@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PdfService;
+use App\Enums\TemplatingMode;
 use App\Events\DocumentTemplateCreated;
 use App\Events\DocumentTemplateDestroyed;
 use App\Events\DocumentTemplateUpdated;
@@ -40,7 +42,8 @@ class DocumentTemplateController extends Controller
                 'your-variable' => 'here',
             ],
             'metadata' => [
-                'driver' => 'gotenberg|wkhtmltopdf',
+                'driver' => PdfService::GOTENBERG->value,
+                'templating' => TemplatingMode::BLADE->value,
             ],
         ]);
 

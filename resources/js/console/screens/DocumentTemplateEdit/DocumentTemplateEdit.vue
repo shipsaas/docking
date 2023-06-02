@@ -134,6 +134,12 @@
           </p>
         </div>
       </template>
+      <template #settings>
+        <Settings
+          :template="template"
+          @update="updateMetadata"
+        />
+      </template>
     </Tabs>
   </Card>
 
@@ -159,6 +165,7 @@ import { toJsonString, validateJson } from './DocumentTemplateEdit.methods';
 import { usePreviewTemplate } from './composable/usePreviewTemplate.js';
 import PreviewHtmlModal from './components/PreviewHtmlModal.vue';
 import { notify } from '@kyvg/vue3-notification';
+import Settings from "./components/Settings.vue";
 
 const props = defineProps({
   uuid: {
@@ -197,6 +204,10 @@ const tabs = ref([
   {
     key: 'metadata',
     label: 'Metadata',
+  },
+  {
+    key: 'settings',
+    label: 'Settings',
   },
 ]);
 
@@ -260,6 +271,13 @@ const saveTemplate = async () => {
     text: 'Document Template has been saved. You can now preview the template.',
   });
 };
+
+function updateMetadata(key, value) {
+  const metadata = validateJson(template.value.metadata) || {};
+  metadata[key] = value;
+
+  template.value.metadata = toJsonString(metadata);
+}
 
 onMounted(() => loadRecord());
 </script>

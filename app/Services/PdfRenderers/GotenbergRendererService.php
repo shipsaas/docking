@@ -30,7 +30,7 @@ class GotenbergRendererService extends AbstractPdfRendererService implements Pdf
         $inputFile = $this->renderTemplate($documentTemplate, $variables);
 
         // request to gotenberg
-        $driver = $metadata['engine'] ?? static::DEFAULT_ENGINE;
+        $driver = ($metadata['engine'] ?? null) ?: static::DEFAULT_ENGINE;
         $response = Http::asMultipart()
             ->attach('files', fopen($inputFile, 'r'), 'index.html')
             ->post(
