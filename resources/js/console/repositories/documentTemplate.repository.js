@@ -9,14 +9,15 @@ export const documentTemplateRepository = {
     page = 1,
     sortBy = 'created_at',
     sortDirection = 'asc',
+    search = null
   }) {
     return httpClient
       .get('document-templates', {
         params: {
-          limit,
           page,
           sort_by: sortBy,
           sort_direction: sortDirection,
+          search,
         },
       })
       .then(getData)

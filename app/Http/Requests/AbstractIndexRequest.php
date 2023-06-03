@@ -24,6 +24,17 @@ abstract class AbstractIndexRequest extends FormRequest
         return ['created_at'];
     }
 
+    /**
+     * List of searchable columns
+     * Note: it will do LIKE %keyword% search
+     *
+     * @return string[]
+     */
+    protected function getAllowedSearchColumns(): array
+    {
+        return [];
+    }
+
     public function rules(): array
     {
         return [
@@ -53,11 +64,26 @@ abstract class AbstractIndexRequest extends FormRequest
     {
         $builder = $this->getModel()->newQuery();
 
+        $wantsSearchByKeyword = !empty($this->getAllowedSearchColumns())
+            && $this->filled('search');
+
         $builder->orderBy(
             $this->input('sort_by') ?: 'created_at',
             $this->input('sort_direction') ?: 'ASC'
+        )->when(
+            $wantsSearchByKeyword,
+            fn ($query) => $query->where($this->searchByKeyword(...))
         );
 
         return $builder;
+    }
+
+    private function searchByKeyword(Builder $query): void
+    {
+        $keyword = '%' . $this->validated('search') . '%';
+
+        array_map(function (string $column) use ($query, $keyword) {
+            $query->orWhere($column, 'LIKE', $keyword);
+        }, $this->getAllowedSearchColumns());
     }
 }
