@@ -15,6 +15,7 @@ class DocumentTemplateIndexRequest extends AbstractIndexRequest
     protected function getAllowedSortColumns(): array
     {
         return [
+            'uuid',
             'key',
             'category',
             'title',
