@@ -27,6 +27,36 @@ class DocumentTemplateControllerTest extends TestCase
         );
     }
 
+    public function testIndexSearchByKeywordReturnsMatchedKeyword()
+    {
+        $templates = DocumentTemplate::factory()->count(5)
+            ->create();
+
+        $templates[0]->title = 'seth tran';
+        $templates[0]->save();
+
+        $templates[1]->category = 'tran minh seth';
+        $templates[1]->save();
+
+        $templates[2]->key = 'hoat-le-seth';
+        $templates[2]->save();
+
+        $uuids = [
+            $templates[0]->uuid,
+            $templates[1]->uuid,
+            $templates[2]->uuid,
+        ];
+
+        $response = $this->json('GET', 'api/v1/document-templates', [
+            'search' => 'seth',
+        ])->assertOk()->assertJsonCount(3, 'data');
+
+        $this->assertEquals(
+            $uuids,
+            $response->collect('data')->pluck('uuid')->toArray()
+        );
+    }
+
     public function testShowReturnsASingleTemplate()
     {
         $template = DocumentTemplate::factory()->create();

@@ -21,4 +21,13 @@ class DocumentTemplateIndexRequest extends AbstractIndexRequest
             'created_at',
         ];
     }
+
+    protected function getAllowedSearchColumns(): array
+    {
+        return [
+            'key',
+            'category',
+            'title',
+        ];
+    }
 }

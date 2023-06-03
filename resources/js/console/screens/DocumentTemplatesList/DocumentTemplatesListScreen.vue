@@ -31,6 +31,21 @@
           />
         </span>
       </template>
+      <template #before-table>
+        <div class="py-4 flex -mx-2 -my-2 sm:-mx-6 lg:-mx-8 gap-2">
+          <div class="flex-1">
+            <Input
+              v-model="keyword"
+              label=""
+              placeholder="Search by keyword"
+              @keyup.enter="search"
+            />
+          </div>
+          <div class="flex-1 mt-2">
+            <Button @click="search">Search</Button>
+          </div>
+        </div>
+      </template>
     </Table>
   </Card>
 </template>
@@ -45,6 +60,8 @@ import CreateNewTemplate from './components/CreateNewTemplate.vue';
 import DeleteTemplateButton from './components/DeleteTemplateButton.vue';
 import DuplicateTemplateButton from './components/DuplicateTemplateButton.vue';
 import { useRouter } from 'vue-router';
+import Input from "../../components/Input/Input.vue";
+import {notify} from "@kyvg/vue3-notification";
 
 const router = useRouter();
 
@@ -76,11 +93,14 @@ const columns = [
 
 const records = ref([]);
 const page = ref(1);
+const keyword = ref(null);
+const isSearching = ref(false);
 
 const loadRecords = async () => {
   const documentTemplates = await documentTemplateRepository.index({
     limit: 20,
     page: page.value,
+    search: keyword.value,
   });
 
   records.value = [...documentTemplates.data];
@@ -95,6 +115,35 @@ const onTemplateDuplicated = (result) =>
 
 // inits
 loadRecords();
+
+function search() {
+  if (!keyword.value) {
+    // clear search state
+    if (isSearching.value) {
+      page.value = 1;
+      isSearching.value = false;
+      loadRecords();
+
+      return;
+    }
+
+    notify({
+      type: 'error',
+      title: 'Missing Info',
+      text: 'Please enter some keywords in order to search.',
+    });
+
+    return;
+  }
+
+  isSearching.value = true;
+
+  // reset page
+  page.value = 1;
+
+  // refetch
+  loadRecords();
+}
 </script>
 
 <style scoped></style>
