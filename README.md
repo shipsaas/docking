@@ -55,6 +55,15 @@ From the diagram above, DocKing is standing as a "shared-microservice".
 
 Awesome, IKR?
 
+## The Awesome Console UI
+
+DocKing ships the Built-in Console with awesome editor & features. Help you and the team to collaborate and
+manage everything easily.
+
+![DocKing's Console UI](https://iili.io/H4QDEJe.png)
+
+Learn more: [DocKing's Console UI](https://docking.shipsaas.tech/getting-started/console-ui)
+
 ## DocKing uses
 - PHP 8.2
 - Laravel 10
