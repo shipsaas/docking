@@ -67,6 +67,23 @@ class FontControllerTest extends TestCase
             ->assertJsonValidationErrorFor('font');
     }
 
+    public function testStoreRejectsWhenStoringFileFailed()
+    {
+        Storage::fake('local');
+
+        Storage::expects('disk')->once()->andReturnSelf();
+        Storage::expects('putFileAs')->once()->andReturn(false);
+
+        $this->json('POST', 'api/v1/fonts', [
+            'key' => 'inter-sans',
+            'name' => 'Inter Sans',
+            'font' => UploadedFile::createFromBase(new File(
+                'Inter-Thin.woff2',
+                fopen(__DIR__ . '/../__fixtures__/Inter-Thin.woff2', 'r')
+            )),
+        ])->assertBadRequest();
+    }
+
     public function testDestroyDeletesTheFontAndFile()
     {
         Storage::fake('local');
