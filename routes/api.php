@@ -38,7 +38,7 @@ Route::prefix('v1')
         Route::get('document-files', [DocumentFileController::class, 'index']);
         Route::get('document-files/{documentFile}', [DocumentFileController::class, 'show']);
 
-        // v1.2.0 Font
+        // v1.2.0 Fonts
         Route::resource('fonts', FontController::class)
             ->only(['index', 'store', 'destroy']);
     });
