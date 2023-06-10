@@ -57,6 +57,16 @@ class FontControllerTest extends TestCase
         Storage::disk('local')->assertExists($font->path);
     }
 
+    public function testStoreRejectsWhenUsingInvalidFontFile()
+    {
+        $this->json('POST', 'api/v1/fonts', [
+            'key' => 'inter-sans',
+            'name' => 'Inter Sans',
+            'font' => UploadedFile::fake()->createWithContent('test.txt', 'aaa'),
+        ])->assertUnprocessable()
+            ->assertJsonValidationErrorFor('font');
+    }
+
     public function testDestroyDeletesTheFontAndFile()
     {
         Storage::fake('local');
