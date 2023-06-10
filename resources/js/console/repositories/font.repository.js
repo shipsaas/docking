@@ -23,6 +23,19 @@ export const fontRepository = {
       .catch(catchError);
   },
 
+  /**
+   *
+   * @param {FormData} data
+   */
+  create(data) {
+    return httpClient
+      .post(`fonts`, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(getData)
+      .catch(catchError);
+  },
+
   destroy(id) {
     return httpClient.delete(`fonts/${id}`).then(getData).catch(catchError);
   },

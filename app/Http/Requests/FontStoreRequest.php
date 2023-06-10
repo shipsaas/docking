@@ -15,6 +15,7 @@ class FontStoreRequest extends FormRequest
                 'required',
                 'string',
                 Rule::unique((new Font())->getTable()),
+
             ],
             'name' => 'required|string',
             'font' => [

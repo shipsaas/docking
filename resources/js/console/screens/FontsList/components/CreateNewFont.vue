@@ -12,8 +12,15 @@
           :disabled="isLoading"
         />
         <Input
-          v-model="formFields.category"
+          v-model="formFields.name"
           label="Name"
+          :disabled="isLoading"
+        />
+        <Input
+          v-model="formFields.font"
+          type="file"
+          label="Font File"
+          accept=".ttf,.woff,.woff2,.otf"
           :disabled="isLoading"
         />
       </div>
@@ -43,10 +50,10 @@ import Button from '../../../components/Button/Button.vue';
 import Modal from '../../../components/Modal/Modal.vue';
 import { ref } from 'vue';
 import Input from '../../../components/Input/Input.vue';
-import { documentTemplateRepository } from '../../../repositories/documentTemplate.repository';
 import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
 import { useRouter } from 'vue-router';
+import { fontRepository } from '../../../repositories/font.repository';
 
 const router = useRouter();
 const isOpenModal = ref(false);
@@ -54,8 +61,8 @@ const { isLoading, startLoading, stopLoading } = useLoading();
 
 const getBlankFields = () => ({
   key: '',
-  category: '',
-  title: '',
+  name: '',
+  font: null,
 });
 
 const formFields = ref(getBlankFields());
@@ -72,9 +79,13 @@ const onClickCloseModal = () => {
 const onClickSubmit = async () => {
   startLoading();
 
-  const data = await documentTemplateRepository.create({
-    ...formFields.value,
+  const formData = new FormData();
+
+  Object.entries(formFields.value).forEach(([key, value]) => {
+    formData.append(key, value);
   });
+
+  const data = await fontRepository.create(formData);
 
   stopLoading();
 
@@ -85,17 +96,10 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Document Template has been created.',
+    text: 'Font has been created.',
   });
 
   onClickCloseModal();
-
-  router.push({
-    name: 'document-template-edit',
-    params: {
-      uuid: data.uuid,
-    },
-  });
 };
 </script>
 
