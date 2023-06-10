@@ -75,17 +75,19 @@ class DatabaseSeeder extends Seeder
         Font::create([
             'key' => 'source-code-pro',
             'name' => 'Source Code PRO',
-            'path' => Storage::disk('local')->putFile(
+            'path' => Storage::disk('local')->putFileAs(
                 'fonts',
-                public_path('assets/fonts/SourceCodePro-Medium.ttf')
+                public_path('assets/fonts/SourceCodePro-Medium.ttf'),
+                'SourceCodePro-Medium.ttf'
             ),
         ]);
         Font::create([
             'key' => 'freeserif',
             'name' => 'FreeSerif',
-            'path' => Storage::disk('local')->putFile(
+            'path' => Storage::disk('local')->putFileAs(
                 'fonts',
-                public_path('assets/fonts/freeserif.ttf')
+                public_path('assets/fonts/freeserif.ttf'),
+                'freeserif.ttf'
             ),
         ]);
     }
