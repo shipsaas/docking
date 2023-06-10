@@ -28,5 +28,10 @@ export const router = createRouter({
       name: 'files-list',
       component: () => import('./screens/FilesList/FilesListScreen.vue'),
     },
+    {
+      path: '/fonts',
+      name: 'fonts-list',
+      component: () => import('./screens/FontsList/FontsListScreen.vue'),
+    },
   ],
 });

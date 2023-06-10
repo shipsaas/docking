@@ -12,4 +12,12 @@ class FontIndexRequest extends AbstractIndexRequest
     {
         return new Font();
     }
+
+    protected function getAllowedSortColumns(): array
+    {
+        return [
+            'name',
+            'created_at',
+        ];
+    }
 }
