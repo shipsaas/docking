@@ -3,10 +3,14 @@
 namespace App\Services\PdfRenderers;
 
 use App\Models\DocumentTemplate;
+use App\Models\Font;
 use App\Results\ErrorCodes\PdfRenderErrorCode;
 use App\Results\PdfRenderOutcomes\PdfRenderErrorOutcome;
 use App\Results\PdfRenderOutcomes\PdfRenderOkOutcome;
 use App\Results\PdfRenderResult;
+use Illuminate\Support\Facades\Storage;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use RuntimeException;
 use Mpdf\Mpdf;
 use Throwable;
@@ -62,6 +66,11 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
             return app('mpdf-testing');
         }
 
+        $useCustomFonts = isset($metadata['custom-fonts']) && is_array($metadata['custom-fonts']);
+
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+
         $mpdf = new Mpdf([
             'format' => $metadata['page-size'] ?? 'A4',
             'margin_left' => $metadata['margin-left'] ?? 15,
@@ -70,6 +79,14 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
             'margin_bottom' => $metadata['margin-bottom'] ?? 16,
             'orientation' => $metadata['orientation'] ?? 'P',
             'tempDir' => sys_get_temp_dir(),
+            'fontDir' => [
+                ...$defaultConfig['fontDir'],
+                ...($useCustomFonts ? [storage_path('app/fonts')] : []),
+            ],
+            'fontdata' => [
+                ...$defaultFontConfig,
+                ...($useCustomFonts ? $this->loadFonts($metadata['custom-fonts']) : []),
+            ],
         ]);
         $mpdf->setLogger(logger());
         $mpdf->useSubstitutions = false;
@@ -82,5 +99,17 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
         }
 
         return $mpdf;
+    }
+
+    private function loadFonts(array $customFonts): array
+    {
+        return Font::whereIn('key', $customFonts)
+            ->pluck('name', 'path')
+            ->mapWithKeys(fn (Font $font) => [
+                $font->name => [
+                    'R' => basename($font->path),
+                ],
+            ])
+            ->toArray();
     }
 }
