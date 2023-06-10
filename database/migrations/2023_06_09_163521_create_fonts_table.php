@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('fonts', function (Blueprint $table) {
             $table->uuid()->primary();
-            $table->string('key');
+            $table->string('key')->unique();
             $table->string('name');
             $table->string('path');
             $table->timestamps();

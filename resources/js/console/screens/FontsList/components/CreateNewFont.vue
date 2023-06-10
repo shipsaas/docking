@@ -58,6 +58,7 @@ import { fontRepository } from '../../../repositories/font.repository';
 const router = useRouter();
 const isOpenModal = ref(false);
 const { isLoading, startLoading, stopLoading } = useLoading();
+const emits = defineEmits(['created']);
 
 const getBlankFields = () => ({
   key: '',
@@ -100,6 +101,7 @@ const onClickSubmit = async () => {
   });
 
   onClickCloseModal();
+  emits('created');
 };
 </script>
 

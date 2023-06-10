@@ -7,10 +7,13 @@
       :records="records"
     >
       <template #action-buttons>
-        <CreateNewFont />
+        <CreateNewFont @created="loadRecords(1)" />
       </template>
       <template #record-actions="{ record }">
-        <DeleteFontButton :font="record" />
+        <DeleteFontButton
+          :font="record"
+          @deleted="loadRecords(1)"
+        />
       </template>
     </Table>
   </Card>
@@ -52,7 +55,11 @@ const columns = [
 const records = ref([]);
 const page = ref(1);
 
-const loadRecords = async () => {
+const loadRecords = async (wantedPage) => {
+  if (wantedPage) {
+    page.value = wantedPage;
+  }
+
   const data = await fontRepository.index({
     limit: 20,
     page: page.value,
