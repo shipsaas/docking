@@ -12,8 +12,8 @@ class FontFactory extends Factory
     public function definition(): array
     {
         return [
-            'key' => fake()->title,
-            'name' => fake()->title,
+            'key' => fake()->words(5),
+            'name' => fake()->words(5),
             'path' => fake()->filePath(),
         ];
     }
