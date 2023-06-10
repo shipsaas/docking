@@ -6,13 +6,11 @@
       :columns="columns"
       :records="records"
     >
+      <template #action-buttons>
+        <CreateNewFont />
+      </template>
       <template #record-actions="{ record }">
-        <Button
-          type="error"
-          @click="onClickRemove(record)"
-        >
-          Remove
-        </Button>
+        <DeleteFontButton :font="record" />
       </template>
     </Table>
   </Card>
@@ -23,7 +21,8 @@ import Card from '../../components/Card/Card.vue';
 import Table from '../../components/Table/Table.vue';
 import { ref } from 'vue';
 import { fontRepository } from '../../repositories/font.repository';
-import Button from '../../components/Button/Button.vue';
+import CreateNewFont from './components/CreateNewFont.vue';
+import DeleteFontButton from './components/DeleteFontButton.vue';
 
 const columns = [
   {
@@ -68,8 +67,4 @@ const loadRecords = async () => {
 };
 
 loadRecords();
-
-const onClickRemove = (record) => {
-  console.log(record);
-};
 </script>
