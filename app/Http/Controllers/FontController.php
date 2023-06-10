@@ -22,6 +22,8 @@ class FontController extends Controller
 
     public function store(FontStoreRequest $request): JsonResponse
     {
+        abort(403, 'This action is forbidden in LiveMode demo.');
+
         $uploadedFile = $request->file('font');
         $extension = $uploadedFile->clientExtension();
 
@@ -51,6 +53,8 @@ class FontController extends Controller
 
     public function destroy(Font $font): JsonResponse
     {
+        abort(403, 'This action is forbidden in LiveMode demo.');
+
         $deleteResult = $font->delete();
         if ($deleteResult) {
             Storage::drive('local')->delete($font->path);

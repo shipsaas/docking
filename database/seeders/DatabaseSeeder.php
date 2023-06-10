@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Enums\GotenbergEngine;
 use App\Models\DocumentTemplate;
+use App\Models\Font;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'metadata' => [
                 'driver' => 'gotenberg',
                 'engine' => GotenbergEngine::CHROMIUM->value,
+                'custom-fonts' => ['source-code-pro'],
             ],
         ]);
 
@@ -64,7 +67,26 @@ class DatabaseSeeder extends Seeder
             'metadata' => [
                 'driver' => 'gotenberg',
                 'engine' => GotenbergEngine::CHROMIUM->value,
+                'custom-fonts' => ['freeserif'],
             ],
+        ]);
+
+        // Fonts
+        Font::create([
+            'key' => 'source-code-pro',
+            'name' => 'Source Code PRO',
+            'path' => Storage::disk('local')->putFile(
+                'fonts',
+                public_path('assets/fonts/SourceCodePro-Medium.ttf')
+            ),
+        ]);
+        Font::create([
+            'key' => 'freeserif',
+            'name' => 'FreeSerif',
+            'path' => Storage::disk('local')->putFile(
+                'fonts',
+                public_path('assets/fonts/freeserif.ttf')
+            ),
         ]);
     }
 }
