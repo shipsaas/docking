@@ -24,7 +24,9 @@ class MPdfRendererServiceTest extends TestCase
     public function testRenderOk()
     {
         $template = DocumentTemplate::factory()->create();
-        $renderResult = $this->renderer->render($template);
+        $renderResult = $this->renderer->render($template, [], [
+            'custom-fonts' => ['fake-fonts'],
+        ]);
 
         $this->assertTrue($renderResult->isOk());
         $this->assertNotNull($renderResult->getOkResult()->file);
