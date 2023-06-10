@@ -20,7 +20,7 @@ class FontStoreRequest extends FormRequest
             'name' => 'required|string',
             'font' => [
                 'required',
-                'mimetypes:font/ttf,font/woff,font/woff2,font/otf'
+                'mimetypes:font/ttf,font/woff,font/woff2,font/otf,font/sfnt'
             ],
         ];
     }

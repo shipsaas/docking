@@ -84,10 +84,11 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
                 ...($useCustomFonts ? [storage_path('app/fonts')] : []),
             ],
             'fontdata' => [
-                ...$defaultFontConfig,
+                ...$defaultFontConfig['fontdata'],
                 ...($useCustomFonts ? $this->loadFonts($metadata['custom-fonts']) : []),
             ],
         ]);
+
         $mpdf->setLogger(logger());
         $mpdf->useSubstitutions = false;
         $mpdf->simpleTables = true;
@@ -104,10 +105,11 @@ class MpdfRendererService extends AbstractPdfRendererService implements PdfRende
     private function loadFonts(array $customFonts): array
     {
         return Font::whereIn('key', $customFonts)
-            ->pluck('name', 'path')
+            ->get(['key', 'path'])
             ->mapWithKeys(fn (Font $font) => [
-                $font->name => [
+                $font->key => [
                     'R' => basename($font->path),
+                    'useOTL' => 0x00,
                 ],
             ])
             ->toArray();
