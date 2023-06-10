@@ -45,7 +45,7 @@ class FontController extends Controller
 
         return new JsonResponse([
             'uuid' => $font->uuid,
-            'deleted' => $font->wasRecentlyCreated,
+            'created' => $font->wasRecentlyCreated,
         ]);
     }
 

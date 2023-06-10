@@ -6,10 +6,7 @@ use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
 use App\Services\TemplatingRenderManager;
 use Illuminate\Http\File;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 abstract class AbstractPdfRendererService
 {
