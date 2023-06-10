@@ -33,6 +33,7 @@
                     'text-left text-sm font-semibold text-gray-900': true,
                     'py-3.5 pl-4 pr-3 sm:pl-3': index === 0,
                     'px-3 py-3.5': index > 0,
+                    [column.headerClass]: !!column.headerClass,
                   }"
                 >
                   {{ column.label }}
@@ -50,7 +51,7 @@
               <tr
                 v-for="(record, recordIdx) in records"
                 :key="`record-${recordIdx}`"
-                :class="recordIdx % 2 === 0 ? undefined : 'bg-gray-50'"
+                :class="[recordIdx % 2 === 0 ? undefined : 'bg-gray-50']"
               >
                 <td
                   v-for="(column, columnIdx) in columns"
@@ -59,6 +60,7 @@
                     'whitespace-nowrap text-sm font-medium text-gray-900': true,
                     'py-4 pl-4 pr-3 sm:pl-3': recordIdx === 0,
                     'px-3 py-4': recordIdx > 0,
+                    [column.contentClass]: !!column.contentClass,
                   }"
                 >
                   <component

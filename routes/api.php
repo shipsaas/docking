@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentFileController;
 use App\Http\Controllers\DocumentTemplateController;
+use App\Http\Controllers\FontController;
 use App\Http\Controllers\PdfRenderController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,8 @@ Route::prefix('v1')
 
         Route::get('document-files', [DocumentFileController::class, 'index']);
         Route::get('document-files/{documentFile}', [DocumentFileController::class, 'show']);
+
+        // v1.2.0 Fonts
+        Route::resource('fonts', FontController::class)
+            ->only(['index', 'store', 'destroy']);
     });

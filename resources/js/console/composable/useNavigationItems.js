@@ -3,6 +3,7 @@ import {
   DocumentDuplicateIcon,
   HomeIcon,
   DocumentPlusIcon,
+  AtSymbolIcon,
 } from '@heroicons/vue/24/outline';
 
 const DEFAULT_NAVIGATION_INDEX = 0;
@@ -18,6 +19,12 @@ const NAVIGATION_ITEMS = [
     name: 'Files',
     href: '#/files',
     icon: DocumentDuplicateIcon,
+    current: false,
+  },
+  {
+    name: 'Fonts',
+    href: '#/fonts',
+    icon: AtSymbolIcon,
     current: false,
   },
 ];

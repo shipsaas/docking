@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
+use App\Models\Font;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -51,5 +52,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::model('documentFile', DocumentFile::class);
         Route::model('documentTemplate', DocumentTemplate::class);
+        Route::model('font', Font::class);
     }
 }
