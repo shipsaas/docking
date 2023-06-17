@@ -31,6 +31,9 @@ COPY . .
 COPY ./.docker/docking-octane.conf /etc/supervisor/conf.d/
 COPY ./.docker/docking-host-octane.conf /etc/nginx/conf.d/default.conf
 
+# The bundle already built, no need to keep this to save size
+RUN rm -rf ./node_modules
+
 RUN php artisan optimize
 RUN php artisan storage:link
 RUN php artisan migrate
