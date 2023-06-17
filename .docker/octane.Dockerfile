@@ -1,12 +1,13 @@
-### Docking Development Image
+### Docking Development Image - Octane Mode
 # Single image to rule them all
 # PHP 8.2
 # SQLite
-# Nginx
 # Local Storage
 # Supervisor to run 5 concurrent workers
-
+FROM ghcr.io/roadrunner-server/roadrunner:latest AS roadrunner
 FROM php:8.2-fpm
+
+COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 WORKDIR /var/www/html
 
@@ -27,8 +28,8 @@ RUN docker-php-ext-install pdo mbstring exif pcntl bcmath gd
 
 # Copy project files
 COPY . .
-COPY ./.docker/docking-worker.conf /etc/supervisor/conf.d/
-COPY ./.docker/docking-host.conf /etc/nginx/conf.d/default.conf
+COPY ./.docker/docking-octane.conf /etc/supervisor/conf.d/
+COPY ./.docker/docking-host-octane.conf /etc/nginx/conf.d/default.conf
 
 # The bundle already built, no need to keep this to save size
 RUN rm -rf ./node_modules
@@ -41,6 +42,7 @@ RUN chown -R www-data:www-data storage
 RUN chown -R www-data:www-data storage/app
 RUN chmod -R 777 storage/logs
 RUN chmod -R 777 docking.sqlite
+
 
 # Nginx remove default site
 RUN rm /etc/nginx/sites-enabled/default

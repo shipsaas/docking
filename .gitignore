@@ -18,4 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 .php-cs-fixer.cache
-*.sqlite
+*.sqliterr
+.rr.yaml

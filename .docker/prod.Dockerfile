@@ -1,9 +1,10 @@
-### Docking Development Image
+### Docking Production Image
 # Single image to rule them all
 # PHP 8.2
 # MySQL (you can change this)
 # Nginx
 # Supervisor to run 5 concurrent workers
+# Please configure and setup based on your needs
 
 FROM php:8.2-fpm
 
@@ -28,6 +29,9 @@ RUN docker-php-ext-install pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
 COPY . .
 COPY ./.docker/docking-worker.conf /etc/supervisor/conf.d/
 COPY ./.docker/docking-host.conf /etc/nginx/conf.d/default.conf
+
+# The bundle already built, no need to keep this to save size
+RUN rm -rf ./node_modules
 
 RUN php artisan optimize
 RUN php artisan storage:link
