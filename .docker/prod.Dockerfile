@@ -30,6 +30,9 @@ COPY . .
 COPY ./.docker/docking-worker.conf /etc/supervisor/conf.d/
 COPY ./.docker/docking-host.conf /etc/nginx/conf.d/default.conf
 
+# The bundle already built, no need to keep this to save size
+RUN rm -rf ./node_modules
+
 RUN php artisan optimize
 RUN php artisan storage:link
 

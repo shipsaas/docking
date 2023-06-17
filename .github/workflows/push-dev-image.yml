@@ -2,6 +2,7 @@ name: Push Docker Dev Image
 env:
   DEV_IMAGE_ENV: ${{ secrets.DEV_IMAGE_ENV }}
   IMAGE: 'shipsaas/docking-dev'
+  OCTANE_IMAGE: 'shipsaas/docking-dev-octane'
   REGISTRY: ghcr.io
 
 on:
@@ -26,11 +27,17 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
-      -   name: Extract metadata (tags, labels) for Docker
+      -   name: Extract metadata (tags, labels) for Normal Image
           id: meta
           uses: docker/metadata-action@v2
           with:
             images: ${{ env.REGISTRY }}/${{ env.IMAGE }}
+
+      -   name: Extract metadata (tags, labels) for Octane Image
+          id: octanemeta
+          uses: docker/metadata-action@v2
+          with:
+            images: ${{ env.REGISTRY }}/${{ env.OCTANE_IMAGE }}
 
       -   name: Setup PHP with coverage driver
           uses: shivammathur/setup-php@v2
@@ -54,7 +61,7 @@ jobs:
 
             npm ci && npm run build
 
-      -   name: Build and push Docker image
+      -   name: Build and push Docker - Normal Image
           uses: docker/build-push-action@v4
           with:
             context: .
@@ -62,3 +69,12 @@ jobs:
             file: .docker/Dockerfile
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
+
+      -   name: Build and push Docker - Octane Image
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            push: true
+            file: .docker/octane.Dockerfile
+            tags: ${{ steps.octanemeta.outputs.tags }}
+            labels: ${{ steps.octanemeta.outputs.labels }}
