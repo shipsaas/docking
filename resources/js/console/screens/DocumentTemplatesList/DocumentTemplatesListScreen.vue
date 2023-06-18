@@ -46,6 +46,16 @@
           </div>
         </div>
       </template>
+      <template #after-table>
+        <Pagination
+          v-if="paginationMeta"
+          :from="paginationMeta.from"
+          :to="paginationMeta.to"
+          :total="paginationMeta.total"
+          @next="loadRecords(page + 1)"
+          @prev="loadRecords(page - 1)"
+        />
+      </template>
     </Table>
   </Card>
 </template>
@@ -60,8 +70,9 @@ import CreateNewTemplate from './components/CreateNewTemplate.vue';
 import DeleteTemplateButton from './components/DeleteTemplateButton.vue';
 import DuplicateTemplateButton from './components/DuplicateTemplateButton.vue';
 import { useRouter } from 'vue-router';
-import Input from "../../components/Input/Input.vue";
-import {notify} from "@kyvg/vue3-notification";
+import Input from '../../components/Input/Input.vue';
+import { notify } from '@kyvg/vue3-notification';
+import Pagination from '../../components/Pagination/Pagination.vue';
 
 const router = useRouter();
 
@@ -92,11 +103,14 @@ const columns = [
 ];
 
 const records = ref([]);
+const paginationMeta = ref(null);
 const page = ref(1);
 const keyword = ref(null);
 const isSearching = ref(false);
 
-const loadRecords = async () => {
+const loadRecords = async (forcePage) => {
+  page.value = forcePage || page.value;
+
   const documentTemplates = await documentTemplateRepository.index({
     limit: 20,
     page: page.value,
@@ -104,6 +118,7 @@ const loadRecords = async () => {
   });
 
   records.value = [...documentTemplates.data];
+  paginationMeta.value = { ...documentTemplates.meta };
 };
 
 const onTemplateDeleted = () => loadRecords();
@@ -138,11 +153,8 @@ function search() {
 
   isSearching.value = true;
 
-  // reset page
-  page.value = 1;
-
   // refetch
-  loadRecords();
+  loadRecords(1);
 }
 </script>
 

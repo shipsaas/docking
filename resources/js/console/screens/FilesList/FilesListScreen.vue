@@ -5,7 +5,18 @@
       sub-title="Manage all rendered PDF files"
       :columns="columns"
       :records="records"
-    />
+    >
+      <template #after-table>
+        <Pagination
+          v-if="paginationMeta"
+          :from="paginationMeta.from"
+          :to="paginationMeta.to"
+          :total="paginationMeta.total"
+          @next="loadRecords(page + 1)"
+          @prev="loadRecords(page - 1)"
+        />
+      </template>
+    </Table>
   </Card>
 </template>
 
@@ -14,6 +25,7 @@ import Card from '../../components/Card/Card.vue';
 import Table from '../../components/Table/Table.vue';
 import { ref, h } from 'vue';
 import { documentFileRepository } from '../../repositories/documentFile.repository';
+import Pagination from '../../components/Pagination/Pagination.vue';
 
 const columns = [
   {
@@ -52,8 +64,11 @@ const columns = [
 
 const records = ref([]);
 const page = ref(1);
+const paginationMeta = ref(null);
 
-const loadRecords = async () => {
+const loadRecords = async (forcePage) => {
+  page.value = forcePage || page.value;
+
   const data = await documentFileRepository.index({
     limit: 20,
     page: page.value,
@@ -64,6 +79,7 @@ const loadRecords = async () => {
   }
 
   records.value = [...data.data];
+  paginationMeta.value = { ...data.meta };
 };
 
 loadRecords();

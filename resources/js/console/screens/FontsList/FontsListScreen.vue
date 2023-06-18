@@ -15,6 +15,16 @@
           @deleted="loadRecords(1)"
         />
       </template>
+      <template #after-table>
+        <Pagination
+          v-if="paginationMeta"
+          :from="paginationMeta.from || 0"
+          :to="paginationMeta.to || 0"
+          :total="paginationMeta.total"
+          @next="loadRecords(page + 1)"
+          @prev="loadRecords(page - 1)"
+        />
+      </template>
     </Table>
   </Card>
 </template>
@@ -26,6 +36,7 @@ import { ref } from 'vue';
 import { fontRepository } from '../../repositories/font.repository';
 import CreateNewFont from './components/CreateNewFont.vue';
 import DeleteFontButton from './components/DeleteFontButton.vue';
+import Pagination from '../../components/Pagination/Pagination.vue';
 
 const columns = [
   {
@@ -54,11 +65,10 @@ const columns = [
 
 const records = ref([]);
 const page = ref(1);
+const paginationMeta = ref(null);
 
 const loadRecords = async (wantedPage) => {
-  if (wantedPage) {
-    page.value = wantedPage;
-  }
+  page.value = wantedPage || page.value;
 
   const data = await fontRepository.index({
     limit: 20,
@@ -71,6 +81,7 @@ const loadRecords = async (wantedPage) => {
   }
 
   records.value = [...data.data];
+  paginationMeta.value = { ...data.meta };
 };
 
 loadRecords();
