@@ -94,6 +94,8 @@
           </table>
         </div>
       </div>
+
+      <slot name="after-table" />
     </div>
   </div>
 </template>
