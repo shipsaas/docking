@@ -19,7 +19,7 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.5",
-        "laravel/framework": "^10.0",
+        "laravel/framework": "^10.19.0",
         "laravel/octane": "^2.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
