@@ -18,22 +18,28 @@ Route::prefix('v1')
         Route::get('access', [AuthController::class, 'access']);
 
         Route::resource('document-templates', DocumentTemplateController::class)
-            ->parameter('document-template', 'documentTemplate')
+            ->parameter('document-templates', 'documentTemplateUuidKey')
             ->except([
                 'create',
                 'edit',
             ]);
         Route::post(
-            'document-templates/{documentTemplate}/preview-html',
+            'document-templates/{documentTemplateUuidKey}/preview-html',
             [DocumentTemplateController::class, 'previewHtml']
         );
         Route::post(
-            'document-templates/{documentTemplate}/duplicate',
+            'document-templates/{documentTemplateUuidKey}/duplicate',
             [DocumentTemplateController::class, 'duplicate']
         );
 
-        Route::post('document-templates/{documentTemplate}/pdfs', [PdfRenderController::class, 'render']);
-        Route::post('document-templates/{documentTemplate}/pdfs-async', [PdfRenderController::class, 'renderAsync']);
+        Route::post(
+            'document-templates/{documentTemplateUuidKey}/pdfs',
+            [PdfRenderController::class, 'render']
+        );
+        Route::post(
+            'document-templates/{documentTemplateUuidKey}/pdfs-async',
+            [PdfRenderController::class, 'renderAsync']
+        );
 
         Route::get('document-files', [DocumentFileController::class, 'index']);
         Route::get('document-files/{documentFile}', [DocumentFileController::class, 'show']);
