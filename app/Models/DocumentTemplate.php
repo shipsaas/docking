@@ -48,4 +48,11 @@ class DocumentTemplate extends Model
 
         return TemplatingMode::from($rawMode);
     }
+
+    public static function getByUuidOrKey(string $value): DocumentTemplate
+    {
+        return DocumentTemplate::where(function ($q) use ($value) {
+            $q->orWhere('uuid', $value)->orWhere('key', $value);
+        })->firstOrFail();
+    }
 }

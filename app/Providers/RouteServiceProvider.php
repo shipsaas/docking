@@ -44,14 +44,15 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting(): void
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(600)->by($request->user()?->id ?: $request->ip());
         });
     }
 
     private function registerModelBindings(): void
     {
         Route::model('documentFile', DocumentFile::class);
-        Route::model('documentTemplate', DocumentTemplate::class);
         Route::model('font', Font::class);
+
+        Route::bind('documentTemplateUuidKey', DocumentTemplate::getByUuidOrKey(...));
     }
 }

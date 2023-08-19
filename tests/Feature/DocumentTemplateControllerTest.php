@@ -72,6 +72,23 @@ class DocumentTemplateControllerTest extends TestCase
             ]);
     }
 
+    public function testShowReturnsASingleTemplateUseKey()
+    {
+        $template = DocumentTemplate::factory()->create([
+            'key' => 'seth-tran-key',
+        ]);
+
+        $this->json('GET', 'api/v1/document-templates/seth-tran-key')
+            ->assertOk()
+            ->assertJsonFragment([
+                'uuid' => $template->uuid,
+                'key' => $template->key,
+                'category' => $template->category,
+                'title' => $template->title,
+                'template' => $template->template,
+            ]);
+    }
+
     public function testStoreCreateNewTemplate()
     {
         Event::fake([
@@ -106,6 +123,45 @@ class DocumentTemplateControllerTest extends TestCase
         $template = DocumentTemplate::factory()->create();
 
         $this->json('PUT', 'api/v1/document-templates/' . $template->uuid, [
+            'category' => 'Hihi',
+            'title' => 'Funny template',
+            'template' => '<h1>Hello {{ $name }}</h1>',
+            'default_variables' => [
+                'name' => 'DocKing',
+            ],
+            'metadata' => [
+                'driver' => 'gotenberg',
+            ],
+        ])
+            ->assertOk()
+            ->assertJsonFragment([
+                'uuid' => $template->uuid,
+            ]);
+
+        $this->assertDatabaseHas('document_templates', [
+            'uuid' => $template->uuid,
+            'category' => 'Hihi',
+            'title' => 'Funny template',
+            'template' => '<h1>Hello {{ $name }}</h1>',
+            'default_variables->name' => 'DocKing',
+            'metadata->driver' => 'gotenberg',
+        ]);
+
+        Event::assertDispatched(
+            DocumentTemplateUpdated::class,
+            fn (DocumentTemplateUpdated $event) => $event->template->is($template)
+        );
+    }
+
+    public function testUpdateUpdatesASingleTemplateUseKey()
+    {
+        Event::fake([
+            DocumentTemplateUpdated::class,
+        ]);
+
+        $template = DocumentTemplate::factory()->create();
+
+        $this->json('PUT', 'api/v1/document-templates/' . $template->key, [
             'category' => 'Hihi',
             'title' => 'Funny template',
             'template' => '<h1>Hello {{ $name }}</h1>',
