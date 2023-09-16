@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('languages', function (Blueprint $table) {
             $table->uuid()->primary();
 
-            $table->unique('code');
+            $table->string('code')->unique();
             $table->string('name');
 
             $table->timestamps();

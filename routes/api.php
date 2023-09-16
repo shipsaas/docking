@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentFileController;
 use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\FontController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PdfRenderController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,4 +48,11 @@ Route::prefix('v1')
         // v1.2.0 Fonts
         Route::resource('fonts', FontController::class)
             ->only(['index', 'store', 'destroy']);
+
+        // v1.4.0 Languages, TranslationGroups, Translations
+        Route::resource('languages', LanguageController::class)
+            ->except([
+                'create',
+                'edit',
+            ]);
     });
