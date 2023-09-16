@@ -108,43 +108,6 @@
                         </li>
                       </ul>
                     </li>
-                    <li>
-                      <div
-                        class="text-xs font-semibold leading-6 text-gray-400"
-                      >
-                        Your teams
-                      </div>
-                      <ul
-                        role="list"
-                        class="-mx-2 mt-2 space-y-1"
-                      >
-                        <li
-                          v-for="team in teams"
-                          :key="team.name"
-                        >
-                          <a
-                            :href="team.href"
-                            :class="[
-                              team.current
-                                ? 'bg-gray-50 text-indigo-600'
-                                : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
-                              'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                            ]"
-                          >
-                            <span
-                              :class="[
-                                team.current
-                                  ? 'text-indigo-600 border-indigo-600'
-                                  : 'text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600',
-                                'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white',
-                              ]"
-                              >{{ team.initial }}</span
-                            >
-                            <span class="truncate">{{ team.name }}</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
                     <li class="mt-auto">
                       <a
                         href="https://github.com/shipsaas"
@@ -196,9 +159,9 @@
                 <li
                   v-for="item in navigation"
                   :key="item.name"
-                  @click="setNavigationItemActive(item)"
                 >
                   <a
+                    v-if="!item.children"
                     :href="item.href"
                     :class="[
                       item.current
@@ -206,6 +169,7 @@
                         : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                     ]"
+                    @click="setNavigationItemActive(item)"
                   >
                     <component
                       :is="item.icon"
@@ -219,6 +183,63 @@
                     />
                     {{ item.name }}
                   </a>
+                  <Disclosure
+                    :default-open="item.current"
+                    as="div"
+                    v-else
+                    v-slot="{ open }"
+                  >
+                    <DisclosureButton
+                      :class="[
+                        item.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                        'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700',
+                      ]"
+                    >
+                      <ChevronRightIcon
+                        :class="[
+                          item.current || (!item.current && open)
+                            ? 'rotate-90 text-gray-500'
+                            : 'text-gray-400',
+                          'h-5 w-5 shrink-0',
+                        ]"
+                        aria-hidden="true"
+                      />
+                      {{ item.name }}
+                    </DisclosureButton>
+                    <DisclosurePanel
+                      :static="item.current"
+                      as="ul"
+                      class="mt-1 px-2"
+                      v-slot="{ close }"
+                    >
+                      <li
+                        v-for="subItem in item.children"
+                        :key="subItem.name"
+                      >
+                        <DisclosureButton
+                          as="a"
+                          :href="subItem.href"
+                          :class="[
+                            subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50',
+                            'flex gap-x-3 rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700',
+                          ]"
+                          @click="setNavigationItemActive(subItem)"
+                        >
+                          <component
+                            :is="subItem.icon"
+                            :class="[
+                              subItem.current
+                                ? 'text-indigo-600'
+                                : 'text-gray-400 group-hover:text-indigo-600',
+                              'h-6 w-6 shrink-0',
+                            ]"
+                            aria-hidden="true"
+                          />
+                          {{ subItem.name }}
+                        </DisclosureButton>
+                      </li>
+                    </DisclosurePanel>
+                  </Disclosure>
                 </li>
               </ul>
             </li>
@@ -283,8 +304,9 @@
                   <span
                     class="ml-4 text-sm font-semibold leading-6 text-gray-900"
                     aria-hidden="true"
-                    >DocKing User</span
                   >
+                    DocKing User
+                  </span>
                   <ChevronDownIcon
                     class="ml-2 h-5 w-5 text-gray-400"
                     aria-hidden="true"
@@ -340,6 +362,9 @@ import { ref } from 'vue';
 import {
   Dialog,
   DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
   Menu,
   MenuButton,
   MenuItem,
@@ -351,6 +376,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   RocketLaunchIcon,
+  ChevronRightIcon,
 } from '@heroicons/vue/24/outline';
 import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import imgUrl from './assets/img/logo.png';
