@@ -4,6 +4,8 @@ import {
   HomeIcon,
   DocumentPlusIcon,
   AtSymbolIcon,
+  LanguageIcon,
+  DocumentTextIcon,
 } from '@heroicons/vue/24/outline';
 
 const DEFAULT_NAVIGATION_INDEX = 0;
@@ -25,6 +27,18 @@ const NAVIGATION_ITEMS = [
     name: 'Fonts',
     href: '#/fonts',
     icon: AtSymbolIcon,
+    current: false,
+  },
+  {
+    name: 'Translations',
+    href: '#/translations',
+    icon: DocumentTextIcon,
+    current: false,
+  },
+  {
+    name: 'Languages',
+    href: '#/languages',
+    icon: LanguageIcon,
     current: false,
   },
 ];

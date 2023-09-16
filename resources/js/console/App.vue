@@ -329,7 +329,7 @@
 
   <LoginModal
     v-if="!isLoggedIn"
-    @login="onLogin"
+    :on-login="onLogin"
   />
 
   <notifications />
