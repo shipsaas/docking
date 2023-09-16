@@ -14,8 +14,8 @@ class TranslationFactory extends Factory
     {
         return [
             'translation_group_id' => fn () => TranslationGroup::factory()->create(),
-            'key' => fake()->words(5),
-            'name' => fake()->words(5),
+            'key' => fake()->sentence(5),
+            'name' => fake()->sentence(5),
             'text' => [],
         ];
     }

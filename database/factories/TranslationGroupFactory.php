@@ -12,9 +12,9 @@ class TranslationGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'key' => fake()->words(5),
-            'name' => fake()->words(5),
-            'description' => fake()->realText(5),
+            'key' => fake()->sentence(5),
+            'name' => fake()->sentence(5),
+            'description' => fake()->realText(50),
         ];
     }
 }
