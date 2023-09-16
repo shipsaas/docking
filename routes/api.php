@@ -6,6 +6,7 @@ use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\FontController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PdfRenderController;
+use App\Http\Controllers\TranslationController;
 use App\Http\Controllers\TranslationGroupController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,11 @@ Route::prefix('v1')
             ]);
         Route::resource('translation-groups', TranslationGroupController::class)
             ->parameter('translation-groups', 'translationGroup')
+            ->except([
+                'create',
+                'edit',
+            ]);
+        Route::resource('translations', TranslationController::class)
             ->except([
                 'create',
                 'edit',
