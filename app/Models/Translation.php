@@ -13,15 +13,18 @@ class Translation extends Model
     use HasFactory;
 
     protected $table = 'translations';
+    protected $primaryKey = 'uuid';
 
     protected $fillable = [
         'key',
         'translation_group_id',
         'name',
-        'description',
+        'text',
     ];
 
-    protected $primaryKey = 'uuid';
+    protected $casts = [
+        'text' => 'array',
+    ];
 
     public function translationGroup(): BelongsTo
     {
