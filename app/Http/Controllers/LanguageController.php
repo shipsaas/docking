@@ -14,7 +14,7 @@ class LanguageController extends Controller
     public function index(LanguageIndexRequest $request): JsonResponse
     {
         $fonts = $request->buildQueryBuilder()
-            ->paginate();
+            ->get();
 
         return LanguageResource::collection($fonts)->response();
     }
