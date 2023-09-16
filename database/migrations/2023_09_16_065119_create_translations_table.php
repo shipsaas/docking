@@ -10,7 +10,9 @@ return new class extends Migration {
         Schema::create('translations', function (Blueprint $table) {
             $table->uuid()->primary();
 
+            $table->uuid('translation_group_id')->index();
             $table->string('key')->unique();
+            $table->string('name');
             $table->jsonb('text');
 
             $table->timestamps();
