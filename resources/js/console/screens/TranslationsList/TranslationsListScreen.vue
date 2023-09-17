@@ -23,7 +23,7 @@
           />
           <DeleteTranslationButton
             :font="record"
-            @updated="loadRecords(page)"
+            @deleted="loadRecords(page)"
           />
         </div>
       </template>
