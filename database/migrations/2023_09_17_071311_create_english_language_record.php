@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
+        if (app()->runningUnitTests()) {
+            return;
+        }
+
         DB::table('languages')
             ->insertOrIgnore([
                 'uuid' => Str::orderedUuid()->toString(),
@@ -17,6 +21,10 @@ return new class extends Migration {
 
     public function down(): void
     {
+        if (app()->runningUnitTests()) {
+            return;
+        }
+
         DB::table('languages')
             ->where('code', 'en')
             ->delete();

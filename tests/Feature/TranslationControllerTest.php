@@ -142,6 +142,16 @@ class TranslationControllerTest extends TestCase
             'text' => [1, 2, 3], // wrong type
         ])->assertUnprocessable();
 
+        $this->json('POST', "api/v1/translations", [
+            'translation_group_id' => $pricingGroup->uuid,
+            'key' => 'inexpensive',
+            'name' => 'Inexpensive',
+            'text' => [
+                'en' => 'Inexpensive',
+                'vi' => '', // empty for vi
+            ],
+        ])->assertUnprocessable();
+
     }
 
     public function testUpdateUpdatesAGivenLanguage()
