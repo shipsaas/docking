@@ -30,6 +30,10 @@ class PdfRenderManager
         array $variables = [],
         array $metadata = []
     ): PdfRenderResult {
+        if (isset($metadata['language'])) {
+            app()->setLocale($metadata['language']);
+        }
+
         return $this->getDriver($metadata['driver'] ?? null)
             ->render($template, $variables, $metadata);
     }
