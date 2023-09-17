@@ -7,7 +7,7 @@
     <template #default>
       <div class="flex flex-col mt-4 gap-2">
         <Input
-          v-model="formFields.key"
+          v-model="formFields.code"
           label="Language ISO Code (e.g: en, vi, es)"
           :disabled="isLoading"
         />
@@ -46,7 +46,7 @@ import Input from '../../../components/Input/Input.vue';
 import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
 import { useRouter } from 'vue-router';
-import { fontRepository } from '../../../repositories/font.repository';
+import { languageRepository } from '../../../repositories/language.repository';
 
 const router = useRouter();
 const isOpenModal = ref(false);
@@ -54,9 +54,8 @@ const { isLoading, startLoading, stopLoading } = useLoading();
 const emits = defineEmits(['created']);
 
 const getBlankFields = () => ({
-  key: '',
+  code: '',
   name: '',
-  font: null,
 });
 
 const formFields = ref(getBlankFields());
@@ -73,13 +72,9 @@ const onClickCloseModal = () => {
 const onClickSubmit = async () => {
   startLoading();
 
-  const formData = new FormData();
-
-  Object.entries(formFields.value).forEach(([key, value]) => {
-    formData.append(key, value);
+  const data = await languageRepository.create({
+    ...formFields.value,
   });
-
-  const data = await fontRepository.create(formData);
 
   stopLoading();
 
@@ -90,7 +85,7 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Font has been created.',
+    text: 'Language has been created.',
   });
 
   onClickCloseModal();
