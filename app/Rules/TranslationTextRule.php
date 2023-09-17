@@ -17,7 +17,13 @@ class TranslationTextRule implements ValidationRule
         $isOk = empty(array_diff($allLanguageCodes, $clientLangCodes));
 
         if (!$isOk) {
-            $fail('Missing languageCode in the object. Required langCodes: ' . implode(', ', $allLanguageCodes));
+            $fail('Missing language codes in the object. Required langCodes: ' . implode(', ', $allLanguageCodes));
+        }
+
+        foreach ($value as $langCode => $langText) {
+            if (empty($langText)) {
+                $fail(sprintf('Missing text for language: %s', $langCode));
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ import { catchError, getData } from './helper';
 
 const httpClient = authenticatedInstance;
 
-export const fontRepository = {
+export const translationRepository = {
   index({
     limit = 20,
     page = 1,
@@ -11,7 +11,7 @@ export const fontRepository = {
     sortDirection = 'asc',
   }) {
     return httpClient
-      .get('fonts', {
+      .get('translations', {
         params: {
           limit,
           page,
@@ -24,19 +24,30 @@ export const fontRepository = {
   },
 
   /**
-   *
-   * @param {FormData} data
+   * @param {{name: string, description: string, key: string}} data
    */
   create(data) {
     return httpClient
-      .post(`fonts`, data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      .post(`translations`, data)
+      .then(getData)
+      .catch(catchError);
+  },
+
+  /**
+   * @param {String} id
+   * @param {{name: string, description: string}} data
+   */
+  update(id, data) {
+    return httpClient
+      .put(`translations/${id}`, data)
       .then(getData)
       .catch(catchError);
   },
 
   destroy(id) {
-    return httpClient.delete(`fonts/${id}`).then(getData).catch(catchError);
+    return httpClient
+      .delete(`translations/${id}`)
+      .then(getData)
+      .catch(catchError);
   },
 };

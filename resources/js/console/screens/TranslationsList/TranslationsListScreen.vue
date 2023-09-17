@@ -7,7 +7,11 @@
       :records="records"
     >
       <template #action-buttons>
-        <CreateNewTranslation @created="loadRecords(1)" />
+        <CreateNewTranslation
+          :languages="languages"
+          :translation-groups="translationGroups"
+          @created="loadRecords(1)"
+        />
       </template>
       <template #record-actions="{ record }">
         <DeleteTranslationButton
@@ -32,18 +36,16 @@
 <script setup>
 import Card from '../../components/Card/Card.vue';
 import Table from '../../components/Table/Table.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { fontRepository } from '../../repositories/font.repository';
 import Pagination from '../../components/Pagination/Pagination.vue';
 import CreateNewTranslation from './components/CreateNewTranslation.vue';
 import DeleteTranslationButton from './components/DeleteTranslationButton.vue';
+import { languageRepository } from '../../repositories/language.repository';
+import { translationGroupRepository } from '../../repositories/translationGroup.repository';
+import { translationRepository } from '../../repositories/translation.repository';
 
 const columns = [
-  {
-    key: 'uuid',
-    label: 'ID',
-    headerClass: 'w-20',
-  },
   {
     key: 'key',
     label: 'Key',
@@ -67,13 +69,17 @@ const records = ref([]);
 const page = ref(1);
 const paginationMeta = ref(null);
 
+const languages = ref([]);
+const translationGroups = ref([]);
+
 const loadRecords = async (wantedPage) => {
   page.value = wantedPage || page.value;
 
-  const data = await fontRepository.index({
+  const data = await translationRepository.index({
     limit: 20,
     page: page.value,
-    sortBy: 'name',
+    sortBy: 'created_at',
+    sortDirection: 'asc',
   });
 
   if (!data) {
@@ -84,5 +90,36 @@ const loadRecords = async (wantedPage) => {
   paginationMeta.value = { ...data.meta };
 };
 
-loadRecords();
+const loadLanguages = async () => {
+  const data = await languageRepository.index({
+    sortBy: 'name',
+    sortDirection: 'asc',
+  });
+
+  if (!data) {
+    return;
+  }
+
+  languages.value = [...data.data];
+};
+
+const loadTranslationGroups = async () => {
+  const data = await translationGroupRepository.index({
+    sortBy: 'name',
+    sortDirection: 'asc',
+    limit: 100, // unlikely people would create more than 100 groups lol
+  });
+
+  if (!data) {
+    return;
+  }
+
+  translationGroups.value = [...data.data];
+};
+
+onMounted(() => {
+  loadRecords();
+  loadLanguages();
+  loadTranslationGroups();
+});
 </script>

@@ -1,28 +1,51 @@
 <template>
   <Button @click="onClickCreate">Create New Translation</Button>
   <Modal
-    title="Create New Font"
+    title="Create New Translation"
+    width-size="xl"
     :is-open="isOpenModal"
   >
     <template #default>
       <div class="flex flex-col mt-4 gap-2">
+        <Dropdown
+          :label="selectedTranslationGroupLabel"
+          :items="translationGroupDropdownItems"
+          @selected="handleSelectedTranslationGroup"
+        />
         <Input
           v-model="formFields.key"
           label="Unique Identifier Key"
           :disabled="isLoading"
         />
+        <p
+          v-if="selectedTranslationGroup"
+          class="text-sm"
+        >
+          Your full translation key will be:
+          <span class="font-medium">
+            {{ selectedTranslationGroup.key }}.{{ formFields.key }}
+          </span>
+        </p>
         <Input
           v-model="formFields.name"
           label="Name"
           :disabled="isLoading"
         />
-        <Input
-          v-model="formFields.font"
-          type="file"
-          label="Font File"
-          accept=".ttf,.woff,.woff2,.otf"
-          :disabled="isLoading"
-        />
+        <h3 class="font-medium text-sm">Translation Texts</h3>
+        <div
+          v-for="language in languages"
+          :key="language.code"
+          class="flex flex-row items-center gap-3"
+        >
+          <span class="font-medium text-sm">
+            {{ language.name }} ({{ language.code }})
+          </span>
+          <Input
+            v-model="formFields.text[language.code]"
+            class="flex-1"
+            label=""
+          />
+        </div>
       </div>
     </template>
     <template #bottom-buttons>
@@ -48,12 +71,24 @@
 <script setup>
 import Button from '../../../components/Button/Button.vue';
 import Modal from '../../../components/Modal/Modal.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Input from '../../../components/Input/Input.vue';
 import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
 import { useRouter } from 'vue-router';
-import { fontRepository } from '../../../repositories/font.repository';
+import { translationRepository } from '../../../repositories/translation.repository';
+import Dropdown from '../../../components/Dropdown/Dropdown.vue';
+
+const props = defineProps({
+  languages: {
+    type: Array,
+    required: true,
+  },
+  translationGroups: {
+    type: Array,
+    required: true,
+  },
+});
 
 const router = useRouter();
 const isOpenModal = ref(false);
@@ -61,15 +96,21 @@ const { isLoading, startLoading, stopLoading } = useLoading();
 const emits = defineEmits(['created']);
 
 const getBlankFields = () => ({
+  translation_group_id: '',
   key: '',
   name: '',
-  font: null,
+  text: props.languages.reduce((values, item) => {
+    values[item.code] = '';
+
+    return values;
+  }, {}),
 });
 
 const formFields = ref(getBlankFields());
 
 const onClickCreate = () => {
   isOpenModal.value = true;
+  formFields.value = getBlankFields();
 };
 
 const onClickCloseModal = () => {
@@ -80,13 +121,9 @@ const onClickCloseModal = () => {
 const onClickSubmit = async () => {
   startLoading();
 
-  const formData = new FormData();
-
-  Object.entries(formFields.value).forEach(([key, value]) => {
-    formData.append(key, value);
+  const data = await translationRepository.create({
+    ...formFields.value,
   });
-
-  const data = await fontRepository.create(formData);
 
   stopLoading();
 
@@ -97,12 +134,31 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Font has been created.',
+    text: 'Translation has been created.',
   });
 
   onClickCloseModal();
   emits('created');
 };
-</script>
 
-<style scoped></style>
+const translationGroupDropdownItems = computed(() =>
+  props.translationGroups.map((item) => ({
+    key: item.uuid,
+    label: item.name,
+  }))
+);
+
+const selectedTranslationGroup = computed(() =>
+  props.translationGroups.find(
+    (item) => item.uuid === formFields.value.translation_group_id
+  )
+);
+
+const selectedTranslationGroupLabel = computed(
+  () => selectedTranslationGroup.value?.name || 'Select Translation Group'
+);
+
+const handleSelectedTranslationGroup = (translationGroupId) => {
+  formFields.value.translation_group_id = translationGroupId;
+};
+</script>
