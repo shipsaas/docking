@@ -6,7 +6,6 @@ use App\Enums\TemplatingMode;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -37,15 +36,6 @@ class DocumentTemplate extends Model
     public function documentFiles(): HasMany
     {
         return $this->hasMany(DocumentFile::class, 'document_template_uuid');
-    }
-
-    public function translationGroups(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            TranslationGroup::class,
-            foreignPivotKey: 'document_template_id',
-            relatedPivotKey: 'translation_group_id'
-        )->using(DocumentTemplateTranslationGroup::class);
     }
 
     public function getTemplatingMode(): TemplatingMode

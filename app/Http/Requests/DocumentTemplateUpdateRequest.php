@@ -16,6 +16,8 @@ class DocumentTemplateUpdateRequest extends FormRequest
             'template' => 'required|string',
             'default_variables' => 'required|array',
             'metadata' => 'required|array',
+            'translation_groups' => 'nullable|array',
+            'translation_groups.*' => 'uuid|exists:translation_groups,uuid',
         ];
     }
 }

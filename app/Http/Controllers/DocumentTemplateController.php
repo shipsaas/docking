@@ -13,8 +13,10 @@ use App\Http\Requests\DocumentTemplateStoreRequest;
 use App\Http\Requests\DocumentTemplateUpdateRequest;
 use App\Http\Resources\DocumentTemplateResource;
 use App\Models\DocumentTemplate;
+use App\Models\TranslationGroup;
 use App\Services\TemplatingRenderManager;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use stdClass;
 
@@ -36,16 +38,24 @@ class DocumentTemplateController extends Controller
 
     public function store(DocumentTemplateStoreRequest $request): JsonResponse
     {
-        $documentTemplate = DocumentTemplate::create([
-            ...$request->validated(),
-            'default_variables' => [
-                'your-variable' => 'here',
-            ],
-            'metadata' => [
-                'driver' => PdfService::GOTENBERG->value,
-                'templating' => TemplatingMode::BLADE->value,
-            ],
-        ]);
+        $documentTemplate = DB::transaction(function () use ($request) {
+            $documentTemplate = DocumentTemplate::create([
+                ...$request->validated(),
+                'default_variables' => [
+                    'your-variable' => 'here',
+                ],
+                'metadata' => [
+                    'driver' => PdfService::GOTENBERG->value,
+                    'templating' => TemplatingMode::BLADE->value,
+                ],
+            ]);
+
+            $translationGroups = TranslationGroup::find($request->validated('translation_groups'));
+
+            $documentTemplate->translationGroups()->attach($translationGroups);
+
+            return $documentTemplate;
+        });
 
         $documentTemplate && Event::dispatch(new DocumentTemplateCreated($documentTemplate));
 
@@ -59,15 +69,24 @@ class DocumentTemplateController extends Controller
         DocumentTemplateUpdateRequest $request,
         DocumentTemplate $documentTemplate
     ): JsonResponse {
-        $updateResult = $documentTemplate->update([
-            ...$request->validated(),
-            'default_variables' => $request->input('default_variables')
-                ?: $documentTemplate->default_variables
-                    ?: new stdClass(),
-            'metadata' => $request->input('metadata')
-                ?: $documentTemplate->metadata
-                    ?: new stdClass(),
-        ]);
+        $updateResult = DB::transaction(function () use ($documentTemplate, $request) {
+            $updateResult = $documentTemplate->update([
+                ...$request->validated(),
+                'default_variables' => $request->input('default_variables')
+                    ?: $documentTemplate->default_variables
+                        ?: new stdClass(),
+                'metadata' => $request->input('metadata')
+                    ?: $documentTemplate->metadata
+                        ?: new stdClass(),
+            ]);
+
+            $translationGroups = TranslationGroup::find($request->validated('translation_groups'));
+
+            $documentTemplate->translationGroups()->sync($translationGroups);
+
+            return $updateResult;
+        });
+
 
         $updateResult && Event::dispatch(new DocumentTemplateUpdated($documentTemplate));
 

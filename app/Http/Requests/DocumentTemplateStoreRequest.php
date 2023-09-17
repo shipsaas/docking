@@ -19,6 +19,8 @@ class DocumentTemplateStoreRequest extends FormRequest
             ],
             'title' => 'required|string',
             'category' => 'required|string',
+            'translation_groups' => 'nullable|array',
+            'translation_groups.*' => 'uuid|exists:translation_groups,uuid',
         ];
     }
 }
