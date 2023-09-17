@@ -91,7 +91,7 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Language has been created.',
+    text: 'Translation Group has been created.',
   });
 
   onClickCloseModal();

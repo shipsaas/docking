@@ -14,10 +14,18 @@
         />
       </template>
       <template #record-actions="{ record }">
-        <DeleteTranslationButton
-          :font="record"
-          @deleted="loadRecords(1)"
-        />
+        <div class="flex gap-2">
+          <UpdateTranslationButton
+            :languages="languages"
+            :translation-groups="translationGroups"
+            :translation="record"
+            @updated="loadRecords(page)"
+          />
+          <DeleteTranslationButton
+            :font="record"
+            @updated="loadRecords(page)"
+          />
+        </div>
       </template>
       <template #after-table>
         <Pagination
@@ -44,6 +52,7 @@ import DeleteTranslationButton from './components/DeleteTranslationButton.vue';
 import { languageRepository } from '../../repositories/language.repository';
 import { translationGroupRepository } from '../../repositories/translationGroup.repository';
 import { translationRepository } from '../../repositories/translation.repository';
+import UpdateTranslationButton from './components/UpdateTranslationButton.vue';
 
 const columns = [
   {

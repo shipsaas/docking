@@ -11,8 +11,8 @@
     title="Delete Confirmation"
   >
     <p class="mt-4 text-sm text-gray-500">
-      Are you sure you want to delete this font? Those templates that are using
-      this font will be fallback to the default font (of Driver).
+      Are you sure you want to delete this Translation? The templates depend on
+      this this Translation will not able to use it anymore.
     </p>
     <template #bottom-buttons>
       <div class="flex gap-1">
@@ -41,7 +41,7 @@ import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
 import Modal from '../../../components/Modal/Modal.vue';
 import { ref } from 'vue';
-import { fontRepository } from '../../../repositories/font.repository';
+import { translationRepository } from '../../../repositories/translation.repository';
 
 const props = defineProps({
   font: {
@@ -62,7 +62,7 @@ const onClickDelete = () => {
 const onClickConfirmDelete = async () => {
   startLoading();
 
-  const data = await fontRepository.destroy(props.font.uuid);
+  const data = await translationRepository.destroy(props.font.uuid);
 
   stopLoading();
 
@@ -73,7 +73,7 @@ const onClickConfirmDelete = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Font has been deleted.',
+    text: 'Translation has been deleted.',
   });
 
   emits('deleted');

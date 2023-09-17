@@ -1,7 +1,7 @@
 <template>
   <Button @click="onClickCreate">Update</Button>
   <Modal
-    title="Update Language"
+    title="Update Translation Group"
     :is-open="isOpenModal"
   >
     <template #default>
