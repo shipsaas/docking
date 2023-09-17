@@ -8,6 +8,7 @@ use App\Http\Requests\TranslationGroupUpdateRequest;
 use App\Http\Resources\TranslationGroupResource;
 use App\Models\TranslationGroup;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class TranslationGroupController extends Controller
 {
@@ -46,7 +47,11 @@ class TranslationGroupController extends Controller
 
     public function destroy(TranslationGroup $translationGroup): JsonResponse
     {
-        $deleteResult = $translationGroup->delete();
+        $deleteResult = DB::transaction(function () use ($translationGroup) {
+            $translationGroup->translations()->delete();
+
+            return $translationGroup->delete();
+        });
 
         return new JsonResponse([
             'uuid' => $translationGroup->uuid,

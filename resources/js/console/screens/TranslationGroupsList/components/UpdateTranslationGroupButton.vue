@@ -7,13 +7,18 @@
     <template #default>
       <div class="flex flex-col mt-4 gap-2">
         <Input
-          :model-value="language.code"
-          label="Language ISO Code"
+          :model-value="translationGroup.key"
+          label="Unique Key"
           disabled
         />
         <Input
           v-model="formFields.name"
           label="Name"
+          :disabled="isLoading"
+        />
+        <Input
+          v-model="formFields.description"
+          label="Description (Optional)"
           :disabled="isLoading"
         />
       </div>
@@ -46,10 +51,10 @@ import Input from '../../../components/Input/Input.vue';
 import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
 import { useRouter } from 'vue-router';
-import { languageRepository } from '../../../repositories/language.repository';
+import { translationGroupRepository } from '../../../repositories/translationGroup.repository';
 
 const props = defineProps({
-  language: {
+  translationGroup: {
     type: Object,
     required: true,
   },
@@ -62,13 +67,15 @@ const { isLoading, startLoading, stopLoading } = useLoading();
 
 const getBlankFields = () => ({
   name: '',
+  description: '',
 });
 
 const formFields = ref(getBlankFields());
 
 const onClickCreate = () => {
   isOpenModal.value = true;
-  formFields.value.name = props.language.name;
+  formFields.value.name = props.translationGroup.name;
+  formFields.value.description = props.translationGroup.description;
 };
 
 const onClickCloseModal = () => {
@@ -79,9 +86,12 @@ const onClickCloseModal = () => {
 const onClickSubmit = async () => {
   startLoading();
 
-  const data = await languageRepository.update(props.language.uuid, {
-    ...formFields.value,
-  });
+  const data = await translationGroupRepository.update(
+    props.translationGroup.uuid,
+    {
+      ...formFields.value,
+    }
+  );
 
   stopLoading();
 
@@ -92,7 +102,7 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Language has been updated.',
+    text: 'Translation Group has been updated.',
   });
 
   onClickCloseModal();

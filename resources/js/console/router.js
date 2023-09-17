@@ -40,6 +40,14 @@ export const router = createRouter({
         import('./screens/LanguagesList/LanguaguesListScreen.vue'),
     },
     {
+      path: '/translation-groups',
+      name: 'translation-groups-list',
+      component: () =>
+        import(
+          './screens/TranslationGroupsList/TranslationGroupsListScreen.vue'
+        ),
+    },
+    {
       path: '/translations',
       name: 'translations-list',
       component: () =>

@@ -1,19 +1,24 @@
 <template>
-  <Button @click="onClickCreate">Update</Button>
+  <Button @click="onClickCreate">Create New Translation Group</Button>
   <Modal
-    title="Update Language"
+    title="Create New Translation Group"
     :is-open="isOpenModal"
   >
     <template #default>
       <div class="flex flex-col mt-4 gap-2">
         <Input
-          :model-value="language.code"
-          label="Language ISO Code"
-          disabled
+          v-model="formFields.key"
+          label="Unique Key"
+          :disabled="isLoading"
         />
         <Input
           v-model="formFields.name"
           label="Name"
+          :disabled="isLoading"
+        />
+        <Input
+          v-model="formFields.description"
+          label="Description (Optional)"
           :disabled="isLoading"
         />
       </div>
@@ -31,7 +36,7 @@
           @click="onClickSubmit"
           :disabled="isLoading"
         >
-          Update
+          Create
         </Button>
       </div>
     </template>
@@ -46,29 +51,23 @@ import Input from '../../../components/Input/Input.vue';
 import { notify } from '@kyvg/vue3-notification';
 import { useLoading } from '../../../composable/useLoading';
 import { useRouter } from 'vue-router';
-import { languageRepository } from '../../../repositories/language.repository';
-
-const props = defineProps({
-  language: {
-    type: Object,
-    required: true,
-  },
-});
-const emits = defineEmits(['updated']);
+import { translationGroupRepository } from '../../../repositories/translationGroup.repository';
 
 const router = useRouter();
 const isOpenModal = ref(false);
 const { isLoading, startLoading, stopLoading } = useLoading();
+const emits = defineEmits(['created']);
 
 const getBlankFields = () => ({
+  key: '',
   name: '',
+  description: '',
 });
 
 const formFields = ref(getBlankFields());
 
 const onClickCreate = () => {
   isOpenModal.value = true;
-  formFields.value.name = props.language.name;
 };
 
 const onClickCloseModal = () => {
@@ -79,7 +78,7 @@ const onClickCloseModal = () => {
 const onClickSubmit = async () => {
   startLoading();
 
-  const data = await languageRepository.update(props.language.uuid, {
+  const data = await translationGroupRepository.create({
     ...formFields.value,
   });
 
@@ -92,11 +91,11 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Language has been updated.',
+    text: 'Language has been created.',
   });
 
   onClickCloseModal();
-  emits('updated');
+  emits('created');
 };
 </script>
 

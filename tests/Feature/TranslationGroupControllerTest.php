@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Translation;
 use App\Models\TranslationGroup;
 use Tests\TestCase;
 
@@ -83,7 +84,7 @@ class TranslationGroupControllerTest extends TestCase
         $response->assertUnprocessable();
     }
 
-    public function testUpdateUpdatesAGivenLanguage()
+    public function testUpdateUpdatesAGivenTranslationGroup()
     {
         $invoiceGroup = TranslationGroup::factory()->create([
             'key' => 'invoice',
@@ -107,11 +108,14 @@ class TranslationGroupControllerTest extends TestCase
         ]);
     }
 
-    public function testDestroyDeletesAGivenLanguage()
+    public function testDestroyDeletesAGivenTranslationGroup()
     {
         $railGroup = TranslationGroup::factory()->create([
             'key' => 'rail',
             'name' => 'Rail Group',
+        ]);
+        $translation = Translation::factory()->create([
+            'translation_group_id' => $railGroup->uuid,
         ]);
 
         $response = $this->json('DELETE', "api/v1/translation-groups/{$railGroup->uuid}");
@@ -123,6 +127,9 @@ class TranslationGroupControllerTest extends TestCase
 
         $this->assertDatabaseMissing((new TranslationGroup())->getTable(), [
             'key' => 'rail',
+        ]);
+        $this->assertDatabaseMissing((new Translation())->getTable(), [
+            'uuid' => $translation->uuid,
         ]);
     }
 }
