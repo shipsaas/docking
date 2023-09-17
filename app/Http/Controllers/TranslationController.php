@@ -7,6 +7,7 @@ use App\Http\Requests\TranslationStoreRequest;
 use App\Http\Requests\TranslationUpdateRequest;
 use App\Http\Resources\TranslationResource;
 use App\Models\Translation;
+use App\Models\TranslationGroup;
 use Illuminate\Http\JsonResponse;
 
 class TranslationController extends Controller
@@ -14,6 +15,7 @@ class TranslationController extends Controller
     public function index(TranslationIndexRequest $request): JsonResponse
     {
         $translations = $request->buildQueryBuilder()
+            ->with(['translationGroup'])
             ->paginate();
 
         return TranslationResource::collection($translations)->response();
@@ -26,7 +28,11 @@ class TranslationController extends Controller
 
     public function store(TranslationStoreRequest $request): JsonResponse
     {
-        $translation = Translation::create($request->validated());
+        $translationGroup = TranslationGroup::find($request->validated('translation_group_id'));
+        $translation = Translation::create([
+            ...$request->validated(),
+            'key' => "{$translationGroup->key}.{$request->input('key')}",
+        ]);
 
         return new JsonResponse([
             'uuid' => $translation->uuid,
@@ -36,7 +42,12 @@ class TranslationController extends Controller
 
     public function update(TranslationUpdateRequest $request, Translation $translation): JsonResponse
     {
-        $updateStatus = $translation->update($request->validated());
+        $translationGroup = TranslationGroup::find($request->validated('translation_group_id'));
+
+        $updateStatus = $translation->update([
+            ...$request->validated(),
+            'key' => "{$translationGroup->key}.{$request->input('key')}",
+        ]);
 
         return new JsonResponse([
             'uuid' => $translation->uuid,

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Translation;
+use App\Rules\TranslationTextRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,10 +19,14 @@ class TranslationStoreRequest extends FormRequest
             ],
             'translation_group_id' => [
                 'required',
-                'exists:translation_groups,id',
+                'exists:translation_groups,uuid',
             ],
             'name' => 'required|string',
-            'text' => 'required|array',
+            'text' => [
+                'required',
+                'array',
+                new TranslationTextRule(),
+            ],
         ];
     }
 }

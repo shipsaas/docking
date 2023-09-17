@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Translation;
+use App\Rules\TranslationTextRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,10 +26,15 @@ class TranslationUpdateRequest extends FormRequest
             ])),
             'translation_group_id' => [
                 'required',
-                'exists:translation_groups,id',
+                'exists:translation_groups,uuid',
             ],
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'text' => [
+                'required',
+                'array',
+                new TranslationTextRule(),
+            ],
         ];
     }
 }
