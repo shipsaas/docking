@@ -1,15 +1,15 @@
 <template>
-  <Button @click="onClickCreate">Create New Language</Button>
+  <Button @click="onClickCreate">Update</Button>
   <Modal
-    title="Create New Language"
+    title="Update Language"
     :is-open="isOpenModal"
   >
     <template #default>
       <div class="flex flex-col mt-4 gap-2">
         <Input
-          v-model="formFields.code"
-          label="Language ISO Code (e.g: en, vi, es)"
-          :disabled="isLoading"
+          :model-value="language.code"
+          label="Language ISO Code"
+          disabled
         />
         <Input
           v-model="formFields.name"
@@ -31,7 +31,7 @@
           @click="onClickSubmit"
           :disabled="isLoading"
         >
-          Create
+          Update
         </Button>
       </div>
     </template>
@@ -48,13 +48,19 @@ import { useLoading } from '../../../composable/useLoading';
 import { useRouter } from 'vue-router';
 import { languageRepository } from '../../../repositories/language.repository';
 
+const props = defineProps({
+  language: {
+    type: Object,
+    required: true,
+  },
+});
+const emits = defineEmits(['updated']);
+
 const router = useRouter();
 const isOpenModal = ref(false);
 const { isLoading, startLoading, stopLoading } = useLoading();
-const emits = defineEmits(['created']);
 
 const getBlankFields = () => ({
-  code: '',
   name: '',
 });
 
@@ -62,6 +68,7 @@ const formFields = ref(getBlankFields());
 
 const onClickCreate = () => {
   isOpenModal.value = true;
+  formFields.value.name = props.language.name;
 };
 
 const onClickCloseModal = () => {
@@ -72,7 +79,8 @@ const onClickCloseModal = () => {
 const onClickSubmit = async () => {
   startLoading();
 
-  const data = await languageRepository.create({
+  console.log(props.language);
+  const data = await languageRepository.update(props.language.uuid, {
     ...formFields.value,
   });
 
@@ -85,11 +93,11 @@ const onClickSubmit = async () => {
   notify({
     type: 'success',
     title: 'Action OK',
-    text: 'Language has been created.',
+    text: 'Language has been updated.',
   });
 
   onClickCloseModal();
-  emits('created');
+  emits('updated');
 };
 </script>
 

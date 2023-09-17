@@ -24,11 +24,21 @@ export const languageRepository = {
   },
 
   /**
-   *
    * @param {{name: string, code: string}} data
    */
   create(data) {
     return httpClient.post(`languages`, data).then(getData).catch(catchError);
+  },
+
+  /**
+   * @param {String} id
+   * @param {{name: String}} data
+   */
+  update(id, data) {
+    return httpClient
+      .put(`languages/${id}`, data)
+      .then(getData)
+      .catch(catchError);
   },
 
   destroy(id) {

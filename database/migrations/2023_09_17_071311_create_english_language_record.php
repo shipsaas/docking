@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         DB::table('languages')
             ->insertOrIgnore([
+                'uuid' => Str::orderedUuid()->toString(),
                 'code' => 'en',
                 'name' => 'English',
             ]);
