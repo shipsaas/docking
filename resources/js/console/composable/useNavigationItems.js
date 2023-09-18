@@ -4,6 +4,9 @@ import {
   HomeIcon,
   DocumentPlusIcon,
   AtSymbolIcon,
+  LanguageIcon,
+  DocumentTextIcon,
+  FolderIcon,
 } from '@heroicons/vue/24/outline';
 
 const DEFAULT_NAVIGATION_INDEX = 0;
@@ -27,15 +30,54 @@ const NAVIGATION_ITEMS = [
     icon: AtSymbolIcon,
     current: false,
   },
+  {
+    name: 'Localization',
+    href: '#/localizations',
+    current: false,
+    children: [
+      {
+        name: 'Languages',
+        href: '#/languages',
+        icon: LanguageIcon,
+        current: false,
+      },
+      {
+        name: 'Translation Groups',
+        href: '#/translation-groups',
+        icon: FolderIcon,
+        current: false,
+      },
+      {
+        name: 'Translations',
+        href: '#/translations',
+        icon: DocumentTextIcon,
+        current: false,
+      },
+    ],
+  },
 ];
 
 export const useNavigationItems = () => {
-  const navigationItems = ref(NAVIGATION_ITEMS);
+  const navigationItems = ref(
+    NAVIGATION_ITEMS.map((item) => {
+      item.children = item.children
+        ? item.children.map((child) => ({ ...child, parent: item }))
+        : undefined;
 
-  const setNavigationItemActive = (navigationItem) => {
-    navigationItems.value.forEach(
-      (item) => (item.current = item.name === navigationItem.name)
-    );
+      return item;
+    })
+  );
+
+  const setNavigationItemActive = (selectedItem) => {
+    navigationItems.value
+      .flatMap((item) => (item.children ? [item, ...item.children] : item))
+      .forEach((item) => (item.current = false));
+
+    if (selectedItem.parent) {
+      selectedItem.parent.current = true;
+    }
+
+    selectedItem.current = true;
   };
 
   onMounted(() => {
@@ -44,12 +86,14 @@ export const useNavigationItems = () => {
       return;
     }
 
-    const fulfilableItem = navigationItems.value.find((item, index) => {
-      return (
-        index !== DEFAULT_NAVIGATION_INDEX &&
-        location.hash.startsWith(item.href)
-      );
-    });
+    const fulfilableItem = navigationItems.value
+      .flatMap((item) => (item.children ? [item, ...item.children] : item))
+      .find((item, index) => {
+        return (
+          index !== DEFAULT_NAVIGATION_INDEX &&
+          location.hash.startsWith(item.href)
+        );
+      });
 
     fulfilableItem && setNavigationItemActive(fulfilableItem);
   });

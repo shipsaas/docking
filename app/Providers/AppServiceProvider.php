@@ -8,10 +8,13 @@ use App\Services\PdfRenderManager;
 use App\Services\TemplatingServices\BladeTemplatingService;
 use App\Services\TemplatingServices\MarkdownTemplatingService;
 use App\Services\TemplatingServices\TemplatingServiceContract;
+use App\Services\Translations\DatabaseLoader;
 use Illuminate\Support\ServiceProvider;
 use App\Services\PdfRenderers\GotenbergRendererService;
 use App\Services\PdfRenderers\MpdfRendererService;
 use App\Services\PdfRenderers\WkHtmlToPdfRendererService;
+use Illuminate\Translation\FileLoader;
+use Illuminate\Translation\Translator;
 use Mpdf\Mpdf;
 
 class AppServiceProvider extends ServiceProvider
@@ -40,11 +43,20 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('mpdf-testing', Mpdf::class);
 
         $this->bindTemplatingServices();
+        $this->bindLocalizationService();
     }
 
     private function bindTemplatingServices(): void
     {
         $this->app->singleton(BladeTemplatingService::class);
         $this->app->singleton(MarkdownTemplatingService::class);
+    }
+
+    private function bindLocalizationService(): void
+    {
+        $this->app->extend(
+            'translation.loader',
+            fn () => new DatabaseLoader()
+        );
     }
 }

@@ -165,7 +165,8 @@ import { toJsonString, validateJson } from './DocumentTemplateEdit.methods';
 import { usePreviewTemplate } from './composable/usePreviewTemplate.js';
 import PreviewHtmlModal from './components/PreviewHtmlModal.vue';
 import { notify } from '@kyvg/vue3-notification';
-import Settings from "./components/Settings.vue";
+import Settings from './components/Settings.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   uuid: {
@@ -173,6 +174,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const router = useRouter();
 
 const { isLoading, startLoading, stopLoading } = useLoading();
 
@@ -222,6 +225,8 @@ const loadRecord = async () => {
   stopLoading();
 
   if (!data) {
+    router.replace({ name: 'document-templates-list' });
+
     return;
   }
 

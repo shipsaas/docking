@@ -33,5 +33,25 @@ export const router = createRouter({
       name: 'fonts-list',
       component: () => import('./screens/FontsList/FontsListScreen.vue'),
     },
+    {
+      path: '/languages',
+      name: 'languages-list',
+      component: () =>
+        import('./screens/LanguagesList/LanguaguesListScreen.vue'),
+    },
+    {
+      path: '/translation-groups',
+      name: 'translation-groups-list',
+      component: () =>
+        import(
+          './screens/TranslationGroupsList/TranslationGroupsListScreen.vue'
+        ),
+    },
+    {
+      path: '/translations',
+      name: 'translations-list',
+      component: () =>
+        import('./screens/TranslationsList/TranslationsListScreen.vue'),
+    },
   ],
 });

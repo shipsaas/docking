@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Enums\PdfService;
+use App\Models\Language;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PdfRenderRequest extends FormRequest
 {
@@ -15,6 +17,10 @@ class PdfRenderRequest extends FormRequest
             'metadata.driver' => [
                 'nullable',
                 PdfService::getRequestRule(),
+            ],
+            'metadata.language' => [
+                'nullable',
+                Rule::in(Language::pluck('code')),
             ],
         ];
     }

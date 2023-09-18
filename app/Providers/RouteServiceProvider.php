@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Models\DocumentFile;
 use App\Models\DocumentTemplate;
 use App\Models\Font;
+use App\Models\Language;
+use App\Models\Translation;
+use App\Models\TranslationGroup;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -52,6 +55,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::model('documentFile', DocumentFile::class);
         Route::model('font', Font::class);
+        Route::model('language', Language::class);
+        Route::model('translationGroup', TranslationGroup::class);
+        Route::model('translation', Translation::class);
 
         Route::bind('documentTemplateUuidKey', DocumentTemplate::getByUuidOrKey(...));
     }

@@ -10,6 +10,7 @@
             <Dropdown
               :label="selectedDriver"
               :items="availableDrivers"
+              class="min-w-[18rem]"
               @selected="(value) => $emit('update', 'driver', value)"
             />
           </div>
@@ -25,6 +26,7 @@
             <Dropdown
               :label="selectedEngine"
               :items="gotenbergEngines"
+              class="min-w-[18rem]"
               @selected="(value) => $emit('update', 'engine', value)"
             />
           </div>
@@ -37,6 +39,7 @@
             <Dropdown
               :label="selectedTemplating"
               :items="templatingDrivers"
+              class="min-w-[18rem]"
               @selected="(value) => $emit('update', 'templating', value)"
             />
           </div>
@@ -47,9 +50,9 @@
 </template>
 
 <script setup>
-import Dropdown from "../../../components/Dropdown/Dropdown.vue";
-import {computed} from "vue";
-import {validateJson} from "../DocumentTemplateEdit.methods";
+import Dropdown from '../../../components/Dropdown/Dropdown.vue';
+import { computed } from 'vue';
+import { validateJson } from '../DocumentTemplateEdit.methods';
 
 const props = defineProps({
   template: {
@@ -76,14 +79,18 @@ const templatingDrivers = [
   { key: 'markdown', label: 'Markdown' },
 ];
 
-const parsedMetadata = computed(() => validateJson(props.template.metadata) || {});
+const parsedMetadata = computed(
+  () => validateJson(props.template.metadata) || {}
+);
 
 const selectedDriver = computed(() => {
   if (!parsedMetadata.value.driver) {
     return 'Select Driver (Default: Gotenberg)';
   }
 
-  const driver = availableDrivers.find(driver => driver.key === parsedMetadata.value['driver']);
+  const driver = availableDrivers.find(
+    (driver) => driver.key === parsedMetadata.value['driver']
+  );
 
   return driver.label;
 });
@@ -93,7 +100,9 @@ const selectedEngine = computed(() => {
     return 'Select Engine (Default: Chromium)';
   }
 
-  const engine = gotenbergEngines.find(driver => driver.key === parsedMetadata.value['engine']);
+  const engine = gotenbergEngines.find(
+    (driver) => driver.key === parsedMetadata.value['engine']
+  );
 
   return engine.label;
 });
@@ -103,7 +112,9 @@ const selectedTemplating = computed(() => {
     return 'Select Templating (Default: Blade)';
   }
 
-  const templating = templatingDrivers.find(driver => driver.key === parsedMetadata.value['templating']);
+  const templating = templatingDrivers.find(
+    (driver) => driver.key === parsedMetadata.value['templating']
+  );
 
   return templating.label;
 });
