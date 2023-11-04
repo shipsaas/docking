@@ -9,11 +9,10 @@
       <template #after-table>
         <Pagination
           v-if="paginationMeta"
-          :from="paginationMeta.from"
-          :to="paginationMeta.to"
-          :total="paginationMeta.total"
-          @next="loadRecords(page + 1)"
-          @prev="loadRecords(page - 1)"
+          :total-records="paginationMeta.total"
+          :total-pages="paginationMeta.last_page"
+          :current="page"
+          @go-to-page="loadRecords"
         />
       </template>
     </Table>
@@ -80,6 +79,8 @@ const loadRecords = async (forcePage) => {
 
   records.value = [...data.data];
   paginationMeta.value = { ...data.meta };
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 loadRecords();
