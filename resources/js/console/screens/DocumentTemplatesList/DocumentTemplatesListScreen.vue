@@ -106,8 +106,10 @@ const paginationMeta = ref(null);
 const page = ref(1);
 const keyword = ref(null);
 const isSearching = ref(false);
+const isLoading = ref(false);
 
 const loadRecords = async (forcePage) => {
+  isLoading.value = true;
   page.value = forcePage || page.value;
 
   const documentTemplates = await documentTemplateRepository.index({
@@ -115,6 +117,8 @@ const loadRecords = async (forcePage) => {
     page: page.value,
     search: keyword.value,
   });
+
+  isLoading.value = false;
 
   records.value = [...documentTemplates.data];
   paginationMeta.value = { ...documentTemplates.meta };
@@ -133,6 +137,10 @@ const onTemplateDuplicated = (result) =>
 loadRecords();
 
 function search() {
+  if (isLoading.value) {
+    return;
+  }
+
   if (!keyword.value) {
     // clear search state
     if (isSearching.value) {
