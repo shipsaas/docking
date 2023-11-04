@@ -57,7 +57,7 @@
                   v-for="(column, columnIdx) in columns"
                   :key="`record-column-${recordIdx}-${columnIdx}`"
                   :class="{
-                    'whitespace-nowrap text-sm font-medium text-gray-900': true,
+                    'whitespace-nowrap text-sm text-gray-900': true,
                     'py-4 pl-4 pr-3 sm:pl-3': recordIdx === 0,
                     'px-3 py-4': recordIdx > 0,
                     [column.contentClass]: !!column.contentClass,
