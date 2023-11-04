@@ -9,6 +9,7 @@ export const translationGroupRepository = {
     page = 1,
     sortBy = 'created_at',
     sortDirection = 'asc',
+    search = '',
   }) {
     return httpClient
       .get('translation-groups', {
@@ -17,6 +18,7 @@ export const translationGroupRepository = {
           page,
           sort_by: sortBy,
           sort_direction: sortDirection,
+          search,
         },
       })
       .then(getData)

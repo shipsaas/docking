@@ -20,4 +20,12 @@ class TranslationGroupIndexRequest extends AbstractIndexRequest
             'created_at',
         ];
     }
+
+    protected function getAllowedSearchColumns(): array
+    {
+        return [
+            'key',
+            'name',
+        ];
+    }
 }

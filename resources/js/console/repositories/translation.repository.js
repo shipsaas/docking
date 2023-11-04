@@ -9,6 +9,7 @@ export const translationRepository = {
     page = 1,
     sortBy = 'created_at',
     sortDirection = 'asc',
+    search = '',
   }) {
     return httpClient
       .get('translations', {
@@ -17,6 +18,7 @@ export const translationRepository = {
           page,
           sort_by: sortBy,
           sort_direction: sortDirection,
+          search,
         },
       })
       .then(getData)
