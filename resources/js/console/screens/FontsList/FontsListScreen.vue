@@ -18,11 +18,10 @@
       <template #after-table>
         <Pagination
           v-if="paginationMeta"
-          :from="paginationMeta.from || 0"
-          :to="paginationMeta.to || 0"
-          :total="paginationMeta.total"
-          @next="loadRecords(page + 1)"
-          @prev="loadRecords(page - 1)"
+          :total-records="paginationMeta.total"
+          :total-pages="paginationMeta.last_page"
+          :current="page"
+          @go-to-page="loadRecords"
         />
       </template>
     </Table>
