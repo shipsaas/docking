@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-/usr/bin/php /var/www/html/artisan migrate --force
+echo "Running migration...";
+php /var/www/html/artisan migrate --no-ansi -q --force 
+echo "Successfully migrated";

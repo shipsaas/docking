@@ -23,6 +23,7 @@ COPY ./.docker/docking-worker.conf /etc/supervisor/conf.d/
 COPY ./.docker/docking-host.conf /etc/nginx/conf.d/default.conf
 
 RUN cp .docker/entrypoint.sh /entrypoint
+RUN chmod +x /entrypoint
 
 # The bundle already built, no need to keep this to save size
 RUN rm -rf ./node_modules
