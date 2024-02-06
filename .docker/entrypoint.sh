@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
 # Run user scripts, if they exist
 for f in /var/www/html/.docker/scripts/*.sh; do
@@ -6,5 +7,6 @@ for f in /var/www/html/.docker/scripts/*.sh; do
     bash "$f" || break
 done
 
+echo "Welcome to DocKing";
 echo "Starting the application using supervisor...";
 exec /usr/bin/supervisord --nodaemon
