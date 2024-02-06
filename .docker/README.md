@@ -1,11 +1,11 @@
 # Docker of DocKing
 
-DocKing ships Docker Images too, in case you want boot it up as fast as you can for development, even production usage.
+DocKing ships Docker Images too.
 
-## Development
+## 2024 updates
 
-Check out: https://docking.shipsaas.tech/getting-started/run-on-local/docker
+DocKing image can be used in both development & production 😎. You can inject your own ENVs in runtime.
 
-## Production
+## Run DocKing
 
-Check out: https://docking.shipsaas.tech/deployment/docker
+TBA
