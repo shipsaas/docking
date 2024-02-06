@@ -34,7 +34,7 @@ RUN chown -R www-data:www-data storage
 RUN chown -R www-data:www-data storage/app
 RUN chmod -R 777 storage/logs
 
-RUN touch /var/www/html/database.sqlite
+RUN touch /var/www/html/docking.sqlite
 RUN chmod -R 777 docking.sqlite
 
 # Nginx remove default site
