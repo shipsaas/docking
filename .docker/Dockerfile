@@ -36,7 +36,7 @@ RUN chown -R www-data:www-data storage/app
 RUN chmod -R 777 storage/logs
 
 RUN touch /var/www/html/docking.sqlite
-RUN chmod -R 777 docking.sqlite
+RUN chown www-data:www-data docking.sqlite
 
 # Nginx remove default site
 RUN rm /etc/nginx/sites-enabled/default
@@ -47,7 +47,7 @@ EXPOSE 80
 ENV APP_ENV="production"
 ENV APP_KEY="base64:/UnGygYvVBmIh+VgNhMj6MyI/ieXTtzUJsUL4OUtZGI="
 ENV DB_CONNECTION="sqlite"
-ENV DATABASE_URL="sqlite:/var/www/html/docking.sqlite"
+ENV DATABASE_URL="sqlite:////var/www/html/docking.sqlite"
 
 ############# Storage ENV
 
