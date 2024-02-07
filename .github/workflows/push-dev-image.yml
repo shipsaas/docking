@@ -1,4 +1,4 @@
-name: Push Docker Dev Image
+name: Push Docker Images
 env:
   DEV_IMAGE_ENV: ${{ secrets.DEV_IMAGE_ENV }}
   IMAGE: 'shipsaas/docking'
