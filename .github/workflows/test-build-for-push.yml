@@ -1,0 +1,39 @@
+name: Test build Docker Image
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+    types: [ opened, synchronize, reopened, ready_for_review ]
+
+jobs:
+  build_image:
+    runs-on: ubuntu-latest
+    steps:
+      -   uses: actions/checkout@v3
+          if: success()
+
+      -   name: Setup PHP with coverage driver
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: 8.2
+
+      -   name: Setup Node 16
+          uses: actions/setup-node@v3
+          with:
+            node-version: 16
+            cache: 'npm'
+
+      -   name: Setup & Build
+          if: success()
+          run: |
+            composer install --no-interaction
+            npm ci && npm run build
+
+      -   name: Build Docker - Normal Image
+          if: success()
+          run: docker build -t docking:test -f .docker/Dockerfile .
+
+      -   name: Build Docker - Octane Image
+          if: success()
+          run: docker build -t docking:test -f .docker/octane.Dockerfile .

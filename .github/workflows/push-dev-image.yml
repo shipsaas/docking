@@ -1,8 +1,8 @@
-name: Push Docker Dev Image
+name: Push Docker Images
 env:
   DEV_IMAGE_ENV: ${{ secrets.DEV_IMAGE_ENV }}
-  IMAGE: 'shipsaas/docking-dev'
-  OCTANE_IMAGE: 'shipsaas/docking-dev-octane'
+  IMAGE: 'shipsaas/docking'
+  OCTANE_IMAGE: 'shipsaas/docking-on-steroid'
   REGISTRY: ghcr.io
 
 on:
