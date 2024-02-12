@@ -16,8 +16,10 @@ for f in /var/www/html/.docker/scripts/*.sh; do
     bash "$f" || break
 done
 
-echo "For SQLite users, please note down the UID & GID, then run CHOWN on the host machine"
-id www-data
+if [ "$DB_CONNECTION" = "sqlite" ]; then
+    echo "For SQLite users, please note down the UID & GID, then run CHOWN on the host machine"
+    id www-data
+fi
 
 echo "Starting the application using supervisor...";
 exec /usr/bin/supervisord --nodaemon
