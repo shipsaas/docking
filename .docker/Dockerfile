@@ -48,6 +48,7 @@ ENV APP_ENV="production"
 ENV APP_KEY="base64:/UnGygYvVBmIh+VgNhMj6MyI/ieXTtzUJsUL4OUtZGI="
 ENV DB_CONNECTION="sqlite"
 ENV DATABASE_URL="sqlite:////var/www/html/docking.sqlite"
+ENV APP_URL="http://127.0.0.1:8000"
 
 ############# Storage ENV
 
