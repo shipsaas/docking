@@ -4,18 +4,21 @@ services:
   docking:
     build:
       context: .
-      dockerfile: .docker/Dockerfile
+      dockerfile: .docker/octane.Dockerfile
     volumes:
+      - ./seth.sqlite:/var/www/html/database/seth.sqlite
       - app_storage:/var/www/html/storage/app
-    links:
-      - gotenberg
+    environment:
+      DATABASE_URL: 'sqlite:////var/www/html/database/seth.sqlite'
+    # links:
+    #   - gotenberg
     ports:
       - '8888:80'
 
-  gotenberg:
-    image: gotenberg/gotenberg:7
-    ports:
-      - '9898:3000'
+  # gotenberg:
+  #   image: gotenberg/gotenberg:7
+  #   ports:
+  #     - '9898:3000'
 
 volumes:
   app_storage:
