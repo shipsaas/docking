@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    \Illuminate\Support\Facades\Log::error('test');
     return view('welcome');
 });
 

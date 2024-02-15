@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bc61918922aa29800a2e5e5c081f041",
+    "content-hash": "17523e037e289791fbefe4fd53b4507f",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1494,20 +1494,20 @@
         },
         {
             "name": "laravel/octane",
-            "version": "v2.0.5",
+            "version": "v2.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/octane.git",
-                "reference": "f42d7f1814dda993a204e6bf8fe31092f1cfc9e6"
+                "reference": "9f36957a2166ba13fd9787246fbba061f307a3f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/octane/zipball/f42d7f1814dda993a204e6bf8fe31092f1cfc9e6",
-                "reference": "f42d7f1814dda993a204e6bf8fe31092f1cfc9e6",
+                "url": "https://api.github.com/repos/laravel/octane/zipball/9f36957a2166ba13fd9787246fbba061f307a3f6",
+                "reference": "9f36957a2166ba13fd9787246fbba061f307a3f6",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-diactoros": "^3.0.0",
+                "laminas/laminas-diactoros": "^3.0",
                 "laravel/framework": "^10.10.1",
                 "laravel/serializable-closure": "^1.3.0",
                 "nesbot/carbon": "^2.66.0",
@@ -1568,6 +1568,7 @@
             ],
             "description": "Supercharge your Laravel application's performance.",
             "keywords": [
+                "frankenphp",
                 "laravel",
                 "octane",
                 "roadrunner",
@@ -1577,7 +1578,7 @@
                 "issues": "https://github.com/laravel/octane/issues",
                 "source": "https://github.com/laravel/octane"
             },
-            "time": "2023-08-08T15:12:51+00:00"
+            "time": "2024-01-08T14:58:30+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -10372,5 +10373,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

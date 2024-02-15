@@ -6,19 +6,20 @@ services:
       context: .
       dockerfile: .docker/octane.Dockerfile
     volumes:
-      - ./seth.sqlite:/var/www/html/database/seth.sqlite
+      - ./docking.sqlite:/var/www/html/database/docking.sqlite
       - app_storage:/var/www/html/storage/app
     environment:
-      DATABASE_URL: 'sqlite:////var/www/html/database/seth.sqlite'
-    # links:
-    #   - gotenberg
+      DATABASE_URL: 'sqlite:////var/www/html/database/docking.sqlite'
+    links:
+      - gotenberg
     ports:
       - '8888:80'
+      - '8080:8080'
 
-  # gotenberg:
-  #   image: gotenberg/gotenberg:7
-  #   ports:
-  #     - '9898:3000'
+  gotenberg:
+    image: gotenberg/gotenberg:7
+    ports:
+      - '9898:3000'
 
 volumes:
   app_storage:
