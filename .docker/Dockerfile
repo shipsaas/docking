@@ -21,11 +21,12 @@ RUN docker-php-ext-install pdo mbstring exif pcntl bcmath gd
 COPY . .
 COPY ./.docker/docking-worker.conf /etc/supervisor/conf.d/
 COPY ./.docker/docking-host.conf /etc/nginx/conf.d/default.conf
+COPY ./.docker/php-fpm.conf /usr/local/etc/php-fpm.d/
 
 RUN cp .docker/entrypoint.sh /entrypoint
 RUN chmod +x /entrypoint
 
-# The bundle already built, no need to keep this to save size
+# The bundle already built (outer layer), no need to keep this to save size
 RUN rm -rf ./node_modules
 
 RUN php artisan optimize
@@ -48,6 +49,7 @@ ENV APP_ENV="production"
 ENV APP_KEY="base64:/UnGygYvVBmIh+VgNhMj6MyI/ieXTtzUJsUL4OUtZGI="
 ENV DB_CONNECTION="sqlite"
 ENV DATABASE_URL="sqlite:////var/www/html/docking.sqlite"
+ENV APP_URL="http://127.0.0.1:8000"
 
 ############# Storage ENV
 

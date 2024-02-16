@@ -1,7 +1,4 @@
-FROM ghcr.io/roadrunner-server/roadrunner:latest AS roadrunner
-FROM php:8.2-fpm
-
-COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
+FROM php:8.2-cli
 
 WORKDIR /var/www/html
 
@@ -33,6 +30,9 @@ RUN rm -rf ./node_modules
 
 RUN php artisan optimize
 RUN php artisan storage:link
+RUN ./vendor/bin/rr get-binary
+RUN chmod +x ./rr
+
 
 RUN chown -R www-data:www-data storage
 RUN chown -R www-data:www-data storage/app
@@ -44,7 +44,7 @@ RUN chown www-data:www-data docking.sqlite
 # Nginx remove default site
 RUN rm /etc/nginx/sites-enabled/default
 
-EXPOSE 80
+EXPOSE 80 8080
 
 ############# Default app ENV
 ENV APP_ENV="production"
