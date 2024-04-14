@@ -1,5 +1,19 @@
 # DocKing from ShipSaaS
 
+## Introducing RenderPDF.io - Render your PDF in seconds
+
+![RenderPDF.io](./.github/render-pdf-io.png)
+
+[RenderPDF.io](https://renderpdf.io) is a Render-PDF-as-a-Service that provides developer-friendly APIs 
+to render your HTML content to modern PDFs file sin seconds 😎.
+
+All you have to do is get your API Key and send RenderPDF.io an API call 🚀, no infrastructure setup, no overhead and
+hassle-free integration 🔋.
+
+Get your free API Key today: [Sign Up to RenderPDF.io](https://renderpdf.io)
+
+## Introducing DocKing
+
 [![Build & Test (PHP 8.2)](https://github.com/shipsaas/docking/actions/workflows/build.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/build.yml)
 [![Integration Tests](https://github.com/shipsaas/docking/actions/workflows/integration.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/integration.yml)
 [![E2E Tests](https://github.com/shipsaas/docking/actions/workflows/e2e.yml/badge.svg)](https://github.com/shipsaas/docking/actions/workflows/e2e.yml)
