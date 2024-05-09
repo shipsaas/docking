@@ -5,7 +5,7 @@
 ![RenderPDF.io](./.github/render-pdf-io.png)
 
 [RenderPDF.io](https://renderpdf.io) is a Render-PDF-as-a-Service that provides developer-friendly APIs 
-to render your HTML content to modern PDFs file sin seconds 😎.
+to render your HTML content to modern PDFs files in seconds 😎.
 
 All you have to do is get your API Key and send RenderPDF.io an API call 🚀, no infrastructure setup, no overhead and
 hassle-free integration 🔋.
@@ -25,7 +25,7 @@ Get your free API Key today: [Sign Up to RenderPDF.io](https://renderpdf.io)
 
 DocKing is a document management service/microservice that handles templates and renders them in PDF format, all in one place.
 
-You can utilize DocKing as a shared microservice, which can be integrated & used in any services from your big product.
+You can utilize DocKing as a shared microservice, which can be integrated & used in any service from your big product.
 
 Documentation: [DocKing](https://docking.shipsaas.tech)
 
